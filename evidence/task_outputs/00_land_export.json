@@ -1,0 +1,16 @@
+{
+  "generator_summary": {
+    "mode": "backfill",
+    "interactions_written": 6046,
+    "labels": 7742,
+    "dealers": 20,
+    "customers": 3200,
+    "vehicles": 3200
+  },
+  "landing_files": {
+    "interactions": 90,
+    "customers": 2,
+    "vehicles": 1,
+    "dealers": 1
+  }
+}

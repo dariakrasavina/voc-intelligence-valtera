@@ -1,0 +1,30 @@
+[
+  {
+    "n": "3200",
+    "t": "silver_customers"
+  },
+  {
+    "n": "433",
+    "t": "lb_escalation_queue (Lakebase)"
+  },
+  {
+    "n": "6046",
+    "t": "bronze_interactions"
+  },
+  {
+    "n": "32433",
+    "t": "silver_sentences"
+  },
+  {
+    "n": "6046",
+    "t": "gold_interaction_insights"
+  },
+  {
+    "n": "7827",
+    "t": "gold_sentence_topics"
+  },
+  {
+    "n": "433",
+    "t": "gold_escalation_queue"
+  }
+]

@@ -1,0 +1,108 @@
+{
+  "sentences_scanned": 32433,
+  "seconds": 20.9,
+  "direct_tags_by_topic": [
+    {
+      "topic_name": "Service - Repair Delay",
+      "tagged_sentences": 820
+    },
+    {
+      "topic_name": "Praise - Positive Feedback",
+      "tagged_sentences": 813
+    },
+    {
+      "topic_name": "Software - Infotainment or App",
+      "tagged_sentences": 773
+    },
+    {
+      "topic_name": "Dealer - Poor Dealer Experience",
+      "tagged_sentences": 562
+    },
+    {
+      "topic_name": "Billing - Payment or Financing Issue",
+      "tagged_sentences": 511
+    },
+    {
+      "topic_name": "Warranty - Claim Denied",
+      "tagged_sentences": 368
+    },
+    {
+      "topic_name": "Safety - Warning Light or Airbag",
+      "tagged_sentences": 367
+    },
+    {
+      "topic_name": "Charging - Public Charger Failure",
+      "tagged_sentences": 335
+    },
+    {
+      "topic_name": "Software - OTA Update Failure",
+      "tagged_sentences": 304
+    },
+    {
+      "topic_name": "Safety - Driver Assist Malfunction",
+      "tagged_sentences": 257
+    },
+    {
+      "topic_name": "Battery - Range Loss",
+      "tagged_sentences": 256
+    },
+    {
+      "topic_name": "Service - Recall Question",
+      "tagged_sentences": 240
+    },
+    {
+      "topic_name": "Charging - Home Charging Issue",
+      "tagged_sentences": 217
+    },
+    {
+      "topic_name": "Charging - Charge Port Door Stuck",
+      "tagged_sentences": 181
+    },
+    {
+      "topic_name": "Safety - Unexpected Braking",
+      "tagged_sentences": 173
+    }
+  ],
+  "example_explanations": [
+    {
+      "topic_name": "Dealer - Poor Dealer Experience",
+      "sentence_text": "The salesman was pushy and lied about the price.",
+      "matched_terms": "salesman, pushy"
+    },
+    {
+      "topic_name": "Praise - Positive Feedback",
+      "sentence_text": "Overall: Honestly the car is amazing on long trips.",
+      "matched_terms": "amazing"
+    },
+    {
+      "topic_name": "Battery - Range Loss",
+      "sentence_text": "I am losing range much faster than when I bought it.",
+      "matched_terms": "range, los*"
+    },
+    {
+      "topic_name": "Safety - Warning Light or Airbag",
+      "sentence_text": "The check engine light is on again.",
+      "matched_terms": "\"check engine\""
+    },
+    {
+      "topic_name": "Battery - Range Loss",
+      "sentence_text": "My range dropped from 290 to about 220 miles.",
+      "matched_terms": "range, drop*"
+    },
+    {
+      "topic_name": "Charging - Public Charger Failure",
+      "sentence_text": "Every DC charger on my route was slow, it took over an hour.",
+      "matched_terms": "\"dc charger\", slow*"
+    },
+    {
+      "topic_name": "Safety - Driver Assist Malfunction",
+      "sentence_text": "Lane keep assist pulled me toward the shoulder.",
+      "matched_terms": "\"lane keep*\", \"pulled\""
+    },
+    {
+      "topic_name": "Dealer - Poor Dealer Experience",
+      "sentence_text": "The dealer never called me back after three messages.",
+      "matched_terms": "dealer, \"never called\""
+    }
+  ]
+}

@@ -1,0 +1,429 @@
+{
+  "model_name": "Valtera Motors VOC category model",
+  "version": "1.0",
+  "parent_rules_filter_children": true,
+  "global_filter": {
+    "name": "Customer English verbatims",
+    "description": "English, customer-side sentences only (agent side excluded).",
+    "lanes": {
+      "keywords": "*",
+      "and": "speaker:customer",
+      "and2": "language:english",
+      "not": ""
+    }
+  },
+  "nodes": [
+    {
+      "id": "battery_charging",
+      "name": "Battery & Charging",
+      "path": [],
+      "level": 2,
+      "description": "",
+      "comparison_target": false,
+      "has_rules": false,
+      "is_leaf": false,
+      "lanes": {
+        "keywords": "",
+        "and": "",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "vehicle_safety",
+      "name": "Vehicle Safety",
+      "path": [],
+      "level": 2,
+      "description": "",
+      "comparison_target": false,
+      "has_rules": false,
+      "is_leaf": false,
+      "lanes": {
+        "keywords": "",
+        "and": "",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "software_connectivity",
+      "name": "Software & Connectivity",
+      "path": [],
+      "level": 2,
+      "description": "",
+      "comparison_target": false,
+      "has_rules": false,
+      "is_leaf": false,
+      "lanes": {
+        "keywords": "",
+        "and": "",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "service_warranty",
+      "name": "Service & Warranty",
+      "path": [],
+      "level": 2,
+      "description": "",
+      "comparison_target": false,
+      "has_rules": false,
+      "is_leaf": false,
+      "lanes": {
+        "keywords": "",
+        "and": "",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "dealer_sales",
+      "name": "Dealer & Sales Experience",
+      "path": [],
+      "level": 2,
+      "description": "",
+      "comparison_target": false,
+      "has_rules": false,
+      "is_leaf": false,
+      "lanes": {
+        "keywords": "",
+        "and": "",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "billing_financing",
+      "name": "Billing & Financing",
+      "path": [],
+      "level": 2,
+      "description": "",
+      "comparison_target": false,
+      "has_rules": false,
+      "is_leaf": false,
+      "lanes": {
+        "keywords": "",
+        "and": "",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "positive_feedback",
+      "name": "Positive Feedback",
+      "path": [],
+      "level": 2,
+      "description": "",
+      "comparison_target": false,
+      "has_rules": false,
+      "is_leaf": false,
+      "lanes": {
+        "keywords": "",
+        "and": "",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "chg_public_charger",
+      "name": "Charging - Public Charger Failure",
+      "path": [
+        "Battery & Charging"
+      ],
+      "level": 3,
+      "description": "Customer could not charge, or charged very slowly, at a public / DC fast charging station.",
+      "ai_description": "Customer reports a failed, interrupted, or very slow charging session at a PUBLIC or DC fast charging station (not home charging).",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 1,
+      "lanes": {
+        "keywords": "\"charging station\"~2, \"fast charg*\", \"fast charger\", \"public charger\", \"public charging\", \"charger network\", \"dc charger\", \"charging network\", \"charging stations\"",
+        "and": "fail*, \"won't\", \"wouldn't\", \"didn't work\", \"doesn't work\", \"not working\", broke*, error*, stuck, \"would not\", \"will not\", \"kept stopping\", \"stopped charging\", slow*, neither, \"would not work\"",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "chg_home_charger",
+      "name": "Charging - Home Charging Issue",
+      "path": [
+        "Battery & Charging"
+      ],
+      "level": 3,
+      "description": "Problems charging the vehicle at home (wall box, level 2, mobile connector).",
+      "ai_description": "Customer has a problem charging at HOME: wall box, level 2 charger, mobile connector, breaker tripping, charging stopping overnight.",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 1,
+      "lanes": {
+        "keywords": "\"home charger\", \"wall charger\", \"wall box\", \"level 2\", \"garage charger\", \"charging at home\", \"charge at home\", \"home charging\", \"mobile connector\"",
+        "and": "fail*, \"won't\", \"didn't work\", \"doesn't work\", \"not working\", error*, trip*, stuck, \"will not\", \"keeps stopping\", \"stops charging\", fault*",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "chg_charge_port",
+      "name": "Charging - Charge Port Door Stuck",
+      "path": [
+        "Battery & Charging"
+      ],
+      "level": 3,
+      "description": "The charge port door will not open or close.",
+      "ai_description": "The vehicle's charge port door or flap is stuck, will not open, will not close, or is broken.",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 2,
+      "lanes": {
+        "keywords": "\"charge port\", \"charging port\", \"port door\", \"charge door\", \"charging door\", \"charging flap\", \"charge flap\"",
+        "and": "stuck, \"won't open\", \"won't close\", \"will not open\", \"will not close\", jam*, broke*, frozen, \"doesn't open\", \"does not open\", \"doesn't close\", \"stays open\"",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "bat_range_loss",
+      "name": "Battery - Range Loss",
+      "path": [
+        "Battery & Charging"
+      ],
+      "level": 3,
+      "description": "Customer reports less driving range than expected or rapid battery drain.",
+      "ai_description": "Customer says the EV's driving range has dropped, is lower than advertised, or the battery drains abnormally fast.",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 1,
+      "lanes": {
+        "keywords": "range, \"miles left\", \"battery drain*\", \"battery degrad*\", \"battery percentage\", \"state of charge\", \"battery is draining\", \"battery drains\"",
+        "and": "lost, los*, drop*, less, worse, shorter, drain*, \"goes down\", \"went down\", degrad*, \"half\", \"not even\", \"only get*\"",
+        "and2": "",
+        "not": "\"range of\", \"range rover\", \"wide range\", \"price range\""
+      }
+    },
+    {
+      "id": "saf_unexpected_braking",
+      "name": "Safety - Unexpected Braking",
+      "path": [
+        "Vehicle Safety"
+      ],
+      "level": 3,
+      "description": "Vehicle braked unexpectedly or automatic emergency braking activated with no obstacle.",
+      "ai_description": "SAFETY: the vehicle braked hard by itself, phantom braking, or automatic emergency braking engaged with no real obstacle.",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 5,
+      "lanes": {
+        "keywords": "\"phantom braking\", \"phantom brake\", \"slammed on the brakes\", \"slams on the brakes\", \"brakes by itself\", \"braked by itself\", \"brakes on its own\", \"braked on its own\", \"emergency braking\", \"automatic braking\", \"hit the brakes\"",
+        "and": "",
+        "and2": "",
+        "not": "\"I hit the brakes\""
+      }
+    },
+    {
+      "id": "saf_driver_assist",
+      "name": "Safety - Driver Assist Malfunction",
+      "path": [
+        "Vehicle Safety"
+      ],
+      "level": 3,
+      "description": "Driver-assistance features (lane keeping, adaptive cruise, blind spot) malfunction.",
+      "ai_description": "SAFETY: a driver-assistance feature (lane keep, lane centering, adaptive cruise, blind spot monitoring, Valtera Pilot) malfunctioned, disengaged unexpectedly, or steered/jerked the car.",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 4,
+      "lanes": {
+        "keywords": "\"lane keep*\", \"lane assist\", \"lane centering\", \"adaptive cruise\", \"driver assist\", \"drive assist\", \"blind spot\", \"cruise control\", \"valtera pilot\"",
+        "and": "fail*, disengag*, \"pulled\", jerk*, \"not working\", error*, malfunction*, \"turned off\", \"shut off\", \"cut out\", \"cuts out\", swerv*, \"steered\", \"yanked\"",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "saf_warning_lights",
+      "name": "Safety - Warning Light or Airbag",
+      "path": [
+        "Vehicle Safety"
+      ],
+      "level": 3,
+      "description": "Warning lights, airbag or safety-system alerts on the dashboard.",
+      "ai_description": "SAFETY: a dashboard warning light, airbag or SRS alert, brake warning, or 'service vehicle soon' message appeared.",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 3,
+      "lanes": {
+        "keywords": "\"airbag light\", \"airbag warning\", \"warning light\", \"check engine\", \"airbag\", \"srs light\", \"service vehicle soon\", \"warning message\", \"brake warning\"",
+        "and": "",
+        "and2": "",
+        "not": "\"no warning light\", \"no warning lights\""
+      }
+    },
+    {
+      "id": "sw_ota_failure",
+      "name": "Software - OTA Update Failure",
+      "path": [
+        "Software & Connectivity"
+      ],
+      "level": 3,
+      "description": "An over-the-air software update failed or introduced new problems.",
+      "ai_description": "Customer says an over-the-air (OTA) software or firmware update failed to install, got stuck, or caused new problems after it installed.",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 2,
+      "lanes": {
+        "keywords": "\"software update\", \"over the air\", ota, \"the update\", \"update 4.2\", \"version 4.2\", firmware, \"latest update\"",
+        "and": "fail*, brick*, stuck, \"since the update\", \"after the update\", froze, freez*, broke*, reboot*, \"rolled back\", \"wouldn't install\", \"won't install\", \"didn't install\", \"error\"",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "sw_infotainment",
+      "name": "Software - Infotainment or App",
+      "path": [
+        "Software & Connectivity"
+      ],
+      "level": 3,
+      "description": "Center screen, navigation, phone connection or the Valtera mobile app is not working.",
+      "ai_description": "Customer reports the center screen, infotainment, navigation, CarPlay/Android Auto, Bluetooth, phone key, or the Valtera mobile app freezing, crashing or not connecting.",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 1,
+      "lanes": {
+        "keywords": "screen, infotainment, carplay, \"android auto\", \"the app\", \"valtera app\", \"mobile app\", bluetooth, navigation, \"phone key\", \"touchscreen\"",
+        "and": "freez*, crash*, \"not working\", blank, black, lag*, disconnect*, reboot*, \"won't connect\", \"doesn't connect\", \"keeps dropping\", glitch*, unresponsive, \"will not connect\", \"not connect*\"",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "svc_repair_delay",
+      "name": "Service - Repair Delay",
+      "path": [
+        "Service & Warranty"
+      ],
+      "level": 3,
+      "description": "Vehicle has been waiting a long time for repair, parts or a service appointment.",
+      "ai_description": "Customer complains about a long wait for a repair, parts on back order, no service appointment availability, or no loaner/rental car.",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 1,
+      "lanes": {
+        "keywords": "\"waiting on parts\", \"waiting for parts\", \"back order*\", \"backorder*\", \"on order\", \"still in the shop\", \"in the shop\", \"loaner\", \"rental car\", \"service appointment\"",
+        "and": "wait*, still, \"no update\", delay*, long, weeks, month*, \"nobody\", \"no one\", \"no eta\", \"no loaner\", paying",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "svc_warranty_denied",
+      "name": "Warranty - Claim Denied",
+      "path": [
+        "Service & Warranty"
+      ],
+      "level": 3,
+      "description": "A warranty claim was denied or the customer was told a repair is not covered.",
+      "ai_description": "Customer says a warranty claim was denied, rejected, or that a repair they expected to be covered is not covered.",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 2,
+      "lanes": {
+        "keywords": "warranty",
+        "and": "denied, deny, denying, \"not covered\", \"isn't covered\", \"wasn't covered\", rejected, refus*, \"out of pocket\", \"have to pay\"",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "svc_recall",
+      "name": "Service - Recall Question",
+      "path": [
+        "Service & Warranty"
+      ],
+      "level": 3,
+      "description": "Customer asks about or reports a recall.",
+      "ai_description": "Customer asks about, received, or is waiting on a vehicle recall or safety recall repair.",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 2,
+      "lanes": {
+        "keywords": "recall, recalls, recalled, \"recall notice\", \"safety recall\"",
+        "and": "",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "dlr_poor_experience",
+      "name": "Dealer - Poor Dealer Experience",
+      "path": [
+        "Dealer & Sales Experience"
+      ],
+      "level": 3,
+      "description": "Negative experience with dealership staff.",
+      "ai_description": "Customer describes a negative experience with dealership staff: rude, pushy, dismissive, ignoring calls, not returning calls, or misleading them.",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 1,
+      "lanes": {
+        "keywords": "dealer, dealership, \"service advisor\", salesman, \"sales rep\", \"sales person\", salesperson, \"service department\"",
+        "and": "rude, \"never called\", ignored, pushy, unprofessional, \"no one\", \"didn't call\", \"hung up\", \"never returned\", lied, \"won't return\", dismissive, \"doesn't care\"",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "bil_payment_issue",
+      "name": "Billing - Payment or Financing Issue",
+      "path": [
+        "Billing & Financing"
+      ],
+      "level": 3,
+      "description": "Problems with billing, payments, lease or financing.",
+      "ai_description": "Customer reports a billing, payment, lease or financing problem: double charge, wrong amount, unexpected fee, late fee error, missing payment.",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 1,
+      "lanes": {
+        "keywords": "payment, \"auto pay\", autopay, financing, lease, invoice, bill, billed, statement, \"monthly payment\", \"valtera financial\"",
+        "and": "wrong, twice, double, late, error*, incorrect, overcharg*, \"charged me\", \"extra\", fee, fees, \"doesn't match\", missing",
+        "and2": "",
+        "not": ""
+      }
+    },
+    {
+      "id": "pos_praise",
+      "name": "Praise - Positive Feedback",
+      "path": [
+        "Positive Feedback"
+      ],
+      "level": 3,
+      "description": "Customer expresses clear satisfaction or praise.",
+      "ai_description": "Customer clearly praises the vehicle, the service, or a person (love it, amazing, excellent, very happy). Not polite thanks alone.",
+      "comparison_target": true,
+      "has_rules": true,
+      "is_leaf": true,
+      "escalation_weight": 0,
+      "lanes": {
+        "keywords": "love, amazing, awesome, fantastic, excellent, \"very happy\", \"so happy\", \"really happy\", \"best car\", \"great car\", \"great job\", \"thank you so much\", impressed",
+        "and": "",
+        "and2": "",
+        "not": "\"would love\", \"I'd love\", \"not happy\", \"not impressed\", \"love to know\", \"love to get\""
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+[
+  {
+    "first_alert_date": "2026-10-30",
+    "is_alert": "true",
+    "last_7d": "42",
+    "model": "Aurora EV",
+    "model_year": "2026",
+    "peak_lift": "24.80",
+    "topic_name": "Charging - Charge Port Door Stuck"
+  },
+  {
+    "first_alert_date": "2026-10-31",
+    "is_alert": "true",
+    "last_7d": "33",
+    "model": "Aurora EV",
+    "model_year": "2026",
+    "peak_lift": "17.60",
+    "topic_name": "Safety - Unexpected Braking"
+  },
+  {
+    "first_alert_date": "2026-10-31",
+    "is_alert": "true",
+    "last_7d": "19",
+    "model": "Aurora EV",
+    "model_year": "2026",
+    "peak_lift": "7.64",
+    "topic_name": "Software - OTA Update Failure"
+  }
+]

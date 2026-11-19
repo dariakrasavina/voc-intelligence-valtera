@@ -1,0 +1,32 @@
+{
+  "model": "daria_krasavina.voc_valtera.voc_sentiment_model",
+  "version": 2,
+  "alias": "champion",
+  "mlflow_run_id": "e4d9df5f1a4643b38cbed81176de34d0",
+  "metrics_vs_weak_labels": {
+    "accuracy": 0.9577464788732394,
+    "macro_f1": 0.89914294459749,
+    "n_train": 281,
+    "n_test": 71
+  },
+  "classification_report": "              precision    recall  f1-score   support\n\n    negative       0.97      0.98      0.98        60\n     neutral       1.00      0.71      0.83         7\n    positive       0.80      1.00      0.89         4\n\n    accuracy                           0.96        71\n   macro avg       0.92      0.90      0.90        71\nweighted avg       0.96      0.96      0.96        71\n",
+  "weak_label_distribution": {
+    "negative": 299,
+    "neutral": 35,
+    "positive": 18
+  },
+  "scored_distribution": [
+    {
+      "sentiment_label": "neutral",
+      "n": 5627
+    },
+    {
+      "sentiment_label": "negative",
+      "n": 10211
+    },
+    {
+      "sentiment_label": "positive",
+      "n": 2589
+    }
+  ]
+}

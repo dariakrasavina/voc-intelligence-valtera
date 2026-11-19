@@ -1,0 +1,15 @@
+resources:
+  pipelines:
+    voc_ingest:
+      name: valtera-voc-ingest
+      catalog: ${var.catalog}
+      schema: ${var.schema}
+      serverless: true
+      channel: CURRENT
+      photon: true
+      continuous: false
+      configuration:
+        landing_path: ${var.landing_path}
+      libraries:
+        - glob:
+            include: ../src/pipeline/**

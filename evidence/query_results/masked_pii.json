@@ -1,0 +1,42 @@
+[
+  {
+    "customer_id": "C00001",
+    "email": "k******",
+    "first_name": "K******",
+    "last_name": "H******",
+    "loyalty_tier": "Standard",
+    "phone": "+******"
+  },
+  {
+    "customer_id": "C00002",
+    "email": "r******",
+    "first_name": "R******",
+    "last_name": "H******",
+    "loyalty_tier": "Standard",
+    "phone": "+******"
+  },
+  {
+    "customer_id": "C00003",
+    "email": "k******",
+    "first_name": "K******",
+    "last_name": "T******",
+    "loyalty_tier": "Silver",
+    "phone": "+******"
+  },
+  {
+    "customer_id": "C00004",
+    "email": "t******",
+    "first_name": "T******",
+    "last_name": "L******",
+    "loyalty_tier": "Silver",
+    "phone": "+******"
+  },
+  {
+    "customer_id": "C00005",
+    "email": "r******",
+    "first_name": "R******",
+    "last_name": "K******",
+    "loyalty_tier": "Silver",
+    "phone": "+******"
+  }
+]

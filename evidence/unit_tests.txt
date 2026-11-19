@@ -1,0 +1,20 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.12, pytest-9.2.0, pluggy-1.7.0 -- /Users/daria.krasavina/.cache/uv/builds-v0/.tmpJ3ZZPp/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/daria.krasavina/voc-intelligence-valtera
+collecting ... collected 12 items
+
+tests/test_rules.py::test_implicit_or_and_phrase PASSED                  [  8%]
+tests/test_rules.py::test_wildcard_and_and_lane PASSED                   [ 16%]
+tests/test_rules.py::test_not_lane_excludes PASSED                       [ 25%]
+tests/test_rules.py::test_proximity PASSED                               [ 33%]
+tests/test_rules.py::test_attribute_predicate PASSED                     [ 41%]
+tests/test_rules.py::test_safety_braking PASSED                          [ 50%]
+tests/test_rules.py::test_charge_port PASSED                             [ 58%]
+tests/test_rules.py::test_rollup_to_parent PASSED                        [ 66%]
+tests/test_rules.py::test_agent_side_out_of_scope PASSED                 [ 75%]
+tests/test_rules.py::test_multilabel PASSED                              [ 83%]
+tests/test_rules.py::test_filler_matches_nothing PASSED                  [ 91%]
+tests/test_rules.py::test_every_leaf_has_ai_description_and_weight PASSED [100%]
+
+============================== 12 passed in 0.01s ==============================

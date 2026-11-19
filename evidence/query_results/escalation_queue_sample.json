@@ -1,0 +1,102 @@
+[
+  {
+    "case_id": "I2026110800033",
+    "case_summary": "Brake sensor not covered under warranty, automatic braking malfunctioned.",
+    "dealer_name": "Riverbend Valtera",
+    "model": "Aurora EV",
+    "model_year": "2026",
+    "primary_topic": "Safety - Unexpected Braking",
+    "priority": "P1",
+    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
+  },
+  {
+    "case_id": "I2026111700064",
+    "case_summary": "Car braked suddenly at 45mph, nearly causing rear-end collision.",
+    "dealer_name": "Riverbend Valtera",
+    "model": "Aurora EV",
+    "model_year": "2026",
+    "primary_topic": "Safety - Unexpected Braking",
+    "priority": "P1",
+    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
+  },
+  {
+    "case_id": "I2026111400027",
+    "case_summary": "Car braked suddenly at 45mph, nearly causing rear-end collision.",
+    "dealer_name": "Harbor Valtera",
+    "model": "Strata EV",
+    "model_year": "2026",
+    "primary_topic": "Safety - Unexpected Braking",
+    "priority": "P1",
+    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
+  },
+  {
+    "case_id": "I2026110200004",
+    "case_summary": "Update caused settings loss and random reboots, leading to a near-accident.",
+    "dealer_name": "Ironwood Valtera",
+    "model": "Aurora EV",
+    "model_year": "2026",
+    "primary_topic": "Safety - Unexpected Braking",
+    "priority": "P1",
+    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
+  },
+  {
+    "case_id": "I2026110700011",
+    "case_summary": "Car braked suddenly at 70mph, nearly causing rear-end collision.",
+    "dealer_name": "Sunset Valtera",
+    "model": "Aurora EV",
+    "model_year": "2026",
+    "primary_topic": "Safety - Unexpected Braking",
+    "priority": "P1",
+    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
+  },
+  {
+    "case_id": "I2026103100044",
+    "case_summary": "OTA update failed, caused error, and unexpected braking issue occurred.",
+    "dealer_name": "Riverbend Valtera",
+    "model": "Aurora EV",
+    "model_year": "2026",
+    "primary_topic": "Safety - Unexpected Braking",
+    "priority": "P1",
+    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
+  },
+  {
+    "case_id": "I2026111800071",
+    "case_summary": "Car's automatic braking malfunctioned, wall charger faulty, and won't start.",
+    "dealer_name": "Prairie Valtera",
+    "model": "Aurora EV",
+    "model_year": "2026",
+    "primary_topic": "Safety - Unexpected Braking",
+    "priority": "P1",
+    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
+  },
+  {
+    "case_id": "I2026110100068",
+    "case_summary": "Car suddenly slammed on brakes on empty highway.",
+    "dealer_name": "Meadowbrook Valtera",
+    "model": "Aurora EV",
+    "model_year": "2026",
+    "primary_topic": "Safety - Unexpected Braking",
+    "priority": "P1",
+    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
+  },
+  {
+    "case_id": "I2026111400068",
+    "case_summary": "Experienced phantom braking, Valtera app connection issues.",
+    "dealer_name": "Summit Valtera",
+    "model": "Ridgeback",
+    "model_year": "2024",
+    "primary_topic": "Safety - Unexpected Braking",
+    "priority": "P1",
+    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
+  },
+  {
+    "case_id": "I2026110900052",
+    "case_summary": "Experienced phantom braking twice on the same road this week.",
+    "dealer_name": "Silver Lake Valtera",
+    "model": "Aurora EV",
+    "model_year": "2026",
+    "primary_topic": "Safety - Unexpected Braking",
+    "priority": "P1",
+    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
+  }
+]

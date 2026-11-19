@@ -1,0 +1,62 @@
+[
+  {
+    "ai_confidence": "0.78",
+    "ai_rationale": "The sentence states the vehicle previously could travel to a destination and back, but now must stop on the way, indicating reduced driving range.",
+    "sentence_text": "It used to get me to my sister's place and back, now I have to stop on the way.",
+    "topic_name": "Battery - Range Loss"
+  },
+  {
+    "ai_confidence": "0.85",
+    "ai_rationale": "The customer says they were \"brushed off at the store\" and felt their problem was not considered worth the staff's time, indicating a negative dealership experience.",
+    "sentence_text": "I felt completely brushed off at the store, like my problem was not worth their time.",
+    "topic_name": "Dealer - Poor Dealer Experience"
+  },
+  {
+    "ai_confidence": "0.7",
+    "ai_rationale": "Customer says they felt brushed off at the store and their problem was not considered important",
+    "sentence_text": "Overall: I felt completely brushed off at the store, like my problem was not worth their time.",
+    "topic_name": "Dealer - Poor Dealer Experience"
+  },
+  {
+    "ai_confidence": "0.6",
+    "ai_rationale": "Customer describes a negative interaction with staff who told them the repair is on them.",
+    "sentence_text": "They told me the repair is on me even though the car is barely a year old.",
+    "topic_name": "Dealer - Poor Dealer Experience"
+  },
+  {
+    "ai_confidence": "0.76",
+    "ai_rationale": "The customer says their phone does not work as a key half the time.",
+    "sentence_text": "Overall: My phone does not work as a key half the time and I am stuck in the parking lot.",
+    "topic_name": "Software - Infotainment or App"
+  },
+  {
+    "ai_confidence": "0.78",
+    "ai_rationale": "The customer reports the steering wheel yanked itself to the right, indicating unexpected steering behavior consistent with a driver-assist malfunction.",
+    "sentence_text": "Overall: The steering wheel yanked itself to the right when I was in the middle lane.",
+    "topic_name": "Safety - Driver Assist Malfunction"
+  },
+  {
+    "ai_confidence": "0.85",
+    "ai_rationale": "The sentence says the door where you plug in will not budge, indicating the charge port door is stuck.",
+    "sentence_text": "That little door where you plug in will not budge, I had to pry it with my fingers.",
+    "topic_name": "Charging - Charge Port Door Stuck"
+  },
+  {
+    "ai_confidence": "0.85",
+    "ai_rationale": "The customer mentions receiving a letter that a car part may be defective and will be fixed for free, indicating a recall notification.",
+    "sentence_text": "Comments: I got a letter saying something on my car might be defective and needs to be fixed for free.",
+    "topic_name": "Service - Recall Question"
+  },
+  {
+    "ai_confidence": "0.78",
+    "ai_rationale": "The comment notes the vehicle previously could travel to a destination and back without stopping, but now must stop en route, indicating reduced driving range.",
+    "sentence_text": "Comments: It used to get me to my sister's place and back, now I have to stop on the way.",
+    "topic_name": "Battery - Range Loss"
+  },
+  {
+    "ai_confidence": "0.78",
+    "ai_rationale": "The customer says they were told the repair is their responsibility despite the car being only a year old, indicating a denied warranty claim.",
+    "sentence_text": "Comments: They told me the repair is on me even though the car is barely a year old.",
+    "topic_name": "Warranty - Claim Denied"
+  }
+]
