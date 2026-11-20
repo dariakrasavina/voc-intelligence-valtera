@@ -84,9 +84,10 @@ INSTRUCTIONS = [
     "Count complaints as DISTINCT interactions (COUNT(DISTINCT interaction_id)) unless the user asks for sentences or mentions.\n",
     "For trends by topic over time use gold_topic_daily and SUM(interactions). For one-row-per-interaction questions (sentiment, NPS, priority) use gold_interaction_insights.\n",
     "For 'emerging', 'spiking' or 'new' issues use gold_emerging_issues (is_alert = true), ordered by peak_lift desc; first_alert_date says when it was first detected.\n",
-    "'Safety complaints' means is_safety = true or parent_topic = 'Vehicle Safety'. 'EV owners' means powertrain = 'EV'.\n",
+    "'Safety complaints' means is_safety = true or parent_topic = 'Vehicle Safety'. powertrain has three values: 'EV', 'HYBRID', 'ICE'. 'EV owners' means powertrain = 'EV'; hybrids are NOT ICE, so compare all three unless the user says otherwise.\n",
+    "To count interactions that MENTION a topic, use gold_topic_daily (SUM(interactions)) or array_contains(topics, '<topic>') in gold_interaction_insights. primary_topic is only the single most severe topic of an interaction; use it only when the user asks for the main or primary issue.\n",
     "Never return customer names, emails, phone numbers or VINs; they are not available. customer_id is fine.\n",
-    "Round percentages to 1 decimal. Show model and model_year together when comparing vehicles.\n",
+    "Round percentages to 1 decimal. When the user names a model without a year, aggregate across all model years.\n",
 ]
 
 EXAMPLES = [
@@ -105,15 +106,15 @@ EXAMPLES = [
 BENCHMARKS = [
     ("How many P1 cases are in the escalation queue?",
      f"SELECT COUNT(*) AS p1_cases FROM {NS}.gold_escalation_queue WHERE priority = 'P1'"),
-    ("Which topic and vehicle had the biggest spike versus its baseline?",
-     f"SELECT topic_name, model, model_year, peak_lift FROM {NS}.gold_emerging_issues WHERE peak_lift IS NOT NULL ORDER BY peak_lift DESC LIMIT 1"),
-    ("What is the average NPS by vehicle model?",
+    ("Which active emerging issue has the biggest spike versus its baseline?",
+     f"SELECT topic_name, model, model_year, peak_lift FROM {NS}.gold_emerging_issues WHERE is_alert ORDER BY peak_lift DESC LIMIT 1"),
+    ("What is the average NPS by vehicle model, all model years combined?",
      f"SELECT model, ROUND(AVG(nps_score), 2) AS avg_nps FROM {NS}.gold_interaction_insights WHERE nps_score IS NOT NULL GROUP BY model ORDER BY avg_nps"),
     ("How many interactions mentioned a charge port door problem for the 2026 Aurora EV?",
      f"SELECT SUM(interactions) AS interactions FROM {NS}.gold_topic_daily WHERE topic_name = 'Charging - Charge Port Door Stuck' AND model = 'Aurora EV' AND model_year = 2026"),
     ("Which dealer has the most poor dealer experience complaints?",
      f"SELECT dealer_name, SUM(interactions) AS interactions FROM {NS}.gold_topic_daily WHERE topic_name = 'Dealer - Poor Dealer Experience' GROUP BY dealer_name ORDER BY interactions DESC LIMIT 1"),
-    ("What percent of interactions are negative for EVs vs ICE vehicles?",
+    ("What percent of interactions are negative for each powertrain?",
      f"SELECT powertrain, ROUND(100.0 * AVG(CASE WHEN sentiment = 'negative' THEN 1 ELSE 0 END), 1) AS negative_pct FROM {NS}.gold_interaction_insights GROUP BY powertrain"),
 ]
 

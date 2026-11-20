@@ -122,10 +122,7 @@ SELECT interaction_id, ai_summarize(customer_text, 30), current_timestamp()
 FROM {ns}.gold_interaction_insights
 WHERE priority IN ('P1', 'P2') AND interaction_id NOT IN (SELECT case_id FROM {ns}.case_summaries)""")
 sql("""
-CREATE OR REPLACE TABLE {ns}.gold_escalation_queue
-COMMENT 'Open P1/P2 cases from the last 30 days, with AI case summary and recommended next action. Synced to Lakebase (triggered) for the case-management app.'
-TBLPROPERTIES (delta.enableChangeDataFeed = true)
-AS
+CREATE OR REPLACE TEMP VIEW _queue_now AS
 SELECT g.interaction_id AS case_id, g.created_at, g.priority, g.escalation_score, g.primary_topic, g.primary_parent_topic,
        array_join(g.topics, '; ') AS topics, g.sentiment, g.nps_score, g.channel, g.model, g.model_year, g.powertrain,
        g.vin, g.dealer_name, g.dealer_region, g.customer_id, g.loyalty_tier,
@@ -141,6 +138,24 @@ SELECT g.interaction_id AS case_id, g.created_at, g.priority, g.escalation_score
 FROM {ns}.gold_interaction_insights g LEFT JOIN {ns}.case_summaries c ON c.case_id = g.interaction_id
 WHERE g.priority IN ('P1', 'P2')
   AND g.interaction_date > date_sub((SELECT max(interaction_date) FROM {ns}.gold_interaction_insights), 30)""")
+
+# The queue is MERGED, never replaced: the Lakebase synced table streams this table's Change Data Feed,
+# and replacing the table would break that stream. MERGE sends Lakebase only the cases that changed.
+if not spark.catalog.tableExists(f"{ns}.gold_escalation_queue"):
+    sql("""CREATE TABLE {ns}.gold_escalation_queue
+           TBLPROPERTIES (delta.enableChangeDataFeed = true)
+           AS SELECT * FROM _queue_now""")
+else:
+    sql("""
+    MERGE INTO {ns}.gold_escalation_queue t
+    USING _queue_now s ON t.case_id = s.case_id
+    WHEN MATCHED AND (t.priority <> s.priority OR t.escalation_score <> s.escalation_score OR t.case_summary <> s.case_summary
+                      OR t.topics <> s.topics OR t.sentiment <> s.sentiment) THEN UPDATE SET *
+    WHEN NOT MATCHED THEN INSERT *
+    WHEN NOT MATCHED BY SOURCE THEN DELETE""")
+sql("""COMMENT ON TABLE {ns}.gold_escalation_queue IS 'Open P1/P2 cases from the last 30 days, with AI case summary and recommended next action. Maintained with MERGE (CDF on) and synced to Lakebase (triggered) for the case-management app.'""")
+merge_stats = sql("DESCRIBE HISTORY {ns}.gold_escalation_queue LIMIT 1").select("version", "operation", "operationMetrics").first().asDict()
+print("escalation queue write:", merge_stats)
 
 # COMMAND ----------
 spark.sql("""
@@ -201,7 +216,8 @@ print("\nESCALATION QUEUE:"); print(queue.to_string(index=False))
 print("\nTOPIC DETECTION SOURCE:"); print(detect.to_string(index=False))
 os.makedirs(ev, exist_ok=True)
 with open(f"{ev}/40_gold_and_alerts.json", "w") as f:
-    json.dump({"emerging_issue_alerts": alerts.to_dict("records"), "escalation_queue_by_priority_topic": queue.to_dict("records"),
+    json.dump({"escalation_queue_write": {k: (dict(v) if isinstance(v, dict) else v) for k, v in merge_stats.items()},
+               "emerging_issue_alerts": alerts.to_dict("records"), "escalation_queue_by_priority_topic": queue.to_dict("records"),
                "topic_detection_source": detect.to_dict("records"),
                "metric_view_sample": sql("""SELECT model, model_year, MEASURE(interactions) AS interactions,
                     MEASURE(safety_interactions) AS safety, MEASURE(negative_rate_pct) AS neg_pct

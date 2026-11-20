@@ -44,27 +44,42 @@ def find_pipeline_id(o):
 
 pid = find_pipeline_id(st)
 print("sync pipeline:", pid)
-if pid:
-    from databricks.sdk.errors import ResourceConflict
+from databricks.sdk.errors import ResourceConflict
+
+def run_sync(full_refresh=False):
     try:
-        update_id = w.pipelines.start_update(pipeline_id=pid).update_id
+        update_id = w.pipelines.start_update(pipeline_id=pid, full_refresh=full_refresh).update_id
     except ResourceConflict:  # a sync is already running (e.g. the initial sync right after creation): wait for it
         update_id = w.pipelines.get(pipeline_id=pid).latest_updates[0].update_id
         print("sync already in progress, waiting for", update_id)
-    for _ in range(90):
+    for _ in range(120):
         u = w.pipelines.get_update(pipeline_id=pid, update_id=update_id).update
-        if u.state.value in ("COMPLETED", "FAILED", "CANCELED"): break
+        if u.state.value in ("COMPLETED", "FAILED", "CANCELED"):
+            return u.state.value, update_id
         time.sleep(10)
-    print("sync update:", u.state.value)
-time.sleep(5)
+    return "TIMEOUT", update_id
+
+state, update_id = run_sync()
+recovered = False
+if state != "COMPLETED":
+    # e.g. the source table was replaced and the change-feed checkpoint no longer matches: rebuild once.
+    print(f"incremental sync {update_id} ended {state}; running a full refresh")
+    state, update_id = run_sync(full_refresh=True)
+    recovered = True
+print("sync update:", update_id, state)
+
 src = spark.sql(f"SELECT count(*) c FROM {cat}.{sch}.gold_escalation_queue").first().c
-try:
-    dst = spark.sql(f"SELECT count(*) c FROM {SYNCED}").first().c   # Postgres table, read through UC federation
-except Exception as e:
-    dst = f"n/a ({str(e)[:100]})"
+dst = None
+for _ in range(12):  # the Postgres table is read through UC federation; allow a few seconds to settle
+    dst = spark.sql(f"SELECT count(*) c FROM {SYNCED}").first().c
+    if dst == src: break
+    time.sleep(10)
 print(f"gold_escalation_queue rows: {src} | Lakebase lb_escalation_queue rows: {dst}")
 os.makedirs(ev, exist_ok=True)
 with open(f"{ev}/50_lakebase_sync.json", "w") as f:
     json.dump({"synced_table": SYNCED, "lakebase_project": proj, "postgres_table": f"{sch}.lb_escalation_queue",
-               "scheduling_policy": "TRIGGERED", "sync_pipeline_id": pid,
+               "scheduling_policy": "TRIGGERED", "sync_pipeline_id": pid, "sync_update_id": update_id,
+               "sync_state": state, "recovered_with_full_refresh": recovered,
                "source_rows": src, "lakebase_rows": dst}, f, indent=2, default=str)
+if state != "COMPLETED" or src != dst:
+    raise RuntimeError(f"Lakebase sync check failed: state={state}, source={src}, lakebase={dst}")

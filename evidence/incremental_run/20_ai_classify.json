@@ -1,0 +1,133 @@
+{
+  "ai_calls_this_run": 0,
+  "seconds": 0.0,
+  "cache_size": 350,
+  "min_confidence": 0.6,
+  "tags_by_topic": [
+    {
+      "topic_name": "Service - Repair Delay",
+      "n": 1052,
+      "avg_conf": 0.812
+    },
+    {
+      "topic_name": "Software - Infotainment or App",
+      "n": 992,
+      "avg_conf": 0.839
+    },
+    {
+      "topic_name": "Dealer - Poor Dealer Experience",
+      "n": 820,
+      "avg_conf": 0.827
+    },
+    {
+      "topic_name": "Praise - Positive Feedback",
+      "n": 673,
+      "avg_conf": 0.905
+    },
+    {
+      "topic_name": "Billing - Payment or Financing Issue",
+      "n": 657,
+      "avg_conf": 0.878
+    },
+    {
+      "topic_name": "Safety - Warning Light or Airbag",
+      "n": 489,
+      "avg_conf": 0.844
+    },
+    {
+      "topic_name": "Warranty - Claim Denied",
+      "n": 476,
+      "avg_conf": 0.828
+    },
+    {
+      "topic_name": "Charging - Public Charger Failure",
+      "n": 426,
+      "avg_conf": 0.832
+    },
+    {
+      "topic_name": "Software - OTA Update Failure",
+      "n": 402,
+      "avg_conf": 0.8
+    },
+    {
+      "topic_name": "Battery - Range Loss",
+      "n": 365,
+      "avg_conf": 0.825
+    },
+    {
+      "topic_name": "Safety - Driver Assist Malfunction",
+      "n": 344,
+      "avg_conf": 0.833
+    },
+    {
+      "topic_name": "Charging - Home Charging Issue",
+      "n": 279,
+      "avg_conf": 0.84
+    },
+    {
+      "topic_name": "Service - Recall Question",
+      "n": 250,
+      "avg_conf": 0.872
+    },
+    {
+      "topic_name": "Charging - Charge Port Door Stuck",
+      "n": 245,
+      "avg_conf": 0.874
+    },
+    {
+      "topic_name": "Safety - Unexpected Braking",
+      "n": 223,
+      "avg_conf": 0.844
+    }
+  ],
+  "examples": [
+    {
+      "topic_name": "Service - Repair Delay",
+      "sentence_text": "Overall: The part is on back order and nobody can give me a date.",
+      "confidence": 0.83,
+      "rationale": "The text says the part is on back order and no date can be given, indicating a repair delay due to parts unavailable."
+    },
+    {
+      "topic_name": "Praise - Positive Feedback",
+      "sentence_text": "Thank you so much, I am really impressed with the service.",
+      "confidence": 0.92,
+      "rationale": "The customer says 'Thank you so much, I am really impressed with the service,' clearly expressing positive feedback."
+    },
+    {
+      "topic_name": "Software - Infotainment or App",
+      "sentence_text": "My phone does not work as a key half the time and I am stuck in the parking lot.",
+      "confidence": 0.78,
+      "rationale": "The text says the phone does not work as a key, which matches the phone key issue described in the label."
+    },
+    {
+      "topic_name": "Safety - Unexpected Braking",
+      "sentence_text": "The car slammed on the brakes on the highway with nothing in front of me.",
+      "confidence": 0.84,
+      "rationale": "The sentence states the car slammed on the brakes on the highway with nothing in front, indicating unexpected braking."
+    },
+    {
+      "topic_name": "Software - Infotainment or App",
+      "sentence_text": "The center screen freezes every time I start the car.",
+      "confidence": 0.85,
+      "rationale": "The text states the center screen freezes every time the car starts, directly describing an infotainment screen issue."
+    },
+    {
+      "topic_name": "Safety - Unexpected Braking",
+      "sentence_text": "It braked by itself at 65 miles an hour and the truck behind me almost hit me.",
+      "confidence": 0.88,
+      "rationale": "The text states the vehicle \"braked by itself\" while driving, matching the description of unexpected braking."
+    },
+    {
+      "topic_name": "Warranty - Claim Denied",
+      "sentence_text": "The dealer said the camera is not covered under warranty.",
+      "confidence": 0.78,
+      "rationale": "Dealer said the camera is not covered under warranty, indicating a warranty claim was denied."
+    },
+    {
+      "topic_name": "Safety - Warning Light or Airbag",
+      "sentence_text": "Overall: There is a little red symbol of a person with a ball on the dash that will not go away.",
+      "confidence": 0.75,
+      "rationale": "The text describes a persistent red symbol on the dash, which indicates a dashboard warning light."
+    }
+  ]
+}

@@ -17,6 +17,9 @@ resources:
           default: ${var.evidence_path}
         - name: generate_mode
           default: backfill
+        - name: day
+          default: ""
+          # YYYY-MM-DD, used when generate_mode=daily
         - name: lakebase_project
           default: ${var.lakebase_project}
       tasks:

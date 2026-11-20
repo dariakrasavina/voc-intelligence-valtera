@@ -1,0 +1,9 @@
+{
+  "synced_table": "daria_krasavina.voc_valtera.lb_escalation_queue",
+  "lakebase_project": "valtera-voc",
+  "postgres_table": "voc_valtera.lb_escalation_queue",
+  "scheduling_policy": "TRIGGERED",
+  "sync_pipeline_id": "f49131a2-3725-4f31-8329-fbbb05a47cd3",
+  "source_rows": 438,
+  "lakebase_rows": 433
+}

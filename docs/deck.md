@@ -98,7 +98,7 @@ One Lakeflow Job runs it end to end, daily and incrementally. Everything is a Da
   Gold tables, Genie and the app never see names, emails, phones or VINs.
 - **Model governance:** the sentiment model is tracked in MLflow and registered in UC (`voc_sentiment_model@champion`).
 - **Measured, not assumed:** every run scores the classifiers against ground truth and writes the metrics to a table.
-- **Genie as code:** instructions, example SQL and benchmark questions are version-controlled.
+- **Genie as code:** instructions, example SQL and benchmark questions are version-controlled. Benchmarks went from 3/6 to 5/6 after fixing three ambiguities.
 
 ---
 
@@ -121,6 +121,7 @@ One Lakeflow Job runs it end to end, daily and incrementally. Everything is a Da
 | Train a sentiment model on LLM weak labels | No per-call cost at volume, owned in UC | Weak labels ≠ human truth; next step is a human-labeled gold set |
 | Daily alert rule (≥10 in 7 days, ≥4× baseline) | Simple, explainable to Safety | Thresholds need tuning on real volume; a statistical model could come later |
 | Lakebase for the queue | Low-latency reads and transactional write-back | Synced table is triggered, not continuous (minutes, not seconds) |
+| MERGE the queue into Delta (never replace) | Lakebase sync streams only the changed cases | Needs a stable key (case_id) and a change check |
 
 ---
 
