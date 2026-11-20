@@ -163,18 +163,46 @@ T = {
 }
 FILLER_CUSTOMER = ["Hi, yes, thanks for picking up.", "Okay.", "Um, let me think.", "Yes, that is right.",
                    "It is a {my} {model}.", "I bought it about a year ago.", "Sure, one second.",
-                   "I already tried turning it off and on.", "Can you help me with that?", "Got it."]
+                   "I already tried turning it off and on.", "Can you help me with that?", "Got it.",
+                   "Yeah, hi.", "Hi, um, yeah.", "Hello?", "Uh, it's a {model}, the {my} one.",
+                   "So, uh, yeah.", "Okay so.", "Right, right.", "I mean, I guess.", "Hang on, my kids are yelling."]
+# Short back-channel / hesitation turns, as in real call transcripts (mostly < 4 words, so not classified).
+BACKCHANNEL = ["Huh?", "What?", "Sorry, what?", "Mm-hmm.", "Hah.", "Ummmm.", "Uh.", "Um.", "Hmm.", "Yeah.", "Yeah yeah.",
+               "Wait wait.", "Hello? Are you there?", "Can you hear me?", "Okay.", "Right.", "No no no.", "Sorry?",
+               "Hold on.", "Uh huh.", "Cancel cancel.", "Never mind, I figured it out.", "I'm not sure what happened.",
+               "Please hurry.", "That's not what I asked for.", "[inaudible]", "[crosstalk]"]
 AGENT_OPEN = ["Thank you for calling Valtera Motors customer care, this is {agent}, how can I help?",
-              "Valtera Motors, my name is {agent}, who do I have the pleasure of speaking with?"]
+              "Valtera Motors, my name is {agent}, who do I have the pleasure of speaking with?",
+              "Thanks for calling Valtera, this is {agent}. Can I get your name and VIN, please?",
+              "Valtera customer care, {agent} speaking."]
 AGENT_MID = ["I am sorry to hear that, can I get the VIN of the vehicle?",
              "Thank you, let me pull up your vehicle.", "I understand, that sounds frustrating.",
-             "Let me check our records for that.", "Can you tell me when this started?"]
+             "Let me check our records for that.", "Can you tell me when this started?",
+             "Please hold while I look into that.", "Sorry, you cut out, can you repeat that?",
+             "Okay, and is the car safe to drive right now?", "One moment please while I check that.",
+             "I'm noting that down.", "Got it, thank you for your patience."]
 AGENT_CLOSE = ["I have opened a case and a specialist will follow up within 48 hours.",
                "I have scheduled a service appointment and sent the details by text.",
-               "I have escalated this to our technical team.", "Is there anything else I can help with?"]
+               "I have escalated this to our technical team.", "Is there anything else I can help with?",
+               "You'll get a confirmation email shortly.", "Thanks for calling Valtera, have a good one."]
 CUSTOMER_CLOSE = ["Okay, thank you.", "Please call me back as soon as you can.", "Alright, bye.",
-                  "I really need this fixed soon."]
-SURVEY_OPEN = ["", "Overall: ", "Comments: "]
+                  "I really need this fixed soon.", "Okay. Bye.", "Thanks, bye bye.", "Mm-hmm, thanks.",
+                  "Yeah okay, thanks.", "Fine. Whatever."]
+SURVEY_OPEN = ["", "Overall: ", "Comments: ", "", ""]
+# Routine contacts: not every call is a complaint (no topic, mostly neutral).
+ROUTINE = {
+  "Service Scheduling": ["I need to book my {mileage} mile service.", "Can I move my service appointment to next week?",
+                         "Do you have anything open on Saturday morning?", "I just want to schedule a tire rotation."],
+  "General Inquiry": ["How do I turn on the seat heaters from the app?", "Is there a way to share my phone key with my wife?",
+                      "What is the towing capacity on the {model}?", "Where do I find the tire pressure in the screen?",
+                      "Does the {model} come with free charging?"],
+  "Account Update": ["I moved, I need to update my address.", "I got a new phone number, can you change it on my account?",
+                     "Can you add my husband as a second driver?", "I want to stop the paper statements."],
+  "Billing": ["Just checking when my lease ends.", "What is my payoff amount?", "When is my next payment due?"],
+}
+ROUTINE_SURVEY = ["ok", "n/a", "good", "Fine.", "Quick and easy, thanks.", "no complaints", "All good.",
+                  "service was ok i guess", "Got what I needed.", "nothing to add"]
+FILLERS = ["um", "uh", "like", "you know", "I mean", "so", "okay so", "yeah so", "well", "ummm", "uhh"]
 PLACES = ["mall", "grocery store", "rest stop", "hotel", "airport"]
 PARTS = ["battery", "drive unit", "charge port", "infotainment screen", "brake sensor", "camera"]
 
@@ -184,7 +212,82 @@ def _fill(rng, s, ctx):
                     r1=rng.choice([290, 310, 320]), r2=rng.choice([180, 200, 210, 220]),
                     speed=rng.choice([45, 55, 65, 70]), weeks=rng.choice([2, 3, 4, 6]),
                     part=rng.choice(PARTS), my=ctx["year"], model=ctx["model"],
-                    agent=ctx.get("agent", "Sam"))
+                    agent=ctx.get("agent", "Sam"), mileage=rng.choice(["5,000", "10,000", "20,000", "30,000"]))
+
+
+def _typo(rng, word):
+    if len(word) < 4 or not word.isalpha():
+        return word
+    i = rng.randint(1, len(word) - 2)
+    return word[:i] + word[i + 1] + word[i] + word[i + 2:]
+
+
+def messy_spoken(rng, s):
+    """Make a customer's spoken sentence look like a real call transcript, without adding a sentence break:
+    leading filler, a filler or stutter inside, ASR-style lowercase / missing final punctuation, [inaudible]."""
+    words = s.split()
+    if rng.random() < 0.45:
+        lead = rng.choice(FILLERS)
+        words = [lead.capitalize() + ","] + [words[0][0].lower() + words[0][1:] if words[0] != "I" else "I"] + words[1:]
+    if rng.random() < 0.25 and len(words) > 4:
+        i = rng.randint(2, len(words) - 2)
+        words.insert(i, rng.choice(["uh,", "um,", "like,", "you know,"]))
+    if rng.random() < 0.15:
+        words[0] = "%s- %s" % (words[0].rstrip(","), words[0])          # stutter: "I- I"
+    if rng.random() < 0.08 and len(words) > 5:
+        words.insert(rng.randint(2, len(words) - 2), "[inaudible]")
+    out = " ".join(words)
+    if rng.random() < 0.3:                                               # ASR style
+        out = out.lower().rstrip(".!?")
+    return out
+
+
+def messy_written(rng, s):
+    """Survey free text: typos, lowercase, shouting, extra punctuation."""
+    words = s.split()
+    if rng.random() < 0.35:
+        j = rng.randrange(len(words))
+        words[j] = _typo(rng, words[j])
+    out = " ".join(words)
+    r = rng.random()
+    if r < 0.08:
+        out = out.upper().rstrip(".") + "!!!"
+    elif r < 0.30:
+        out = out.lower()
+    elif r < 0.40:
+        out = out.rstrip(".") + "!!"
+    return out
+
+
+def messy_person(rng, c):
+    """CRM records as they really arrive: inconsistent casing, stray spaces, mixed phone formats, gaps."""
+    c = dict(c)
+    style = rng.random()
+    if style < 0.15:
+        c["first_name"], c["last_name"] = c["first_name"].lower(), c["last_name"].lower()
+    elif style < 0.22:
+        c["first_name"], c["last_name"] = c["first_name"].upper(), c["last_name"].upper()
+    if rng.random() < 0.1:
+        c["last_name"] = c["last_name"] + " "
+    if rng.random() < 0.05:
+        c["email"] = None
+    elif rng.random() < 0.15:
+        c["email"] = " " + c["email"].upper()
+    digits = c["phone"].replace("+1-", "").replace("-", "")
+    fmt = rng.random()
+    if rng.random() < 0.07:
+        c["phone"] = None
+    elif fmt < 0.3:
+        c["phone"] = "(%s) %s-%s" % (digits[:3], digits[3:6], digits[6:])
+    elif fmt < 0.5:
+        c["phone"] = "%s.%s.%s" % (digits[:3], digits[3:6], digits[6:])
+    elif fmt < 0.6:
+        c["phone"] = digits
+    c["loyalty_tier"] = rng.choice([c["loyalty_tier"], c["loyalty_tier"], c["loyalty_tier"].lower(),
+                                    c["loyalty_tier"].upper() + " "])
+    if rng.random() < 0.1:
+        c["state"] = c["state"].lower()
+    return c
 
 
 def topic_weights(day, vehicle, dealer):
@@ -248,6 +351,7 @@ def build_reference(rng):
             "state": rng.choice(STATES[region]), "region": region,
             "loyalty_tier": rng.choices(["Standard", "Silver", "Gold"], [0.6, 0.3, 0.1])[0],
             "updated_at": "2026-08-01T00:00:00Z", "op": "UPSERT"})
+        customers[-1] = messy_person(rng, customers[-1])
         model, pt, _ = rng.choices(MODELS, weights=[m[2] for m in MODELS])[0]
         vehicles.append({
             "vin": "7VAL%s%06d" % (model[:2].upper(), c), "customer_id": "C%05d" % c,
@@ -259,36 +363,61 @@ def build_reference(rng):
 
 def make_interaction(rng, seq, day, veh, dealer, cust):
     ctx = {"model": veh["model"], "year": veh["model_year"], "agent": rng.choice(["Sam", "Lee", "Ana", "Raj", "Mia"])}
-    topics = pick_topics(rng, topic_weights(day, veh, dealer))
+    routine = rng.random() < 0.25
+    topics = [] if routine else pick_topics(rng, topic_weights(day, veh, dealer))
+    reason = rng.choice(list(ROUTINE)) if routine else CALL_REASONS[topics[0]]
     labels = []
     channel = "call" if rng.random() < 0.7 else "survey"
     ts = dt.datetime.combine(day, dt.time(rng.randint(8, 19), rng.randint(0, 59), rng.randint(0, 59)))
     iid = "I%s%05d" % (day.strftime("%Y%m%d"), seq)
+    fill = lambda x: _fill(rng, x, ctx)
+
+    def backchannel(turns):
+        if rng.random() < 0.45:
+            turns.append({"speaker": "customer", "text": rng.choice(BACKCHANNEL)})
+            if rng.random() < 0.5:
+                turns.append({"speaker": "agent", "text": rng.choice(AGENT_MID)})
+
     if channel == "call":
-        turns = [{"speaker": "agent", "text": _fill(rng, rng.choice(AGENT_OPEN), ctx)},
-                 {"speaker": "customer", "text": _fill(rng, rng.choice(FILLER_CUSTOMER[:1] + FILLER_CUSTOMER[4:6]), ctx)}]
+        turns = [{"speaker": "agent", "text": fill(rng.choice(AGENT_OPEN))},
+                 {"speaker": "customer", "text": fill(rng.choice(FILLER_CUSTOMER[:1] + FILLER_CUSTOMER[4:6] + FILLER_CUSTOMER[10:14]))}]
+        backchannel(turns)
+        if routine:
+            turns.append({"speaker": "customer", "text": messy_spoken(rng, fill(rng.choice(ROUTINE[reason])))})
+            turns.append({"speaker": "agent", "text": rng.choice(AGENT_MID)})
+            backchannel(turns)
         for t in topics:
             s, kind = topic_sentence(rng, t, ctx)
-            extra = _fill(rng, rng.choice(FILLER_CUSTOMER), ctx)
-            turns.append({"speaker": "customer", "text": s + " " + extra if rng.random() < 0.4 else s})
+            s = messy_spoken(rng, s)
+            ends_clean = s[-1:] in ".!?"
+            extra = fill(rng.choice(FILLER_CUSTOMER))
+            turns.append({"speaker": "customer", "text": s + " " + extra if ends_clean and rng.random() < 0.4 else s})
             labels.append({"interaction_id": iid, "topic_id": t, "sentence": s, "variant": kind})
             turns.append({"speaker": "agent", "text": rng.choice(AGENT_MID)})
+            backchannel(turns)
         turns.append({"speaker": "agent", "text": rng.choice(AGENT_CLOSE)})
         turns.append({"speaker": "customer", "text": rng.choice(CUSTOMER_CLOSE)})
         nps = None
-        duration = rng.randint(180, 1500)
+        duration = rng.randint(90, 600) if routine else rng.randint(180, 1500)
     else:
         parts = []
         for t in topics:
             s, kind = topic_sentence(rng, t, ctx)
+            s = messy_written(rng, s)
+            if s[-1:] not in ".!?":
+                s = s + "."                       # keep one sentence per complaint for the splitter
             parts.append(s)
             labels.append({"interaction_id": iid, "topic_id": t, "sentence": s, "variant": kind})
-        turns = [{"speaker": "customer", "text": rng.choice(SURVEY_OPEN) + " ".join(parts)}]
-        nps = rng.randint(8, 10) if topics == ["pos_praise"] else rng.randint(0, 6)
+        text = " ".join(parts) if parts else rng.choice(ROUTINE_SURVEY)
+        turns = [{"speaker": "customer", "text": rng.choice(SURVEY_OPEN) + text}]
+        if routine:
+            nps = rng.randint(7, 10)
+        else:
+            nps = rng.randint(8, 10) if topics == ["pos_praise"] else rng.randint(0, 6)
         duration = None
     return {"interaction_id": iid, "channel": channel, "created_at": ts.isoformat() + "Z",
             "customer_id": cust["customer_id"], "vin": veh["vin"], "dealer_id": dealer["dealer_id"],
-            "language": "english", "call_reason": CALL_REASONS[topics[0]],
+            "language": "english", "call_reason": reason,
             "duration_sec": duration, "nps_score": nps, "turns": turns}, labels
 
 
@@ -340,9 +469,9 @@ def main(argv=None):
         for c in crng.sample(customers, 150):
             c2 = dict(c, updated_at="2026-10-15T00:00:00Z")
             if crng.random() < 0.6:
-                c2["loyalty_tier"] = {"Standard": "Silver", "Silver": "Gold", "Gold": "Gold"}[c["loyalty_tier"]]
+                c2["loyalty_tier"] = {"Standard": "Silver", "Silver": "Gold", "Gold": "Gold"}[c["loyalty_tier"].strip().title()]
             else:
-                c2["email"] = c["email"].replace("@example.com", ".new@example.com")
+                c2["email"] = (c["email"] or "%s.%s@example.com" % (c["first_name"].strip().lower(), c["last_name"].strip().lower())).strip().lower().replace("@example.com", ".new@example.com")
             changes.append(c2)
         write_jsonl(os.path.join(a.out, "customers", "customers_0002_changes.json"), changes)
         days = [BACKFILL_START + dt.timedelta(d) for d in range((BACKFILL_END - BACKFILL_START).days + 1)]
