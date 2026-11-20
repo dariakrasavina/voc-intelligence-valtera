@@ -1,0 +1,17 @@
+[
+  {
+    "interactions": "3841",
+    "pct": "61.6",
+    "sentiment": "negative"
+  },
+  {
+    "interactions": "1887",
+    "pct": "30.3",
+    "sentiment": "neutral"
+  },
+  {
+    "interactions": "508",
+    "pct": "8.1",
+    "sentiment": "positive"
+  }
+]

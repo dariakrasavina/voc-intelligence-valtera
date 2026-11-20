@@ -30,7 +30,7 @@ Skills give the agent current, Databricks-approved guidance for each product, in
 |---|---|
 | **Databricks AppKit** (`@databricks/appkit`, `@databricks/appkit-ui`) | The app framework: `useAnalyticsQuery`, charts, `useGenieChat`, `GenieQueryVisualization`, `lakebase()` plugin, `appkit generate-types`, built-in agent docs (`npx @databricks/appkit docs`) |
 | **Databricks CLI** `experimental aitools tools` | Running and checking SQL from the agent (`query`, `get-default-warehouse`), for every data check, grant and evidence query |
-| **Genie benchmark evaluation** (Genie eval-runs API, Beta) | Runs 20 benchmark questions from `08_genie_space` on every job run; 85% → 95% after fixing ambiguities; the task fails below 90% |
+| **Genie benchmark evaluation** (Genie eval-runs API, Beta) | Runs 20 benchmark questions from `08_genie_space` on every job run; 85% → 95% after fixing ambiguities (19/20 on the final data); the task fails below 90% |
 
 ### Other assistants
 | Tool | Used for |
@@ -41,7 +41,7 @@ Skills give the agent current, Databricks-approved guidance for each product, in
 
 | Capability | Where | Why this one |
 |---|---|---|
-| `ai_classify` v2.1 (multi-label, confidence, rationale) | `03_ai_classify` → `ai_classify_job.py` | Topic tagging from plain-language definitions in `category_model.json`; catches paraphrases the rules miss (100% of them in the test set) |
+| `ai_classify` v2.1 (multi-label, confidence, rationale) | `03_ai_classify` → `ai_classify_job.py` | Topic tagging from plain-language definitions in `category_model.json`; catches paraphrases the rules miss (97% of them in the test set) |
 | `ai_analyze_sentiment` | `04_sentiment_model` | Weak labels, once, to train a small sentiment model (no per-call cost afterwards) |
 | Trained sentiment model (scikit-learn, MLflow, UC `@champion`) | `04_sentiment_model` | Owned, versioned, zero-token scoring at volume |
 | `ai_summarize` | `05_gold_and_alerts` | One-line case summaries for P1/P2 cases (cached per case) |

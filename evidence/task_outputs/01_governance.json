@@ -3,12 +3,12 @@
     {
       "sql": "ALTER TABLE daria_krasavina.voc_valtera.silver_customers ALTER COLUMN first_name SET TAGS ('pii' = 'first_name')",
       "ok": false,
-      "error": "[RequestId=8789f691-f708-493a-9f0b-a6aed1f765dd ErrorClass=INVALID_PARAMETER_VALUE.UC_TAG_POLICY_VALUE_NOT_ALLOWED] Tag value first_name is not an allowed value for tag policy key pii. Allowed values:"
+      "error": "[RequestId=024e2d84-e42e-4f92-95ff-1624dd42a0a0 ErrorClass=INVALID_PARAMETER_VALUE.UC_TAG_POLICY_VALUE_NOT_ALLOWED] Tag value first_name is not an allowed value for tag policy key pii. Allowed values:"
     },
     {
       "sql": "ALTER TABLE daria_krasavina.voc_valtera.silver_customers ALTER COLUMN last_name SET TAGS ('pii' = 'last_name')",
       "ok": false,
-      "error": "[RequestId=1279484b-6ed9-40ce-9731-6b225b7dde0b ErrorClass=INVALID_PARAMETER_VALUE.UC_TAG_POLICY_VALUE_NOT_ALLOWED] Tag value last_name is not an allowed value for tag policy key pii. Allowed values: "
+      "error": "[RequestId=fb237ad8-9c7f-4e99-b270-3fab7e1d3ad5 ErrorClass=INVALID_PARAMETER_VALUE.UC_TAG_POLICY_VALUE_NOT_ALLOWED] Tag value last_name is not an allowed value for tag policy key pii. Allowed values: "
     },
     {
       "sql": "ALTER TABLE daria_krasavina.voc_valtera.silver_customers ALTER COLUMN email SET TAGS ('pii' = 'email')",
@@ -17,12 +17,12 @@
     {
       "sql": "ALTER TABLE daria_krasavina.voc_valtera.silver_customers ALTER COLUMN phone SET TAGS ('pii' = 'phone')",
       "ok": false,
-      "error": "[RequestId=2b3c1d8e-a26d-4e37-b6ce-d19829fbb2ac ErrorClass=INVALID_PARAMETER_VALUE.UC_TAG_POLICY_VALUE_NOT_ALLOWED] Tag value phone is not an allowed value for tag policy key pii. Allowed values: [ema"
+      "error": "[RequestId=1bf8b235-d006-4d92-9681-886f9b3d2c7d ErrorClass=INVALID_PARAMETER_VALUE.UC_TAG_POLICY_VALUE_NOT_ALLOWED] Tag value phone is not an allowed value for tag policy key pii. Allowed values: [ema"
     },
     {
       "sql": "ALTER SCHEMA daria_krasavina.voc_valtera SET TAGS ('domain' = 'customer_experience', 'data_class' = 'synthetic')",
       "ok": false,
-      "error": "[RequestId=a15e9de8-c924-4d48-9479-a885764cde09 ErrorClass=INVALID_PARAMETER_VALUE.UC_TAG_POLICY_VALUE_NOT_ALLOWED] Tag value customer_experience is not an allowed value for tag policy key domain. All"
+      "error": "[RequestId=329ff650-e570-42d4-b74d-63d8ad55dbc9 ErrorClass=INVALID_PARAMETER_VALUE.UC_TAG_POLICY_VALUE_NOT_ALLOWED] Tag value customer_experience is not an allowed value for tag policy key domain. All"
     },
     {
       "sql": "CREATE OR REPLACE FUNCTION daria_krasavina.voc_valtera.mask_pii(v STRING)\nRETURNS STRING\nCOMMENT 'Returns the value for members of valtera_voc_pii_readers, othe",
@@ -50,15 +50,15 @@
     },
     {
       "customer_id": "C00002",
-      "first_name": "R******",
-      "email": "r******",
+      "first_name": "M******",
+      "email": "m******",
       "loyalty_tier": "Standard"
     },
     {
       "customer_id": "C00003",
-      "first_name": "K******",
-      "email": "k******",
-      "loyalty_tier": "Silver"
+      "first_name": "P******",
+      "email": "p******",
+      "loyalty_tier": "Standard"
     }
   ]
 }

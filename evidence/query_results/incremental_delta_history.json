@@ -1,0 +1,60 @@
+[
+  {
+    "operation": "STREAMING UPDATE",
+    "rows_written": "6046",
+    "table_name": "bronze_interactions",
+    "ts": "2026-11-19 17:55:50",
+    "version": "2"
+  },
+  {
+    "operation": "STREAMING UPDATE",
+    "rows_written": "70",
+    "table_name": "bronze_interactions",
+    "ts": "2026-11-19 18:45:30",
+    "version": "3"
+  },
+  {
+    "operation": "STREAMING UPDATE",
+    "rows_written": "6166",
+    "table_name": "bronze_interactions",
+    "ts": "2026-11-20 14:01:21",
+    "version": "7"
+  },
+  {
+    "operation": "STREAMING UPDATE",
+    "rows_written": "70",
+    "table_name": "bronze_interactions",
+    "ts": "2026-11-20 14:40:53",
+    "version": "8"
+  }
+]
+[
+  {
+    "operation": "STREAMING UPDATE",
+    "rows_written": "32433",
+    "table_name": "silver_sentences",
+    "ts": "2026-11-19 17:55:57",
+    "version": "3"
+  },
+  {
+    "operation": "STREAMING UPDATE",
+    "rows_written": "399",
+    "table_name": "silver_sentences",
+    "ts": "2026-11-19 18:45:39",
+    "version": "5"
+  },
+  {
+    "operation": "STREAMING UPDATE",
+    "rows_written": "39454",
+    "table_name": "silver_sentences",
+    "ts": "2026-11-20 14:01:33",
+    "version": "11"
+  },
+  {
+    "operation": "STREAMING UPDATE",
+    "rows_written": "480",
+    "table_name": "silver_sentences",
+    "ts": "2026-11-20 14:41:03",
+    "version": "12"
+  }
+]

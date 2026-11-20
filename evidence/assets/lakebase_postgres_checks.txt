@@ -1,0 +1,22 @@
+ queue_rows 
+------------
+        318
+(1 row)
+
+    status    | count 
+--------------+-------
+ Acknowledged |     1
+(1 row)
+
+ audit_log_rows 
+----------------
+              1
+(1 row)
+
+ table_oid |  status   | committed_lsn |        last_write_time        |            status_detail            
+-----------+-----------+---------------+-------------------------------+-------------------------------------
+     17081 | STREAMING | 0/211A790     | 2026-11-20 18:30:52.666716+00 | 
+     17091 | STREAMING | 0/211A790     | 2026-11-20 18:30:56.275397+00 | 
+     17066 | SKIPPED   |               | 2026-11-20 18:45:11.83445+00  | Does not have REPLICA IDENTITY FULL
+(3 rows)
+

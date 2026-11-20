@@ -1,0 +1,95 @@
+{
+  "job_id": 791845510507972,
+  "name": "valtera-voc-end-to-end",
+  "trigger": {
+    "file_arrival": {
+      "min_time_between_triggers_seconds": 300,
+      "url": "/Volumes/daria_krasavina/voc_valtera/landing/",
+      "wait_after_last_change_seconds": 120
+    },
+    "pause_status": "UNPAUSED"
+  },
+  "tasks": [
+    {
+      "task_key": "ai_classify",
+      "depends_on": [
+        "lakeflow_ingest"
+      ],
+      "type": [
+        "notebook_task"
+      ]
+    },
+    {
+      "task_key": "evaluate",
+      "depends_on": [
+        "gold_and_alerts"
+      ],
+      "type": [
+        "notebook_task"
+      ]
+    },
+    {
+      "task_key": "genie_space",
+      "depends_on": [
+        "gold_and_alerts"
+      ],
+      "type": [
+        "notebook_task"
+      ]
+    },
+    {
+      "task_key": "gold_and_alerts",
+      "depends_on": [
+        "rule_tagging",
+        "ai_classify",
+        "sentiment_model"
+      ],
+      "type": [
+        "notebook_task"
+      ]
+    },
+    {
+      "task_key": "governance",
+      "depends_on": [
+        "lakeflow_ingest"
+      ],
+      "type": [
+        "notebook_task"
+      ]
+    },
+    {
+      "task_key": "lakebase_sync",
+      "depends_on": [
+        "gold_and_alerts"
+      ],
+      "type": [
+        "notebook_task"
+      ]
+    },
+    {
+      "task_key": "lakeflow_ingest",
+      "depends_on": [],
+      "type": [
+        "pipeline_task"
+      ]
+    },
+    {
+      "task_key": "rule_tagging",
+      "depends_on": [
+        "lakeflow_ingest"
+      ],
+      "type": [
+        "notebook_task"
+      ]
+    },
+    {
+      "task_key": "sentiment_model",
+      "depends_on": [
+        "lakeflow_ingest"
+      ],
+      "type": [
+        "notebook_task"
+      ]
+    }
+  ]
+}

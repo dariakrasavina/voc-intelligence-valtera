@@ -1,28 +1,8 @@
 [
   {
-    "case_id": "I2026110800033",
-    "case_summary": "Brake sensor not covered under warranty, automatic braking malfunctioned.",
-    "dealer_name": "Riverbend Valtera",
-    "model": "Aurora EV",
-    "model_year": "2026",
-    "primary_topic": "Safety - Unexpected Braking",
-    "priority": "P1",
-    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
-  },
-  {
-    "case_id": "I2026111700064",
-    "case_summary": "Car braked suddenly at 45mph, nearly causing rear-end collision.",
-    "dealer_name": "Riverbend Valtera",
-    "model": "Aurora EV",
-    "model_year": "2026",
-    "primary_topic": "Safety - Unexpected Braking",
-    "priority": "P1",
-    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
-  },
-  {
-    "case_id": "I2026111400027",
-    "case_summary": "Car braked suddenly at 45mph, nearly causing rear-end collision.",
-    "dealer_name": "Harbor Valtera",
+    "case_id": "I2026110800024",
+    "case_summary": "Autopay error and phantom braking issues occurred.",
+    "dealer_name": "Oakmont Valtera",
     "model": "Strata EV",
     "model_year": "2026",
     "primary_topic": "Safety - Unexpected Braking",
@@ -30,38 +10,18 @@
     "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
   },
   {
-    "case_id": "I2026110200004",
-    "case_summary": "Update caused settings loss and random reboots, leading to a near-accident.",
-    "dealer_name": "Ironwood Valtera",
-    "model": "Aurora EV",
-    "model_year": "2026",
-    "primary_topic": "Safety - Unexpected Braking",
-    "priority": "P1",
-    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
-  },
-  {
-    "case_id": "I2026110700011",
-    "case_summary": "Car braked suddenly at 70mph, nearly causing rear-end collision.",
+    "case_id": "I2026111500058",
+    "case_summary": "Car slams on brakes and center screen freezes at startup.",
     "dealer_name": "Sunset Valtera",
-    "model": "Aurora EV",
+    "model": "Cove",
     "model_year": "2026",
     "primary_topic": "Safety - Unexpected Braking",
     "priority": "P1",
     "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
   },
   {
-    "case_id": "I2026103100044",
-    "case_summary": "OTA update failed, caused error, and unexpected braking issue occurred.",
-    "dealer_name": "Riverbend Valtera",
-    "model": "Aurora EV",
-    "model_year": "2026",
-    "primary_topic": "Safety - Unexpected Braking",
-    "priority": "P1",
-    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
-  },
-  {
-    "case_id": "I2026111800071",
-    "case_summary": "Car's automatic braking malfunctioned, wall charger faulty, and won't start.",
+    "case_id": "I2026111700017",
+    "case_summary": "Car braked suddenly, displaying a persistent red symbol on the dash, nearly causing a rear-end collision.",
     "dealer_name": "Prairie Valtera",
     "model": "Aurora EV",
     "model_year": "2026",
@@ -70,9 +30,9 @@
     "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
   },
   {
-    "case_id": "I2026110100068",
-    "case_summary": "Car suddenly slammed on brakes on empty highway.",
-    "dealer_name": "Meadowbrook Valtera",
+    "case_id": "I2026111900007",
+    "case_summary": "Car malfunctioned, slamming brakes on highway, no loaner provided, owner paying for rental car.",
+    "dealer_name": "Riverbend Valtera",
     "model": "Aurora EV",
     "model_year": "2026",
     "primary_topic": "Safety - Unexpected Braking",
@@ -80,19 +40,59 @@
     "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
   },
   {
-    "case_id": "I2026111400068",
-    "case_summary": "Experienced phantom braking, Valtera app connection issues.",
-    "dealer_name": "Summit Valtera",
-    "model": "Ridgeback",
-    "model_year": "2024",
+    "case_id": "I2026110700040",
+    "case_summary": "Car braked suddenly at 45mph, nearly causing rear-end collision.",
+    "dealer_name": "Prairie Valtera",
+    "model": "Aurora EV",
+    "model_year": "2026",
     "primary_topic": "Safety - Unexpected Braking",
     "priority": "P1",
     "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
   },
   {
-    "case_id": "I2026110900052",
-    "case_summary": "Experienced phantom braking twice on the same road this week.",
-    "dealer_name": "Silver Lake Valtera",
+    "case_id": "I2026110900012",
+    "case_summary": "Car braked suddenly at 65mph, nearly causing rear-end collision.",
+    "dealer_name": "Blue Mesa Valtera",
+    "model": "Aurora EV",
+    "model_year": "2026",
+    "primary_topic": "Safety - Unexpected Braking",
+    "priority": "P1",
+    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
+  },
+  {
+    "case_id": "I2026102200022",
+    "case_summary": "Car braked suddenly at 65mph, nearly causing rear-end collision.",
+    "dealer_name": "Bayview Valtera",
+    "model": "Strata EV",
+    "model_year": "2026",
+    "primary_topic": "Safety - Unexpected Braking",
+    "priority": "P1",
+    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
+  },
+  {
+    "case_id": "I2026110700019",
+    "case_summary": "Car acted strangely after update 4.2, braking suddenly at 45mph.",
+    "dealer_name": "Stonebridge Valtera",
+    "model": "Aurora EV",
+    "model_year": "2026",
+    "primary_topic": "Safety - Unexpected Braking",
+    "priority": "P1",
+    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
+  },
+  {
+    "case_id": "I2026111400001",
+    "case_summary": "Car braked suddenly at 65mph, nearly causing rear-end collision.",
+    "dealer_name": "Riverbend Valtera",
+    "model": "Aurora EV",
+    "model_year": "2026",
+    "primary_topic": "Safety - Unexpected Braking",
+    "priority": "P1",
+    "recommended_action": "Open safety investigation; call customer within 24h; check for related recall/OTA"
+  },
+  {
+    "case_id": "I2026103100009",
+    "case_summary": "Car suddenly brakes on empty highway.",
+    "dealer_name": "Copper Hill Valtera",
     "model": "Aurora EV",
     "model_year": "2026",
     "primary_topic": "Safety - Unexpected Braking",

@@ -34,8 +34,8 @@ safety signals that surface 3–5 weeks after customers start calling.
 
 | KPI | Today | With VOC Intelligence | Basis |
 |---|---|---|---|
-| Time to detect an emerging safety issue | ~30 days (month-end report) | **2–3 days** after OTA 4.2 | measured on the seeded OTA 4.2 issue |
-| Complaints correctly topic-tagged (recall) | 79.8% (keyword rules) | **100%** (rules + ai_classify) | measured vs. ground truth |
+| Time to detect an emerging safety issue | ~30 days (month-end report) | **2–6 days** after OTA 4.2 | measured on the seeded OTA 4.2 issue |
+| Complaints correctly topic-tagged (recall) | 77.9% (keyword rules) | **99.4%** (rules + ai_classify) | measured vs. ground truth |
 | Vendor text-analytics license | ~$600K/yr | $0 (Databricks consumption ≈ $60–90K/yr) | estimate |
 | Analyst hours on rule upkeep and tag review | ~5 FTE | ~2.5 FTE (≈ $300K/yr returned) | estimate |
 | Vehicles exposed to a bad OTA before rollback | full rollout | ~6,000 fewer at 1,500/week × 4 weeks earlier (≈ $0.9M at $150/vehicle in service + goodwill) | estimate |
@@ -49,7 +49,7 @@ safety signals that surface 3–5 weeks after customers start calling.
 # 4 · Demo storyline (what you will see)
 
 1. **Overview:** "4 emerging issues". Three are the 2026 Aurora EV after OTA 4.2 (Oct 28): charge-port door, unexpected
-   braking, OTA failure. One is a small infotainment spike, which is why alerts go to an analyst. The rule fired on **Oct 30 for charge-port door and Oct 31 for unexpected braking, 2–3 days after release**.
+   braking, OTA failure. One is a small infotainment spike, which is why alerts go to an analyst. The rule fired on **Oct 30 (charge-port door), Oct 31 (OTA failure) and Nov 3 (unexpected braking), 2–6 days after release**.
 2. **Escalation queue:** the P1 braking cases with an AI case summary and recommended action. Assign one to the
    safety investigation team and add a note; it is saved to Lakebase with an audit log.
 3. **Ask Genie:** "When was the charge port door problem on the 2026 Aurora EV first detected?" and "Which dealers
@@ -81,14 +81,14 @@ the Genie Agent, grants and Lakebase setup are scripted. All of it is in Git.
 
 | Method | Precision | Recall | F1 |
 |---|---|---|---|
-| Keyword rule engine | 100.0%¹ | 79.8% | 88.8% |
-| ai_classify (v2.1) | 99.9% | 97.4% | 98.7% |
-| **Rules + AI combined** | **99.9%** | **100%** | **99.9%** |
+| Keyword rule engine | 100.0%¹ | 77.9% | 87.6% |
+| ai_classify (v2.1) | 96.1% | 97.4% | 96.7% |
+| **Rules + AI combined** | **96.1%** | **99.4%** | **97.7%** |
 
 ¹ On synthetic data the rule vocabulary matches the generator, so rule precision is perfect by construction. Expect lower on real data.
 
 - The rules catch **100%** of complaints that use the expected vocabulary and **0%** of paraphrases.
-- ai_classify catches **100%** of the paraphrases, using the same plain-language topic definitions the
+- ai_classify catches **97%** of the paraphrases, using the same plain-language topic definitions the
   business already writes.
 - Every rule tag stores the words that triggered it, so the counts are explainable to Quality and Legal.
 
@@ -106,8 +106,8 @@ the Genie Agent, grants and Lakebase setup are scripted. All of it is in Git.
 
 # 8 · Cost and scale choices
 
-- **97.8% fewer LLM calls:** 15,821 customer sentences needed only 350 ai_classify calls (one per *distinct* sentence,
-  cached). The second full run made **0** new calls, so daily increments only pay for new wording.
+- **66% fewer LLM calls:** 11,953 customer sentences needed 4,018 ai_classify calls (one per *distinct* sentence,
+  cached); a new day only pays for its new wording (43 calls).
 - **Zero-token sentiment:** an LLM labels a sample once, and a small trained model scores everything after that.
 - **Serverless everywhere:** pipeline, job and SQL. Lakebase scales to zero when the app is idle.
 - Escalation reads are served from **Lakebase** (milliseconds), and analytics from the SQL warehouse.

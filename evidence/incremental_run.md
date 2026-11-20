@@ -1,36 +1,17 @@
-# Incremental daily run (2026-11-20)
+# Incremental ingestion (Auto Loader) on the final, noisy dataset
 
-Job run `615261678774193` with `generate_mode=daily, day=2026-11-20`, started after the full backfill run `327620437213971`.
-The generator landed **one** new file (`landing/interactions/interactions_20261120.json`): {'mode': 'daily', 'interactions_written': 70, 'labels': 94, 'dealers': 20, 'customers': 3200, 'vehicles': 3200}
+Source: Delta history of the streaming tables (`evidence/query_results/incremental_delta_history.json`).
 
-## Auto Loader processed only the new file (Delta history of the streaming tables)
+| table | version | time | what happened | rows written |
+|---|---|---|---|---|
+| bronze_interactions | v7 | 2026-11-20 14:01 | full refresh after the data was regenerated (90 days, noisy transcripts) | 6,166 |
+| bronze_interactions | v8 | 2026-11-20 14:40 | `scripts/land_export.sh … daily 2026-11-20` landed **one** new file | **+70** |
+| silver_sentences | v11 | 2026-11-20 14:01 | sentence split of the rebuilt data | 39,454 |
+| silver_sentences | v12 | 2026-11-20 14:41 | only the new day's sentences | **+480** |
 
-| table | version | time (UTC-5) | rows written |
-|---|---|---|---|
-| bronze_interactions | v2 | 2026-11-19 17:55:50 | 6046 |
-| bronze_interactions | v3 | 2026-11-19 18:45:30 | 70 |
-| silver_sentences | v3 | 2026-11-19 17:55:57 | 32433 |
-| silver_sentences | v5 | 2026-11-19 18:45:39 | 399 |
+Earlier versions (v2/v3 and v3/v5) are the first, cleaner dataset from 2026-11-19, which showed the same behaviour: the
+90-day load wrote 6,046 rows, a second run over the same 90 files wrote **0** (no streaming update at all), and the next
+day wrote +70.
 
-* First run (17:55): full 90-day backfill, 6,046 interactions / 32,433 sentences.
-* Second full run (18:09, backfill mode re-landing the same 90 files): **no streaming update was written**. Auto Loader had already processed those files.
-* Daily run (18:45): **+70 interactions / +399 sentences**, the new day only.
-
-## Downstream
-
-* ai_classify: 0 new ai_classify calls, cache size 350 (new day's wording was already cached).
-* Lakebase sync: gold_escalation_queue 438 rows, Lakebase 433 rows.
-
-## Task results
-
-| task | result | duration |
-|---|---|---|
-| land_export | SUCCESS | 42s |
-| lakeflow_ingest | SUCCESS | 94s |
-| ai_classify | SUCCESS | 61s |
-| governance | SUCCESS | 55s |
-| rule_tagging | SUCCESS | 74s |
-| sentiment_model | SUCCESS | 75s |
-| gold_and_alerts | SUCCESS | 45s |
-| evaluate | SUCCESS | 25s |
-| lakebase_sync | SUCCESS | 76s |
+Downstream, the new day cost **43** ai_classify calls (only sentences whose wording was not already cached under the
+current topic definitions). Job run `544525181135495`: 9/9 tasks SUCCESS (`evidence/job_run_summary.txt`).

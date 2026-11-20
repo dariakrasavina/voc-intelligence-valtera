@@ -1,0 +1,44 @@
+[
+  {
+    "interaction_id": "I2026110500000",
+    "sentence_text": "Thank you for calling Valtera Motors customer care, this is Raj, how can I help?",
+    "speaker": "agent",
+    "turn_idx": "0"
+  },
+  {
+    "interaction_id": "I2026110500000",
+    "sentence_text": "Uh, it's a Aurora EV, the 2026 one.",
+    "speaker": "customer",
+    "turn_idx": "1"
+  },
+  {
+    "interaction_id": "I2026110500000",
+    "sentence_text": "Hah.",
+    "speaker": "customer",
+    "turn_idx": "2"
+  },
+  {
+    "interaction_id": "I2026110500000",
+    "sentence_text": "I- I got a letter saying something on my car might be defective and needs to be fixed for free.",
+    "speaker": "customer",
+    "turn_idx": "3"
+  },
+  {
+    "interaction_id": "I2026110500000",
+    "sentence_text": "One moment please while I check that.",
+    "speaker": "agent",
+    "turn_idx": "4"
+  },
+  {
+    "interaction_id": "I2026110500000",
+    "sentence_text": "You'll get a confirmation email shortly.",
+    "speaker": "agent",
+    "turn_idx": "5"
+  },
+  {
+    "interaction_id": "I2026110500000",
+    "sentence_text": "Thanks, bye bye.",
+    "speaker": "customer",
+    "turn_idx": "6"
+  }
+]

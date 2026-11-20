@@ -1,138 +1,138 @@
 {
-  "sentences_in_scope": 18652,
-  "seconds": 31.1,
+  "sentences_in_scope": 22745,
+  "seconds": 15.2,
   "tags_by_topic": [
     {
       "topic_name": "Praise - Positive Feedback",
       "parent_topic": "Positive Feedback",
-      "sentences_tagged": 823,
-      "interactions_tagged": 823
+      "sentences_tagged": 609,
+      "interactions_tagged": 609
     },
     {
       "topic_name": "Service - Repair Delay",
       "parent_topic": "Service & Warranty",
-      "sentences_tagged": 822,
-      "interactions_tagged": 822
+      "sentences_tagged": 590,
+      "interactions_tagged": 590
     },
     {
       "topic_name": "Software - Infotainment or App",
       "parent_topic": "Software & Connectivity",
-      "sentences_tagged": 785,
-      "interactions_tagged": 785
+      "sentences_tagged": 540,
+      "interactions_tagged": 540
     },
     {
       "topic_name": "Dealer - Poor Dealer Experience",
       "parent_topic": "Dealer & Sales Experience",
-      "sentences_tagged": 564,
-      "interactions_tagged": 564
+      "sentences_tagged": 445,
+      "interactions_tagged": 445
     },
     {
       "topic_name": "Billing - Payment or Financing Issue",
       "parent_topic": "Billing & Financing",
-      "sentences_tagged": 518,
-      "interactions_tagged": 518
+      "sentences_tagged": 429,
+      "interactions_tagged": 429
     },
     {
       "topic_name": "Warranty - Claim Denied",
       "parent_topic": "Service & Warranty",
-      "sentences_tagged": 372,
-      "interactions_tagged": 372
+      "sentences_tagged": 300,
+      "interactions_tagged": 300
     },
     {
       "topic_name": "Safety - Warning Light or Airbag",
       "parent_topic": "Vehicle Safety",
-      "sentences_tagged": 371,
-      "interactions_tagged": 371
-    },
-    {
-      "topic_name": "Charging - Public Charger Failure",
-      "parent_topic": "Battery & Charging",
-      "sentences_tagged": 339,
-      "interactions_tagged": 339
+      "sentences_tagged": 292,
+      "interactions_tagged": 292
     },
     {
       "topic_name": "Software - OTA Update Failure",
       "parent_topic": "Software & Connectivity",
-      "sentences_tagged": 316,
-      "interactions_tagged": 316
+      "sentences_tagged": 237,
+      "interactions_tagged": 237
+    },
+    {
+      "topic_name": "Charging - Public Charger Failure",
+      "parent_topic": "Battery & Charging",
+      "sentences_tagged": 232,
+      "interactions_tagged": 232
     },
     {
       "topic_name": "Battery - Range Loss",
       "parent_topic": "Battery & Charging",
-      "sentences_tagged": 264,
-      "interactions_tagged": 264
-    },
-    {
-      "topic_name": "Safety - Driver Assist Malfunction",
-      "parent_topic": "Vehicle Safety",
-      "sentences_tagged": 258,
-      "interactions_tagged": 258
+      "sentences_tagged": 227,
+      "interactions_tagged": 227
     },
     {
       "topic_name": "Service - Recall Question",
       "parent_topic": "Service & Warranty",
-      "sentences_tagged": 244,
-      "interactions_tagged": 244
+      "sentences_tagged": 187,
+      "interactions_tagged": 187
+    },
+    {
+      "topic_name": "Safety - Driver Assist Malfunction",
+      "parent_topic": "Vehicle Safety",
+      "sentences_tagged": 170,
+      "interactions_tagged": 170
     },
     {
       "topic_name": "Charging - Home Charging Issue",
       "parent_topic": "Battery & Charging",
-      "sentences_tagged": 220,
-      "interactions_tagged": 220
+      "sentences_tagged": 159,
+      "interactions_tagged": 159
     },
     {
       "topic_name": "Charging - Charge Port Door Stuck",
       "parent_topic": "Battery & Charging",
-      "sentences_tagged": 190,
-      "interactions_tagged": 190
+      "sentences_tagged": 126,
+      "interactions_tagged": 126
     },
     {
       "topic_name": "Safety - Unexpected Braking",
       "parent_topic": "Vehicle Safety",
-      "sentences_tagged": 176,
-      "interactions_tagged": 176
+      "sentences_tagged": 115,
+      "interactions_tagged": 115
     }
   ],
   "example_explanations": [
     {
-      "topic_name": "Battery - Range Loss",
-      "sentence_text": "The battery drains about 80 percent overnight while parked.",
-      "matched_terms": "\"battery drains\", drain*"
+      "topic_name": "Billing - Payment or Financing Issue",
+      "sentence_text": "so- so, my lease statement has a fee i do not recognize",
+      "matched_terms": "lease, fee"
     },
     {
       "topic_name": "Service - Repair Delay",
-      "sentence_text": "My car has been in the shop for 4 weeks waiting on parts.",
-      "matched_terms": "\"waiting on parts\", wait*"
+      "sentence_text": "Yeah so, the part is on back order and nobody can give me a date.",
+      "matched_terms": "\"back order*\", \"nobody\""
     },
     {
-      "topic_name": "Praise - Positive Feedback",
-      "sentence_text": "Overall: Honestly the car is amazing on long trips.",
-      "matched_terms": "amazing"
+      "topic_name": "Warranty - Claim Denied",
+      "sentence_text": "THE DEALER SAID THE BRAKE SENSOR IS NOT COVERED UNDER WARRANTY!!!",
+      "matched_terms": "warranty, \"not covered\""
     },
     {
-      "topic_name": "Service - Recall Question",
-      "sentence_text": "Is there a recall for the charge port on my car?",
-      "matched_terms": "recall"
+      "topic_name": "Charging - Public Charger Failure",
+      "sentence_text": "Uhh- Uhh, every DC charger on you know, my route was slow, it took over an hour.",
+      "matched_terms": "\"dc charger\", slow*"
     },
     {
-      "topic_name": "Software - OTA Update Failure",
-      "sentence_text": "After the update my settings were gone and it keeps rebooting.",
-      "matched_terms": "\"the update\", \"after the update\""
+      "topic_name": "Service - Repair Delay",
+      "sentence_text": "They- They have no loaner and I am paying for a uh, rental car myself.",
+      "matched_terms": "\"loaner\", \"no loaner\""
     },
     {
-      "topic_name": "Service - Recall Question",
-      "sentence_text": "Is there a recall for the battery on my car?",
-      "matched_terms": "recall"
+      "topic_name": "Battery - Range Loss",
+      "sentence_text": "the- the battery drains about 55 you know, percent overnight while parked",
+      "matched_terms": "\"battery drains\", drain*"
     },
     {
-      "topic_name": "Safety - Warning Light or Airbag",
-      "sentence_text": "A brake warning light showed up on the dash this morning.",
-      "matched_terms": "\"warning light\""
+      "topic_name": "Dealer - Poor Dealer Experience",
+      "sentence_text": "The dealer never called me back after three messages.",
+      "matched_terms": "dealer, \"never called\""
     },
     {
-      "topic_name": "Software - Infotainment or App",
-      "sentence_text": "The Valtera app will not connect to the car.",
-      "matched_terms": "\"valtera app\", \"will not connect\""
+      "topic_name": "Warranty - Claim Denied",
+      "sentence_text": "I have to pay out of pocket even though it is under warranty.",
+      "matched_terms": "warranty, \"out of pocket\""
     }
   ]
 }

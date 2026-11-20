@@ -1,62 +1,62 @@
 [
   {
-    "ai_confidence": "0.66",
-    "ai_rationale": "The statement notes the vehicle has been at the service center since the beginning of the month, indicating a prolonged wait for repair.",
-    "sentence_text": "It has been sitting at the service center since the beginning of the month.",
+    "ai_confidence": "0.6",
+    "ai_rationale": "The customer notes the vehicle has been sitting at the service center since the beginning of the month, indicating a prolonged repair wait.",
+    "sentence_text": "Ummm, it has been [inaudible] sitting at the service center since the beginning of the month.",
     "topic_name": "Service - Repair Delay"
   },
   {
+    "ai_confidence": "0.85",
+    "ai_rationale": "Customer says they plug the car in at home but the battery level is unchanged in the morning, indicating a problem with home charging.",
+    "sentence_text": "Comments: i plug it in at the house and wake up to the same battery as when i went to bed.",
+    "topic_name": "Charging - Home Charging Issue"
+  },
+  {
     "ai_confidence": "0.78",
-    "ai_rationale": "Customer states the phone key fails half the time, which matches the phone key issue described in the Software - Infotainment or App category.",
-    "sentence_text": "My phone does not work as a key half the time and I am stuck in the parking lot.",
+    "ai_rationale": "Customer says they plug it in at the house and wake up with the same battery level, indicating a problem with home charging.",
+    "sentence_text": "I plug it in at the house and wake up to the same batteyr as when I went to bed.",
+    "topic_name": "Charging - Home Charging Issue"
+  },
+  {
+    "ai_confidence": "0.78",
+    "ai_rationale": "The customer says the \"flap is jammed shut\" indicating the charge port door is stuck.",
+    "sentence_text": "You know, the charge you know, flap is jammed shut again this morning.",
+    "topic_name": "Charging - Charge Port Door Stuck"
+  },
+  {
+    "ai_confidence": "0.75",
+    "ai_rationale": "Customer mentions receiving a letter stating the car might be defective and needs to be fixed for free, which aligns with receiving a recall notice.",
+    "sentence_text": "I got you know, a letter saying something on my car might be defective and needs to be fixed for free.",
+    "topic_name": "Service - Recall Question"
+  },
+  {
+    "ai_confidence": "0.85",
+    "ai_rationale": "Customer says their phone does not work as a key half the time",
+    "sentence_text": "Well, my phone does not work as a key half the time and I am stuck in the parking lot.",
     "topic_name": "Software - Infotainment or App"
   },
   {
     "ai_confidence": "0.88",
-    "ai_rationale": "Customer says the charging door will not budge and had to pry it open.",
-    "sentence_text": "That little door where you plug in will not budge, I had to pry it with my fingers.",
+    "ai_rationale": "The customer states the door where you plug in will not budge and required prying, indicating the charge port door is stuck.",
+    "sentence_text": "that little door where you plug in will not budge, i had to pry it with my fingers",
     "topic_name": "Charging - Charge Port Door Stuck"
   },
   {
-    "ai_confidence": "0.78",
-    "ai_rationale": "Customer says the steering wheel yanked itself, indicating an unexpected steering/driver-assist behavior.",
-    "sentence_text": "The steering wheel yanked itself to the right when I was in the middle lane.",
-    "topic_name": "Safety - Driver Assist Malfunction"
-  },
-  {
-    "ai_confidence": "0.78",
-    "ai_rationale": "The customer states the money was taken from their account two times on the same day, indicating a double charge.",
-    "sentence_text": "Overall: The money came out of my account two times on the same day.",
-    "topic_name": "Billing - Payment or Financing Issue"
-  },
-  {
-    "ai_confidence": "0.6",
-    "ai_rationale": "The sentence links a downloaded new version to the car feeling different, implying a post‑update problem.",
-    "sentence_text": "Ever since it downloaded that new version the whole car feels like a different car.",
+    "ai_confidence": "0.65",
+    "ai_rationale": "The customer says a new version was downloaded and now the car feels different, indicating a problem after an OTA update.",
+    "sentence_text": "Um, ever since it downloaded that new version the whole car um, feels like a different car.",
     "topic_name": "Software - OTA Update Failure"
   },
   {
     "ai_confidence": "0.85",
-    "ai_rationale": "Customer mentions receiving a letter stating a possible defect and that it will be fixed for free, which is a recall notification.",
-    "sentence_text": "I got a letter saying something on my car might be defective and needs to be fixed for free.",
-    "topic_name": "Service - Recall Question"
+    "ai_rationale": "Customer states the money was taken from their account twice on the same day, indicating a double charge.",
+    "sentence_text": "you know, the money came out of my account two times on the same day",
+    "topic_name": "Billing - Payment or Financing Issue"
   },
   {
-    "ai_confidence": "0.78",
-    "ai_rationale": "The customer says they could not get a single top-up on the interstate, indicating a failure to charge at public stations.",
-    "sentence_text": "On my road trip I could not get a single top-up on the interstate.",
-    "topic_name": "Charging - Public Charger Failure"
-  },
-  {
-    "ai_confidence": "0.78",
-    "ai_rationale": "Customer says they plug the vehicle in at home and wake up with the same battery level, indicating a problem with home charging.",
-    "sentence_text": "I plug it in at the house and wake up to the same battery as when I went to bed.",
-    "topic_name": "Charging - Home Charging Issue"
-  },
-  {
-    "ai_confidence": "0.65",
-    "ai_rationale": "The customer says the steering wheel yanked itself to the right, indicating unexpected steering movement potentially from a driver‑assist feature.",
-    "sentence_text": "Overall: The steering wheel yanked itself to the right when I was in the middle lane.",
-    "topic_name": "Safety - Driver Assist Malfunction"
+    "ai_confidence": "0.85",
+    "ai_rationale": "The customer reports the screen \"stuck on the logo,\" a clear infotainment screen freeze.",
+    "sentence_text": "The software update failed and um, now the screen is stuck on the logo.",
+    "topic_name": "Software - Infotainment or App"
   }
 ]

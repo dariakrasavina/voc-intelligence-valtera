@@ -1,0 +1,1635 @@
+{
+  "space_id": "01f1e46e16d61008a7f72226f0aacb03",
+  "title": "Valtera VOC Insights",
+  "description": "Ask about Valtera Motors customer calls and surveys: complaint topics, sentiment, safety signals, emerging issues by model and model year, dealers and the escalation queue. Synthetic data.",
+  "warehouse_id": "148ccb90800933a1",
+  "serialized_space": {
+    "version": 2,
+    "config": {
+      "sample_questions": [
+        {
+          "id": "bb37099e84955905a3f0b75ffed43d91",
+          "question": [
+            "Show what customers said about unexpected braking"
+          ]
+        },
+        {
+          "id": "cab2d594ce28590dac806cfeab6e5123",
+          "question": [
+            "When was the charge port door problem on the 2026 Aurora EV first detected?"
+          ]
+        },
+        {
+          "id": "d4f6ba0c79f15a3b98eff1674670488b",
+          "question": [
+            "Top complaint topics for EV owners in the last 30 days"
+          ]
+        },
+        {
+          "id": "d5d19e133e1659c88d31edd261ae1d0e",
+          "question": [
+            "Which issues are spiking right now?"
+          ]
+        }
+      ]
+    },
+    "data_sources": {
+      "tables": [
+        {
+          "identifier": "daria_krasavina.voc_valtera.dim_topics",
+          "column_configs": [
+            {
+              "column_name": "escalation_weight",
+              "description": [
+                "Topic severity weight 0-5 (5 = safety critical)."
+              ],
+              "synonyms": [
+                "severity weight"
+              ]
+            },
+            {
+              "column_name": "parent_topic",
+              "description": [
+                "Topic group: Battery & Charging, Vehicle Safety, Software & Connectivity, Service & Warranty, Dealer & Sales Experience, Billing & Financing, Positive Feedback."
+              ],
+              "synonyms": [
+                "topic group",
+                "category"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "topic_name",
+              "description": [
+                "Leaf complaint topic, e.g. 'Charging - Charge Port Door Stuck', 'Safety - Unexpected Braking'."
+              ],
+              "synonyms": [
+                "topic",
+                "issue",
+                "complaint type"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            }
+          ]
+        },
+        {
+          "identifier": "daria_krasavina.voc_valtera.gold_case_status",
+          "column_configs": [
+            {
+              "column_name": "assignee",
+              "description": [
+                "Team or person the case is assigned to."
+              ],
+              "synonyms": [
+                "owner",
+                "assigned to"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "case_id",
+              "description": [
+                "Escalation case (a P1/P2 interaction from the last 30 days)."
+              ],
+              "synonyms": [
+                "case",
+                "ticket"
+              ]
+            },
+            {
+              "column_name": "dealer_name",
+              "description": [
+                "Selling / servicing dealer, e.g. 'Lakeshore Valtera'."
+              ],
+              "synonyms": [
+                "dealer",
+                "dealership",
+                "store"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "first_action_at",
+              "description": [
+                "When an agent first saved an action on the case."
+              ]
+            },
+            {
+              "column_name": "last_updated_at",
+              "description": [
+                "When the case was last updated in the app."
+              ]
+            },
+            {
+              "column_name": "model",
+              "description": [
+                "Vehicle model: Aurora EV, Strata EV, Ridgeback, Ridgeback Hybrid, Cove."
+              ],
+              "synonyms": [
+                "vehicle",
+                "car",
+                "nameplate"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "model_year",
+              "description": [
+                "Vehicle model year (integer, e.g. 2026)."
+              ],
+              "synonyms": [
+                "MY",
+                "year model"
+              ]
+            },
+            {
+              "column_name": "note",
+              "description": [
+                "Agent's note."
+              ]
+            },
+            {
+              "column_name": "primary_topic",
+              "description": [
+                "Most severe topic of the case."
+              ],
+              "synonyms": [
+                "issue",
+                "topic"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "priority",
+              "description": [
+                "P1 or P2."
+              ],
+              "synonyms": [
+                "severity"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "status",
+              "description": [
+                "Open (no action yet), Acknowledged, In progress or Resolved, as saved by agents in the app."
+              ],
+              "synonyms": [
+                "case status",
+                "state"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            }
+          ]
+        },
+        {
+          "identifier": "daria_krasavina.voc_valtera.gold_emerging_issues",
+          "column_configs": [
+            {
+              "column_name": "as_of_date",
+              "description": [
+                "Latest date in the data."
+              ]
+            },
+            {
+              "column_name": "baseline_weekly_avg",
+              "description": [
+                "Average weekly interactions in the 4 weeks before the last 7 days."
+              ],
+              "synonyms": [
+                "baseline"
+              ]
+            },
+            {
+              "column_name": "first_alert_date",
+              "description": [
+                "First day the alert rule fired for this topic and vehicle."
+              ],
+              "synonyms": [
+                "detected on",
+                "first detected"
+              ]
+            },
+            {
+              "column_name": "is_alert",
+              "description": [
+                "True when the alert rule (>= 10 interactions in 7 days and >= 4x the prior 4-week weekly average) fired in the last 30 days."
+              ],
+              "synonyms": [
+                "active alert",
+                "spiking",
+                "emerging",
+                "trending issue"
+              ]
+            },
+            {
+              "column_name": "last_7d",
+              "description": [
+                "Interactions in the 7 days up to as_of_date."
+              ],
+              "synonyms": [
+                "last week"
+              ]
+            },
+            {
+              "column_name": "lift_vs_baseline",
+              "description": [
+                "Current lift on the latest day only (last_7d / baseline). Not the spike size; use peak_lift for spikes."
+              ],
+              "synonyms": [
+                "current lift"
+              ]
+            },
+            {
+              "column_name": "model",
+              "description": [
+                "Vehicle model: Aurora EV, Strata EV, Ridgeback, Ridgeback Hybrid, Cove."
+              ],
+              "synonyms": [
+                "vehicle",
+                "car",
+                "nameplate"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "model_year",
+              "description": [
+                "Vehicle model year (integer, e.g. 2026)."
+              ],
+              "synonyms": [
+                "MY",
+                "year model"
+              ]
+            },
+            {
+              "column_name": "parent_topic",
+              "description": [
+                "Topic group: Battery & Charging, Vehicle Safety, Software & Connectivity, Service & Warranty, Dealer & Sales Experience, Billing & Financing, Positive Feedback."
+              ],
+              "synonyms": [
+                "topic group",
+                "category"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "peak_lift",
+              "description": [
+                "Size of the spike: the highest lift (last 7 days / baseline) on any alert day. Use this for 'biggest spike' or 'largest increase'."
+              ],
+              "synonyms": [
+                "spike",
+                "spike size",
+                "biggest increase",
+                "peak lift"
+              ]
+            },
+            {
+              "column_name": "topic_name",
+              "description": [
+                "Leaf complaint topic, e.g. 'Charging - Charge Port Door Stuck', 'Safety - Unexpected Braking'."
+              ],
+              "synonyms": [
+                "topic",
+                "issue",
+                "complaint type"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            }
+          ]
+        },
+        {
+          "identifier": "daria_krasavina.voc_valtera.gold_escalation_queue",
+          "column_configs": [
+            {
+              "column_name": "case_id",
+              "description": [
+                "Case = interaction id of a P1/P2 interaction from the last 30 days."
+              ],
+              "synonyms": [
+                "case",
+                "ticket"
+              ]
+            },
+            {
+              "column_name": "case_summary",
+              "description": [
+                "AI-generated one-line summary of what the customer said."
+              ],
+              "synonyms": [
+                "summary"
+              ]
+            },
+            {
+              "column_name": "channel",
+              "description": [
+                "'call' (contact center) or 'survey' (post-service survey)."
+              ],
+              "synonyms": [
+                "source"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "dealer_name",
+              "description": [
+                "Selling / servicing dealer, e.g. 'Lakeshore Valtera'."
+              ],
+              "synonyms": [
+                "dealer",
+                "dealership",
+                "store"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "dealer_region",
+              "description": [
+                "Dealer region: Midwest, Northeast, South, West."
+              ],
+              "synonyms": [
+                "region"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "escalation_score",
+              "description": [
+                "Severity score of the case."
+              ]
+            },
+            {
+              "column_name": "model",
+              "description": [
+                "Vehicle model: Aurora EV, Strata EV, Ridgeback, Ridgeback Hybrid, Cove."
+              ],
+              "synonyms": [
+                "vehicle",
+                "car",
+                "nameplate"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "model_year",
+              "description": [
+                "Vehicle model year (integer, e.g. 2026)."
+              ],
+              "synonyms": [
+                "MY",
+                "year model"
+              ]
+            },
+            {
+              "column_name": "powertrain",
+              "description": [
+                "EV, HYBRID or ICE. Hybrids are not ICE."
+              ],
+              "synonyms": [
+                "drivetrain",
+                "electric",
+                "gas"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "primary_parent_topic",
+              "description": [
+                "Topic group of the case."
+              ],
+              "synonyms": [
+                "topic group"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "primary_topic",
+              "description": [
+                "Most severe topic of the case."
+              ],
+              "synonyms": [
+                "issue",
+                "topic"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "priority",
+              "description": [
+                "P1 or P2."
+              ],
+              "synonyms": [
+                "severity"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "recommended_action",
+              "description": [
+                "Suggested next step for the owning team."
+              ],
+              "synonyms": [
+                "next step",
+                "action"
+              ]
+            },
+            {
+              "column_name": "vin",
+              "exclude": true
+            }
+          ]
+        },
+        {
+          "identifier": "daria_krasavina.voc_valtera.gold_interaction_insights",
+          "column_configs": [
+            {
+              "column_name": "call_reason",
+              "description": [
+                "Reason code chosen by the agent at the start of the call."
+              ],
+              "synonyms": [
+                "reason"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "channel",
+              "description": [
+                "'call' (contact center) or 'survey' (post-service survey)."
+              ],
+              "synonyms": [
+                "source"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "customer_text",
+              "exclude": true
+            },
+            {
+              "column_name": "dealer_name",
+              "description": [
+                "Selling / servicing dealer, e.g. 'Lakeshore Valtera'."
+              ],
+              "synonyms": [
+                "dealer",
+                "dealership",
+                "store"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "dealer_region",
+              "description": [
+                "Dealer region: Midwest, Northeast, South, West."
+              ],
+              "synonyms": [
+                "region"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "escalation_score",
+              "description": [
+                "Severity score: topic weight x negativity, + NPS and safety boosts."
+              ]
+            },
+            {
+              "column_name": "interaction_date",
+              "description": [
+                "Date of the call or survey."
+              ],
+              "synonyms": [
+                "date",
+                "day"
+              ]
+            },
+            {
+              "column_name": "interaction_id",
+              "description": [
+                "One row per customer interaction (a call or a survey)."
+              ],
+              "synonyms": [
+                "contact",
+                "case id"
+              ]
+            },
+            {
+              "column_name": "is_safety",
+              "description": [
+                "True if any Vehicle Safety topic was mentioned."
+              ],
+              "synonyms": [
+                "safety",
+                "safety complaint"
+              ]
+            },
+            {
+              "column_name": "loyalty_tier",
+              "description": [
+                "Standard, Silver or Gold."
+              ],
+              "synonyms": [
+                "tier",
+                "membership"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "model",
+              "description": [
+                "Vehicle model: Aurora EV, Strata EV, Ridgeback, Ridgeback Hybrid, Cove."
+              ],
+              "synonyms": [
+                "vehicle",
+                "car",
+                "nameplate"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "model_year",
+              "description": [
+                "Vehicle model year (integer, e.g. 2026)."
+              ],
+              "synonyms": [
+                "MY",
+                "year model"
+              ]
+            },
+            {
+              "column_name": "nps_score",
+              "description": [
+                "Net Promoter Score 0-10, surveys only (NULL for calls). Detractor = 0-6, promoter = 9-10."
+              ],
+              "synonyms": [
+                "NPS",
+                "score"
+              ]
+            },
+            {
+              "column_name": "powertrain",
+              "description": [
+                "EV, HYBRID or ICE. Hybrids are not ICE."
+              ],
+              "synonyms": [
+                "drivetrain",
+                "electric",
+                "gas"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "primary_parent_topic",
+              "description": [
+                "Topic group of primary_topic."
+              ],
+              "synonyms": [
+                "main topic group"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "primary_topic",
+              "description": [
+                "The single most severe topic of the interaction ('No topic detected' if none). Use only for 'main issue' questions; to count mentions of a topic use topics or gold_topic_daily."
+              ],
+              "synonyms": [
+                "main issue"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "priority",
+              "description": [
+                "P1 = safety or escalation score >= 6, P2 = score >= 3, P3 = rest."
+              ],
+              "synonyms": [
+                "severity"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "sentiment",
+              "description": [
+                "negative / neutral / positive, from the trained sentiment model."
+              ],
+              "synonyms": [
+                "tone"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "topics",
+              "description": [
+                "Array of every topic mentioned. Filter with array_contains(topics, '<topic_name>')."
+              ]
+            },
+            {
+              "column_name": "vin",
+              "exclude": true
+            }
+          ]
+        },
+        {
+          "identifier": "daria_krasavina.voc_valtera.gold_sentence_topics",
+          "column_configs": [
+            {
+              "column_name": "ai_confidence",
+              "description": [
+                "ai_classify confidence 0-1."
+              ]
+            },
+            {
+              "column_name": "ai_rationale",
+              "description": [
+                "ai_classify's reason for the tag."
+              ]
+            },
+            {
+              "column_name": "channel",
+              "description": [
+                "'call' (contact center) or 'survey' (post-service survey)."
+              ],
+              "synonyms": [
+                "source"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "detected_by",
+              "description": [
+                "'rules' (keyword rule engine), 'ai' (ai_classify only) or 'both'."
+              ],
+              "synonyms": [
+                "detection method",
+                "classifier"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "matched_terms",
+              "description": [
+                "Keywords that triggered the rule tag."
+              ]
+            },
+            {
+              "column_name": "parent_topic",
+              "description": [
+                "Topic group: Battery & Charging, Vehicle Safety, Software & Connectivity, Service & Warranty, Dealer & Sales Experience, Billing & Financing, Positive Feedback."
+              ],
+              "synonyms": [
+                "topic group",
+                "category"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "sentence_text",
+              "description": [
+                "The customer's sentence that was tagged."
+              ],
+              "synonyms": [
+                "quote",
+                "verbatim",
+                "what customers said"
+              ]
+            },
+            {
+              "column_name": "topic_name",
+              "description": [
+                "Leaf complaint topic, e.g. 'Charging - Charge Port Door Stuck', 'Safety - Unexpected Braking'."
+              ],
+              "synonyms": [
+                "topic",
+                "issue",
+                "complaint type"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            }
+          ]
+        },
+        {
+          "identifier": "daria_krasavina.voc_valtera.gold_topic_daily",
+          "column_configs": [
+            {
+              "column_name": "channel",
+              "description": [
+                "'call' (contact center) or 'survey' (post-service survey)."
+              ],
+              "synonyms": [
+                "source"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "dealer_name",
+              "description": [
+                "Selling / servicing dealer, e.g. 'Lakeshore Valtera'."
+              ],
+              "synonyms": [
+                "dealer",
+                "dealership",
+                "store"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "dealer_region",
+              "description": [
+                "Dealer region: Midwest, Northeast, South, West."
+              ],
+              "synonyms": [
+                "region"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "interaction_date",
+              "description": [
+                "Day."
+              ],
+              "synonyms": [
+                "date"
+              ]
+            },
+            {
+              "column_name": "interactions",
+              "description": [
+                "Interactions that mentioned the topic that day. SUM it across rows; do not add across topics to get total interactions (one interaction can mention several topics)."
+              ],
+              "synonyms": [
+                "mentions",
+                "complaints",
+                "volume"
+              ]
+            },
+            {
+              "column_name": "model",
+              "description": [
+                "Vehicle model: Aurora EV, Strata EV, Ridgeback, Ridgeback Hybrid, Cove."
+              ],
+              "synonyms": [
+                "vehicle",
+                "car",
+                "nameplate"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "model_year",
+              "description": [
+                "Vehicle model year (integer, e.g. 2026)."
+              ],
+              "synonyms": [
+                "MY",
+                "year model"
+              ]
+            },
+            {
+              "column_name": "negative_interactions",
+              "description": [
+                "Of those, interactions with negative sentiment."
+              ],
+              "synonyms": [
+                "negative mentions"
+              ]
+            },
+            {
+              "column_name": "p1_interactions",
+              "description": [
+                "Of those, interactions with priority P1."
+              ],
+              "synonyms": [
+                "P1 mentions"
+              ]
+            },
+            {
+              "column_name": "parent_topic",
+              "description": [
+                "Topic group: Battery & Charging, Vehicle Safety, Software & Connectivity, Service & Warranty, Dealer & Sales Experience, Billing & Financing, Positive Feedback."
+              ],
+              "synonyms": [
+                "topic group",
+                "category"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "powertrain",
+              "description": [
+                "EV, HYBRID or ICE. Hybrids are not ICE."
+              ],
+              "synonyms": [
+                "drivetrain",
+                "electric",
+                "gas"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            },
+            {
+              "column_name": "topic_name",
+              "description": [
+                "Leaf complaint topic, e.g. 'Charging - Charge Port Door Stuck', 'Safety - Unexpected Braking'."
+              ],
+              "synonyms": [
+                "topic",
+                "issue",
+                "complaint type"
+              ],
+              "enable_format_assistance": true,
+              "enable_entity_matching": true
+            }
+          ]
+        },
+        {
+          "identifier": "daria_krasavina.voc_valtera.mv_voc_metrics"
+        }
+      ]
+    },
+    "instructions": {
+      "text_instructions": [
+        {
+          "id": "fd6c402a77345f65a93a798b7b20edd7",
+          "content": [
+            "## PURPOSE\n",
+            "Answer questions about Valtera Motors customer calls and surveys (synthetic data, 2026-08-22 to 2026-11-20): complaint topics, sentiment, safety signals, emerging issues, dealers and the escalation queue.\n",
+            "\n",
+            "## DISAMBIGUATION\n",
+            "- \"Interactions\", \"contacts\", \"complaints\" mean distinct calls or surveys. One interaction can mention several topics: count totals in gold_interaction_insights, mentions per topic in gold_topic_daily.\n",
+            "- \"Recent\", \"this month\", \"last 30 days\" are relative to the latest date in the data (2026-11-20).\n",
+            "- A model named without a year means all model years. Powertrain is EV, HYBRID or ICE; hybrids are not ICE.\n",
+            "\n",
+            "## DATA QUALITY NOTES\n",
+            "- nps_score exists only for surveys; calls have NULL.\n",
+            "\n",
+            "## CONSTRAINTS\n",
+            "- Never return customer names, emails, phone numbers or VINs.\n",
+            "\n",
+            "## Instructions you must follow when providing summaries\n",
+            "- Round percentages to 1 decimal. Mention the date range in the text of the answer; do not add date columns to the query result."
+          ]
+        }
+      ],
+      "example_question_sqls": [
+        {
+          "id": "0c828971883056bda72e22983bbade81",
+          "question": [
+            "Weekly mentions of a topic for a vehicle"
+          ],
+          "sql": [
+            "SELECT DATE_TRUNC('WEEK', interaction_date) AS week, SUM(interactions) AS mentions FROM daria_krasavina.voc_valtera.gold_topic_daily WHERE topic_name = :topic AND model = :model AND model_year = :model_year GROUP BY 1 ORDER BY 1"
+          ],
+          "parameters": [
+            {
+              "name": "topic",
+              "type_hint": "STRING",
+              "description": [
+                "Leaf topic name"
+              ],
+              "default_value": {
+                "values": [
+                  "Safety - Unexpected Braking"
+                ]
+              }
+            },
+            {
+              "name": "model",
+              "type_hint": "STRING",
+              "description": [
+                "Vehicle model"
+              ],
+              "default_value": {
+                "values": [
+                  "Aurora EV"
+                ]
+              }
+            },
+            {
+              "name": "model_year",
+              "type_hint": "STRING",
+              "description": [
+                "Model year"
+              ],
+              "default_value": {
+                "values": [
+                  "2026"
+                ]
+              }
+            }
+          ],
+          "usage_guidance": [
+            "Trends of one topic over time: gold_topic_daily, SUM(interactions)."
+          ]
+        },
+        {
+          "id": "183df5d26c2655988c927df3be96d5f0",
+          "question": [
+            "How many escalation cases are still open, by priority?"
+          ],
+          "sql": [
+            "SELECT priority, status, COUNT(*) AS cases FROM daria_krasavina.voc_valtera.gold_case_status GROUP BY ALL ORDER BY priority, status"
+          ],
+          "usage_guidance": [
+            "Case handling (status, assignee, notes from the app): gold_case_status. Open = no action saved yet."
+          ]
+        },
+        {
+          "id": "1d5f725b3ccf5bde9dfdd8eb930c4591",
+          "question": [
+            "Show what customers said about a topic"
+          ],
+          "sql": [
+            "SELECT sentence_text, detected_by, matched_terms, ai_confidence FROM daria_krasavina.voc_valtera.gold_sentence_topics WHERE topic_name = :topic ORDER BY ai_confidence DESC NULLS LAST LIMIT 20"
+          ],
+          "parameters": [
+            {
+              "name": "topic",
+              "type_hint": "STRING",
+              "description": [
+                "Leaf topic name"
+              ],
+              "default_value": {
+                "values": [
+                  "Charging - Charge Port Door Stuck"
+                ]
+              }
+            }
+          ],
+          "usage_guidance": [
+            "Verbatims / quotes / examples: gold_sentence_topics.sentence_text."
+          ]
+        },
+        {
+          "id": "870f8ea2ef9856c4b6fdda5ae618b729",
+          "question": [
+            "Top complaint topics for a powertrain between two dates"
+          ],
+          "sql": [
+            "SELECT topic_name, SUM(interactions) AS mentions FROM daria_krasavina.voc_valtera.gold_topic_daily WHERE powertrain = :powertrain AND parent_topic <> 'Positive Feedback' AND interaction_date BETWEEN :start_date AND :end_date GROUP BY topic_name ORDER BY mentions DESC LIMIT 10"
+          ],
+          "parameters": [
+            {
+              "name": "powertrain",
+              "type_hint": "STRING",
+              "description": [
+                "EV, HYBRID or ICE"
+              ],
+              "default_value": {
+                "values": [
+                  "EV"
+                ]
+              }
+            },
+            {
+              "name": "start_date",
+              "type_hint": "STRING",
+              "description": [
+                "First day (YYYY-MM-DD)"
+              ],
+              "default_value": {
+                "values": [
+                  "2026-10-21"
+                ]
+              }
+            },
+            {
+              "name": "end_date",
+              "type_hint": "STRING",
+              "description": [
+                "Last day (YYYY-MM-DD)"
+              ],
+              "default_value": {
+                "values": [
+                  "2026-11-20"
+                ]
+              }
+            }
+          ],
+          "usage_guidance": [
+            "Ranking topics: exclude Positive Feedback."
+          ]
+        },
+        {
+          "id": "9d697bc2782e56e9999da88390552974",
+          "question": [
+            "Open P1 and P2 cases by topic group"
+          ],
+          "sql": [
+            "SELECT primary_parent_topic, priority, COUNT(*) AS cases FROM daria_krasavina.voc_valtera.gold_escalation_queue GROUP BY ALL ORDER BY priority, cases DESC"
+          ],
+          "usage_guidance": [
+            "Escalation queue questions: gold_escalation_queue."
+          ]
+        },
+        {
+          "id": "bf109037ef375e8d8e0cbbd6e26e7174",
+          "question": [
+            "Safety interactions and negative rate by vehicle (metric view)"
+          ],
+          "sql": [
+            "SELECT model, model_year, MEASURE(safety_interactions) AS safety_interactions, MEASURE(negative_rate_pct) AS negative_rate_pct FROM daria_krasavina.voc_valtera.mv_voc_metrics GROUP BY ALL ORDER BY safety_interactions DESC"
+          ],
+          "usage_guidance": [
+            "Governed KPIs by dimension: mv_voc_metrics with MEASURE()."
+          ]
+        },
+        {
+          "id": "c123cc0081c05d4a8676c5d32de9eccc",
+          "question": [
+            "Dealers with the highest share of negative interactions"
+          ],
+          "sql": [
+            "SELECT dealer_name, COUNT(*) AS interactions, ROUND(100.0 * AVG(CASE WHEN sentiment = 'negative' THEN 1 ELSE 0 END), 1) AS negative_pct FROM daria_krasavina.voc_valtera.gold_interaction_insights GROUP BY dealer_name HAVING COUNT(*) >= 50 ORDER BY negative_pct DESC LIMIT 10"
+          ],
+          "usage_guidance": [
+            "Rates per dealer: require a minimum volume."
+          ]
+        },
+        {
+          "id": "daee50f5338156508ec2a33b0588bd45",
+          "question": [
+            "Which issues are spiking right now?"
+          ],
+          "sql": [
+            "SELECT topic_name, model, model_year, first_alert_date, peak_lift, last_7d FROM daria_krasavina.voc_valtera.gold_emerging_issues WHERE is_alert ORDER BY peak_lift DESC"
+          ],
+          "usage_guidance": [
+            "Emerging / spiking / trending issues: always gold_emerging_issues with is_alert."
+          ]
+        }
+      ],
+      "join_specs": [
+        {
+          "id": "2ddfd51ff4285b428b8a250b7ee1a5b8",
+          "left": {
+            "identifier": "daria_krasavina.voc_valtera.gold_emerging_issues",
+            "alias": "gold_emerging_issues"
+          },
+          "right": {
+            "identifier": "daria_krasavina.voc_valtera.dim_topics",
+            "alias": "dim_topics"
+          },
+          "sql": [
+            "`gold_emerging_issues`.`topic_name` = `dim_topics`.`topic_name`",
+            "--rt=FROM_RELATIONSHIP_TYPE_MANY_TO_ONE--"
+          ]
+        },
+        {
+          "id": "684d3f72915151eaa5a7799eff486ded",
+          "left": {
+            "identifier": "daria_krasavina.voc_valtera.gold_sentence_topics",
+            "alias": "gold_sentence_topics"
+          },
+          "right": {
+            "identifier": "daria_krasavina.voc_valtera.gold_interaction_insights",
+            "alias": "gold_interaction_insights"
+          },
+          "sql": [
+            "`gold_sentence_topics`.`interaction_id` = `gold_interaction_insights`.`interaction_id`",
+            "--rt=FROM_RELATIONSHIP_TYPE_MANY_TO_ONE--"
+          ]
+        },
+        {
+          "id": "eeb11130e49e511da71b4d9e67f9ed2b",
+          "left": {
+            "identifier": "daria_krasavina.voc_valtera.gold_topic_daily",
+            "alias": "gold_topic_daily"
+          },
+          "right": {
+            "identifier": "daria_krasavina.voc_valtera.dim_topics",
+            "alias": "dim_topics"
+          },
+          "sql": [
+            "`gold_topic_daily`.`topic_id` = `dim_topics`.`topic_id`",
+            "--rt=FROM_RELATIONSHIP_TYPE_MANY_TO_ONE--"
+          ]
+        },
+        {
+          "id": "f27960dcefe05d669d9d8867b71c34fb",
+          "left": {
+            "identifier": "daria_krasavina.voc_valtera.gold_escalation_queue",
+            "alias": "gold_escalation_queue"
+          },
+          "right": {
+            "identifier": "daria_krasavina.voc_valtera.gold_interaction_insights",
+            "alias": "gold_interaction_insights"
+          },
+          "sql": [
+            "`gold_escalation_queue`.`case_id` = `gold_interaction_insights`.`interaction_id`",
+            "--rt=FROM_RELATIONSHIP_TYPE_ONE_TO_ONE--"
+          ]
+        }
+      ],
+      "sql_snippets": {
+        "filters": [
+          {
+            "id": "0294bc4cbca356f69ec1f4b6eb76f813",
+            "sql": [
+              "gold_interaction_insights.powertrain = 'EV'"
+            ],
+            "display_name": "EV owners",
+            "synonyms": [
+              "electric vehicles",
+              "EVs"
+            ]
+          },
+          {
+            "id": "1a3d1a26d7355addb547f135cf9908eb",
+            "sql": [
+              "gold_interaction_insights.sentiment = 'negative'"
+            ],
+            "display_name": "Negative interactions",
+            "synonyms": [
+              "unhappy customers",
+              "negative"
+            ]
+          },
+          {
+            "id": "1bec60a4484e52a5b8cc6e0e2378228f",
+            "sql": [
+              "gold_interaction_insights.is_safety = true"
+            ],
+            "display_name": "Safety interactions",
+            "synonyms": [
+              "safety complaints",
+              "safety issues"
+            ]
+          },
+          {
+            "id": "200c29711e0c549ba1e1e7342a192aa4",
+            "sql": [
+              "gold_emerging_issues.is_alert = true"
+            ],
+            "display_name": "Active alerts",
+            "synonyms": [
+              "spiking now",
+              "current alerts",
+              "emerging"
+            ]
+          },
+          {
+            "id": "66994a9a13f855529b44153db1c8cc10",
+            "sql": [
+              "gold_topic_daily.parent_topic <> 'Positive Feedback'"
+            ],
+            "display_name": "Complaints only",
+            "synonyms": [
+              "complaints",
+              "problems",
+              "excluding praise"
+            ]
+          },
+          {
+            "id": "bfb5cb0c13b753dc8a5b11ea35a7d4e6",
+            "sql": [
+              "gold_interaction_insights.channel = 'survey'"
+            ],
+            "display_name": "Surveys only",
+            "synonyms": [
+              "survey responses"
+            ]
+          }
+        ],
+        "expressions": [
+          {
+            "id": "5e9b88c0915253ed8ae8604c53cc6531",
+            "alias": "interaction_month",
+            "sql": [
+              "DATE_TRUNC('MONTH', gold_interaction_insights.interaction_date)"
+            ],
+            "display_name": "Month",
+            "synonyms": [
+              "month",
+              "monthly"
+            ]
+          },
+          {
+            "id": "91ea11487d0950c18464c7698059bbc6",
+            "alias": "interaction_week",
+            "sql": [
+              "DATE_TRUNC('WEEK', gold_interaction_insights.interaction_date)"
+            ],
+            "display_name": "Week",
+            "synonyms": [
+              "week",
+              "weekly"
+            ]
+          },
+          {
+            "id": "e4f3b8d366465b2da48275906a43f697",
+            "alias": "vehicle",
+            "sql": [
+              "CONCAT(gold_interaction_insights.model, ' ', CAST(gold_interaction_insights.model_year AS STRING))"
+            ],
+            "display_name": "Vehicle (model + year)",
+            "synonyms": [
+              "vehicle",
+              "model and year"
+            ]
+          }
+        ],
+        "measures": [
+          {
+            "id": "35e351ca24c8598e8c8d771179a74c79",
+            "alias": "avg_nps",
+            "sql": [
+              "ROUND(AVG(gold_interaction_insights.nps_score), 2)"
+            ],
+            "display_name": "Average NPS",
+            "synonyms": [
+              "NPS",
+              "net promoter score"
+            ]
+          },
+          {
+            "id": "7b2cb22fa11f5ca292606d9ada15a3fd",
+            "alias": "topic_mentions",
+            "sql": [
+              "SUM(gold_topic_daily.interactions)"
+            ],
+            "display_name": "Topic mentions",
+            "synonyms": [
+              "mentions",
+              "complaints about"
+            ]
+          },
+          {
+            "id": "866e929615db5ea08b902c0ecf474d66",
+            "alias": "p1_case_count",
+            "sql": [
+              "COUNT(CASE WHEN gold_escalation_queue.priority = 'P1' THEN 1 END)"
+            ],
+            "display_name": "P1 cases",
+            "synonyms": [
+              "P1",
+              "critical cases"
+            ]
+          },
+          {
+            "id": "d2cdd71b907157ca8832c6fb526801c7",
+            "alias": "negative_rate_pct",
+            "sql": [
+              "ROUND(100.0 * AVG(CASE WHEN gold_interaction_insights.sentiment = 'negative' THEN 1 ELSE 0 END), 1)"
+            ],
+            "display_name": "Negative rate %",
+            "synonyms": [
+              "negative share",
+              "% negative"
+            ]
+          },
+          {
+            "id": "e4a2af9600035c8dad34693bb5c214a9",
+            "alias": "interaction_count",
+            "sql": [
+              "COUNT(DISTINCT gold_interaction_insights.interaction_id)"
+            ],
+            "display_name": "Interactions",
+            "synonyms": [
+              "number of interactions",
+              "contacts",
+              "volume"
+            ]
+          },
+          {
+            "id": "ea01dcc147e9539bb37c2010ed1b32a7",
+            "alias": "detractor_rate_pct",
+            "sql": [
+              "ROUND(100.0 * AVG(CASE WHEN gold_interaction_insights.nps_score <= 6 THEN 1.0 ELSE 0.0 END), 1)"
+            ],
+            "display_name": "Detractor rate %",
+            "synonyms": [
+              "detractors",
+              "% detractors"
+            ]
+          }
+        ]
+      }
+    },
+    "benchmarks": {
+      "questions": [
+        {
+          "id": "fe10b7f8286e55dd85d15fd39010eb3f",
+          "question": [
+            "How many interactions came from Gold tier customers?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT COUNT(*) AS interactions FROM daria_krasavina.voc_valtera.gold_interaction_insights WHERE loyalty_tier = 'Gold'"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "f6c910842e2d5c2885ff0ddaa2e2ad20",
+          "question": [
+            "Which 3 dealers have the most P1 cases in the escalation queue?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT dealer_name, COUNT(*) AS p1_cases FROM daria_krasavina.voc_valtera.gold_escalation_queue WHERE priority = 'P1' GROUP BY dealer_name ORDER BY p1_cases DESC LIMIT 3"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "f6a81fe031785cd2be64c239193d6320",
+          "question": [
+            "When was the charge port door problem on the 2026 Aurora EV first detected?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT first_alert_date FROM daria_krasavina.voc_valtera.gold_emerging_issues WHERE topic_name = 'Charging - Charge Port Door Stuck' AND model = 'Aurora EV' AND model_year = 2026"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "e9bcadf96e355da7a8a4a508bb0485b1",
+          "question": [
+            "What is the detractor rate for surveys?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT ROUND(100.0 * AVG(CASE WHEN nps_score <= 6 THEN 1.0 ELSE 0.0 END), 1) AS detractor_rate_pct FROM daria_krasavina.voc_valtera.gold_interaction_insights WHERE channel = 'survey'"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "e898c255b0135ad296e659d4659cd090",
+          "question": [
+            "Which dealer has the most poor dealer experience complaints?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT dealer_name, SUM(interactions) AS complaints FROM daria_krasavina.voc_valtera.gold_topic_daily WHERE topic_name = 'Dealer - Poor Dealer Experience' GROUP BY dealer_name ORDER BY complaints DESC LIMIT 1"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "db577201bdce518cb25028a2af7895e9",
+          "question": [
+            "Which active emerging issue has the biggest spike versus its baseline?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT topic_name, model, model_year, peak_lift FROM daria_krasavina.voc_valtera.gold_emerging_issues WHERE is_alert ORDER BY peak_lift DESC LIMIT 1"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "c860a34ffcfd5bdca7f12928f451b70e",
+          "question": [
+            "How many interactions were there for the Strata EV, all model years?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT COUNT(*) AS interactions FROM daria_krasavina.voc_valtera.gold_interaction_insights WHERE model = 'Strata EV'"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "c570f04a2ab953ee898ea3338541cf0a",
+          "question": [
+            "How many interactions came from calls and how many from surveys?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT channel, COUNT(*) AS interactions FROM daria_krasavina.voc_valtera.gold_interaction_insights GROUP BY channel"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "c332f9ef1c1a582883e1ada6a67bf79f",
+          "question": [
+            "How many emerging issue alerts are active?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT COUNT(*) AS active_alerts FROM daria_krasavina.voc_valtera.gold_emerging_issues WHERE is_alert"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a5c822cbe8b1545b91096097b366a737",
+          "question": [
+            "How many interactions mentioned a charge port door problem for the 2026 Aurora EV?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT SUM(interactions) AS interactions FROM daria_krasavina.voc_valtera.gold_topic_daily WHERE topic_name = 'Charging - Charge Port Door Stuck' AND model = 'Aurora EV' AND model_year = 2026"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "9aea73503601552fad83eaf7147cd91c",
+          "question": [
+            "What percent of interactions are negative for each powertrain?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT powertrain, ROUND(100.0 * AVG(CASE WHEN sentiment = 'negative' THEN 1 ELSE 0 END), 1) AS negative_pct FROM daria_krasavina.voc_valtera.gold_interaction_insights GROUP BY powertrain"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "93c2b1469cfc5ecb8d4454ff07c013f0",
+          "question": [
+            "What is the average NPS by vehicle model, all model years combined?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT model, AVG(nps_score) AS avg_nps FROM daria_krasavina.voc_valtera.gold_interaction_insights WHERE channel = 'survey' AND nps_score IS NOT NULL GROUP BY model"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "931b0105773658a799eea13815ce5037",
+          "question": [
+            "How many tagged sentences were found only by the AI classifier and not by the rules?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT COUNT(*) AS ai_only FROM daria_krasavina.voc_valtera.gold_sentence_topics WHERE detected_by = 'ai'"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "7c178ba76b855cad951763cd75a6a25f",
+          "question": [
+            "How many unexpected braking mentions were there for the 2026 Aurora EV in November 2026?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT SUM(interactions) AS mentions FROM daria_krasavina.voc_valtera.gold_topic_daily WHERE topic_name = 'Safety - Unexpected Braking' AND model = 'Aurora EV' AND model_year = 2026 AND interaction_date BETWEEN '2026-11-01' AND '2026-11-30'"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "73c4a6d5a1ea5373b54001e3c33adf4d",
+          "question": [
+            "How many P1 cases are in the escalation queue?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT COUNT(*) AS p1_cases FROM daria_krasavina.voc_valtera.gold_escalation_queue WHERE priority = 'P1'"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "65f2bac8ab5d5a86898641adb1ba990f",
+          "question": [
+            "What share of P1 cases in the escalation queue are vehicle safety cases?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT ROUND(100.0 * AVG(CASE WHEN primary_parent_topic = 'Vehicle Safety' THEN 1 ELSE 0 END), 1) AS safety_share_pct FROM daria_krasavina.voc_valtera.gold_escalation_queue WHERE priority = 'P1'"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4d0c8319586151b0b090bb019a1cd9fb",
+          "question": [
+            "Which complaint topic has the most mentions overall?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT topic_name, SUM(interactions) AS mentions FROM daria_krasavina.voc_valtera.gold_topic_daily WHERE parent_topic <> 'Positive Feedback' GROUP BY topic_name ORDER BY mentions DESC LIMIT 1"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "45fd08991ec156da8239677345801853",
+          "question": [
+            "Which dealer region has the highest average NPS?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT dealer_region, AVG(nps_score) AS avg_nps FROM daria_krasavina.voc_valtera.gold_interaction_insights WHERE channel = 'survey' AND nps_score IS NOT NULL GROUP BY dealer_region ORDER BY avg_nps DESC LIMIT 1"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "15cee55b84d85b0dbd29b89c40aeb655",
+          "question": [
+            "What is the average escalation score of P1 cases in the queue?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT AVG(escalation_score) AS avg_escalation_score FROM daria_krasavina.voc_valtera.gold_escalation_queue WHERE priority = 'P1'"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "125011a443c25bdb9d2120ed5eb12e99",
+          "question": [
+            "How many safety-related interactions were there in October 2026?"
+          ],
+          "answer": [
+            {
+              "format": "SQL",
+              "content": [
+                "SELECT COUNT(*) AS safety_interactions FROM daria_krasavina.voc_valtera.gold_interaction_insights WHERE is_safety AND interaction_date BETWEEN '2026-10-01' AND '2026-10-31'"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

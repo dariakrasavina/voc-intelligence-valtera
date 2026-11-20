@@ -1,7 +1,7 @@
 {
-  "ai_calls_this_run": 350,
-  "seconds": 152.2,
-  "cache_size": 350,
+  "ai_calls_this_run": 43,
+  "seconds": 51.9,
+  "cache_size": 4018,
   "errors": 0,
   "definitions_fingerprint": "280419e7f6251de2",
   "min_confidence": 0.6,
@@ -25,128 +25,128 @@
   "tags_by_topic": [
     {
       "topic_name": "Service - Repair Delay",
-      "tagged_sentences": 1052,
-      "avg_confidence": 0.782
+      "tagged_sentences": 755,
+      "avg_confidence": 0.801
     },
     {
       "topic_name": "Software - Infotainment or App",
-      "tagged_sentences": 997,
-      "avg_confidence": 0.854
-    },
-    {
-      "topic_name": "Praise - Positive Feedback",
-      "tagged_sentences": 823,
-      "avg_confidence": 0.83
-    },
-    {
-      "topic_name": "Dealer - Poor Dealer Experience",
       "tagged_sentences": 731,
-      "avg_confidence": 0.812
+      "avg_confidence": 0.845
     },
     {
       "topic_name": "Billing - Payment or Financing Issue",
-      "tagged_sentences": 544,
-      "avg_confidence": 0.859
+      "tagged_sentences": 684,
+      "avg_confidence": 0.83
+    },
+    {
+      "topic_name": "Praise - Positive Feedback",
+      "tagged_sentences": 634,
+      "avg_confidence": 0.841
+    },
+    {
+      "topic_name": "Dealer - Poor Dealer Experience",
+      "tagged_sentences": 569,
+      "avg_confidence": 0.831
     },
     {
       "topic_name": "Warranty - Claim Denied",
-      "tagged_sentences": 476,
-      "avg_confidence": 0.84
-    },
-    {
-      "topic_name": "Charging - Public Charger Failure",
-      "tagged_sentences": 426,
-      "avg_confidence": 0.843
+      "tagged_sentences": 396,
+      "avg_confidence": 0.837
     },
     {
       "topic_name": "Safety - Warning Light or Airbag",
-      "tagged_sentences": 402,
-      "avg_confidence": 0.862
+      "tagged_sentences": 374,
+      "avg_confidence": 0.845
+    },
+    {
+      "topic_name": "Charging - Public Charger Failure",
+      "tagged_sentences": 330,
+      "avg_confidence": 0.841
     },
     {
       "topic_name": "Software - OTA Update Failure",
-      "tagged_sentences": 402,
-      "avg_confidence": 0.754
+      "tagged_sentences": 291,
+      "avg_confidence": 0.776
     },
     {
       "topic_name": "Battery - Range Loss",
-      "tagged_sentences": 365,
-      "avg_confidence": 0.847
-    },
-    {
-      "topic_name": "Safety - Driver Assist Malfunction",
-      "tagged_sentences": 344,
-      "avg_confidence": 0.838
+      "tagged_sentences": 287,
+      "avg_confidence": 0.829
     },
     {
       "topic_name": "Service - Recall Question",
-      "tagged_sentences": 328,
-      "avg_confidence": 0.86
+      "tagged_sentences": 246,
+      "avg_confidence": 0.856
+    },
+    {
+      "topic_name": "Safety - Driver Assist Malfunction",
+      "tagged_sentences": 235,
+      "avg_confidence": 0.829
     },
     {
       "topic_name": "Charging - Home Charging Issue",
-      "tagged_sentences": 279,
+      "tagged_sentences": 208,
+      "avg_confidence": 0.833
+    },
+    {
+      "topic_name": "Safety - Unexpected Braking",
+      "tagged_sentences": 162,
       "avg_confidence": 0.831
     },
     {
       "topic_name": "Charging - Charge Port Door Stuck",
-      "tagged_sentences": 245,
-      "avg_confidence": 0.847
-    },
-    {
-      "topic_name": "Safety - Unexpected Braking",
-      "tagged_sentences": 227,
-      "avg_confidence": 0.842
+      "tagged_sentences": 160,
+      "avg_confidence": 0.858
     }
   ],
   "examples": [
     {
-      "topic_name": "Billing - Payment or Financing Issue",
-      "sentence_text": "Autopay took the wrong amount this month.",
+      "topic_name": "Safety - Warning Light or Airbag",
+      "sentence_text": "The check engine light is on again.",
       "confidence": 0.85,
-      "rationale": "The text says Autopay took the wrong amount this month, indicating a billing/payment problem."
+      "rationale": "The sentence explicitly states \"The check engine light is on again,\" which is a dashboard warning light."
     },
     {
-      "topic_name": "Dealer - Poor Dealer Experience",
-      "sentence_text": "The salesman was pushy and lied about the price.",
-      "confidence": 0.85,
-      "rationale": "The customer describes the salesman as pushy and lying about the price, indicating a negative experience with dealership staff."
-    },
-    {
-      "topic_name": "Charging - Public Charger Failure",
-      "sentence_text": "The charging network app said the station was available but it was not working.",
-      "confidence": 0.78,
-      "rationale": "Customer reports a station shown as available in the app was not working, indicating a failure at a public charging location."
-    },
-    {
-      "topic_name": "Software - Infotainment or App",
-      "sentence_text": "Navigation crashes and the touchscreen goes black.",
-      "confidence": 0.85,
-      "rationale": "The customer reports that navigation crashes and the touchscreen goes black, which are failures of the infotainment system."
-    },
-    {
-      "topic_name": "Billing - Payment or Financing Issue",
-      "sentence_text": "My lease statement has a fee I do not recognize.",
+      "topic_name": "Safety - Warning Light or Airbag",
+      "sentence_text": "a brake warning light showed up on um, the dash this morning",
       "confidence": 0.87,
-      "rationale": "Customer mentions a fee on their lease statement that they do not recognize, indicating a billing/lease issue."
+      "rationale": "The customer states a brake warning light appeared on the dashboard."
     },
     {
       "topic_name": "Safety - Unexpected Braking",
-      "sentence_text": "Automatic braking kicked in under an overpass for no reason.",
-      "confidence": 0.88,
-      "rationale": "The customer reports automatic braking engaged with no real obstacle under an overpass."
+      "sentence_text": "Like, it braked by itself um, at 65 miles an hour and the truck behind me almost hit me.",
+      "confidence": 0.8,
+      "rationale": "The customer says the vehicle 'braked by itself' while driving at 65 mph, indicating a phantom or unexpected braking event."
+    },
+    {
+      "topic_name": "Billing - Payment or Financing Issue",
+      "sentence_text": "Valtera Financial billed me a late fee eevn though I paid on time.",
+      "confidence": 0.85,
+      "rationale": "The customer reports being billed a late fee despite paying on time, indicating a billing error."
     },
     {
       "topic_name": "Service - Repair Delay",
-      "sentence_text": "It has been sitting at the service center since the beginning of the month.",
-      "confidence": 0.66,
-      "rationale": "The statement notes the vehicle has been at the service center since the beginning of the month, indicating a prolonged wait for repair."
+      "sentence_text": "I cannot get a service appointment for another month.",
+      "confidence": 0.85,
+      "rationale": "The customer says they cannot get a service appointment for another month, indicating a lack of appointment availability."
     },
     {
-      "topic_name": "Software - Infotainment or App",
-      "sentence_text": "My phone does not work as a key half the time and I am stuck in the parking lot.",
-      "confidence": 0.78,
-      "rationale": "Customer states the phone key fails half the time, which matches the phone key issue described in the Software - Infotainment or App category."
+      "topic_name": "Charging - Charge Port Door Stuck",
+      "sentence_text": "like, the charge flap is jammed shut again you know, this morning",
+      "confidence": 0.85,
+      "rationale": "Customer says the charge flap is jammed shut, indicating the charge port door is stuck."
+    },
+    {
+      "topic_name": "Praise - Positive Feedback",
+      "sentence_text": "Thank you uh, so much, I am really impressed with the service.",
+      "confidence": 0.85,
+      "rationale": "The sentence says \"I am really impressed with the service\" which is explicit positive feedback."
+    },
+    {
+      "topic_name": "Safety - Warning Light or Airbag",
+      "sentence_text": "Comments: THERE IS A LITTLE RED SYMBOL OF A PERSON WITH A BALL ON THE DASH THAT WILL NOT GO AWAY!!!",
+      "confidence": 0.71,
+      "rationale": "Customer reports a red dashboard symbol that will not go away, indicating a warning light"
     }
   ]
 }

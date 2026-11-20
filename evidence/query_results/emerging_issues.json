@@ -1,38 +1,38 @@
 [
   {
+    "first_alert_date": "2026-10-26",
+    "is_alert": "true",
+    "last_7d": "0",
+    "model": "Ridgeback Hybrid",
+    "model_year": "2026",
+    "peak_lift": "6.86",
+    "topic_name": "Software - Infotainment or App"
+  },
+  {
     "first_alert_date": "2026-10-30",
     "is_alert": "true",
-    "last_7d": "45",
+    "last_7d": "32",
     "model": "Aurora EV",
     "model_year": "2026",
-    "peak_lift": "24.80",
+    "peak_lift": "9.60",
     "topic_name": "Charging - Charge Port Door Stuck"
   },
   {
     "first_alert_date": "2026-10-31",
     "is_alert": "true",
-    "last_7d": "31",
+    "last_7d": "17",
     "model": "Aurora EV",
     "model_year": "2026",
-    "peak_lift": "18.40",
-    "topic_name": "Safety - Unexpected Braking"
-  },
-  {
-    "first_alert_date": "2026-10-31",
-    "is_alert": "true",
-    "last_7d": "23",
-    "model": "Aurora EV",
-    "model_year": "2026",
-    "peak_lift": "7.64",
+    "peak_lift": "6.50",
     "topic_name": "Software - OTA Update Failure"
   },
   {
-    "first_alert_date": "2026-11-20",
+    "first_alert_date": "2026-11-03",
     "is_alert": "true",
-    "last_7d": "11",
+    "last_7d": "21",
     "model": "Aurora EV",
-    "model_year": "2024",
-    "peak_lift": "4.40",
-    "topic_name": "Software - Infotainment or App"
+    "model_year": "2026",
+    "peak_lift": "10.40",
+    "topic_name": "Safety - Unexpected Braking"
   }
 ]

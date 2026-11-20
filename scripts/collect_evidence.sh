@@ -7,7 +7,7 @@ W=148ccb90800933a1; NS=daria_krasavina.voc_valtera
 cd "$(dirname "$0")/.."; mkdir -p evidence/task_outputs evidence/query_results
 
 # 1. per-task evidence JSON written by every notebook
-for f in 01_governance 02_rule_tagging 03_ai_classify 04_sentiment_model 05_gold_and_alerts 06_lakebase_sync 07_evaluate; do
+for f in 01_governance 02_rule_tagging 03_ai_classify 04_sentiment_model 05_gold_and_alerts 06_lakebase_sync 07_evaluate 08_genie_space; do
   databricks fs cat "dbfs:/Volumes/daria_krasavina/voc_valtera/evidence/$f.json" --profile "$P" > "evidence/task_outputs/$f.json"
 done
 
@@ -41,6 +41,15 @@ q ai_only_catches "SELECT topic_name, ai_confidence, ai_rationale, s.sentence_te
 q masked_pii "SELECT customer_id, first_name, last_name, email, phone, loyalty_tier FROM $NS.customers_secure LIMIT 5"
 q uc_model_versions "SELECT 'voc_sentiment_model' AS model, '$NS.voc_sentiment_model' AS full_name"
 
-# 5. unit tests
+# 5. incremental ingestion proof: rows written per Auto Loader update (Delta history)
+for t in bronze_interactions silver_sentences; do
+  databricks experimental aitools tools query "SELECT '$t' AS table_name, version, CAST(timestamp AS STRING) AS ts, operation, operationMetrics.numOutputRows AS rows_written FROM (DESCRIBE HISTORY $NS.$t) WHERE operation IN ('STREAMING UPDATE', 'CREATE OR REPLACE TABLE', 'WRITE') ORDER BY version" --warehouse $W --profile "$P"
+done > evidence/query_results/incremental_delta_history.json
+q case_status "SELECT status, priority, count(*) AS cases FROM $NS.gold_case_status GROUP BY ALL ORDER BY priority, status"
+q sentiment_mix "SELECT sentiment, count(*) AS interactions, round(100 * count(*) / sum(count(*)) OVER (), 1) AS pct FROM $NS.gold_interaction_insights GROUP BY 1"
+q messy_bronze_vs_clean_silver "SELECT b.customer_id, b.first_name AS bronze_first_name, s.first_name AS silver_first_name, b.phone AS bronze_phone, s.phone AS silver_phone, b.loyalty_tier AS bronze_tier, s.loyalty_tier AS silver_tier FROM $NS.bronze_customers b JOIN $NS.silver_customers s USING (customer_id) WHERE b.loyalty_tier <> s.loyalty_tier OR b.first_name <> s.first_name LIMIT 8"
+q transcript_sample "SELECT interaction_id, turn_idx, speaker, sentence_text FROM $NS.silver_sentences WHERE interaction_id = (SELECT min(interaction_id) FROM $NS.silver_sentences WHERE channel = 'call' AND interaction_date = '2026-11-05') ORDER BY turn_idx, sentence_idx"
+
+# 6. unit tests
 (uv run --no-project --with pytest python -m pytest tests -v 2>&1 || true) > evidence/unit_tests.txt
 echo "evidence collected in ./evidence"

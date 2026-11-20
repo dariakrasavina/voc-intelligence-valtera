@@ -1,13 +1,8 @@
 [
   {
-    "matched_terms": "\"charge flap\", jam*",
-    "sentence_text": "The charge flap is jammed shut again this morning.",
-    "topic_name": "Charging - Charge Port Door Stuck"
-  },
-  {
-    "matched_terms": "\"charge flap\", jam*",
-    "sentence_text": "The charge flap is jammed shut again this morning.",
-    "topic_name": "Charging - Charge Port Door Stuck"
+    "matched_terms": "\"phantom braking\"",
+    "sentence_text": "I had phantom braking twice this week on the same road.",
+    "topic_name": "Safety - Unexpected Braking"
   },
   {
     "matched_terms": "\"charging port\", \"won't close\"",
@@ -15,18 +10,23 @@
     "topic_name": "Charging - Charge Port Door Stuck"
   },
   {
+    "matched_terms": "\"charge flap\", jam*",
+    "sentence_text": "the charge flap is jammed shut again this morning",
+    "topic_name": "Charging - Charge Port Door Stuck"
+  },
+  {
+    "matched_terms": "\"charging port\", \"won't close\"",
+    "sentence_text": "So, my charging port door won't close, so the car will not lock.",
+    "topic_name": "Charging - Charge Port Door Stuck"
+  },
+  {
+    "matched_terms": "\"charge flap\", jam*",
+    "sentence_text": "Overall: The charge flap is jammed shut again this morning.",
+    "topic_name": "Charging - Charge Port Door Stuck"
+  },
+  {
     "matched_terms": "\"phantom braking\"",
-    "sentence_text": "I had phantom braking twice this week on the same road.",
+    "sentence_text": "So, I had phantom braking twice this week on the same road.",
     "topic_name": "Safety - Unexpected Braking"
-  },
-  {
-    "matched_terms": "\"charge port\", \"stays open\"",
-    "sentence_text": "Overall: The charge port door stays open after I unplug.",
-    "topic_name": "Charging - Charge Port Door Stuck"
-  },
-  {
-    "matched_terms": "\"charge port\", stuck",
-    "sentence_text": "The charge port door is stuck and will not open.",
-    "topic_name": "Charging - Charge Port Door Stuck"
   }
 ]

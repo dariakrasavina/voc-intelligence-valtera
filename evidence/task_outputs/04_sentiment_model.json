@@ -1,32 +1,32 @@
 {
   "model": "daria_krasavina.voc_valtera.voc_sentiment_model",
-  "version": 7,
+  "version": 10,
   "alias": "champion",
-  "mlflow_run_id": "ab7f97a6277648c1878f225cf96610b0",
+  "mlflow_run_id": "a4c674057d1547fcbefe101138dcbd9c",
   "metrics_vs_weak_labels": {
-    "accuracy": 0.9577464788732394,
-    "macro_f1": 0.89914294459749,
-    "n_train": 281,
-    "n_test": 71
+    "accuracy": 0.9873417721518988,
+    "macro_f1": 0.9819804338032377,
+    "n_train": 3158,
+    "n_test": 790
   },
-  "classification_report": "              precision    recall  f1-score   support\n\n    negative       0.97      0.98      0.98        60\n     neutral       1.00      0.71      0.83         7\n    positive       0.80      1.00      0.89         4\n\n    accuracy                           0.96        71\n   macro avg       0.92      0.90      0.90        71\nweighted avg       0.96      0.96      0.96        71\n",
+  "classification_report": "              precision    recall  f1-score   support\n\n    negative       0.99      0.99      0.99       580\n     neutral       0.97      0.97      0.97       145\n    positive       0.97      1.00      0.98        65\n\n    accuracy                           0.99       790\n   macro avg       0.98      0.99      0.98       790\nweighted avg       0.99      0.99      0.99       790\n",
   "weak_label_distribution": {
-    "negative": 299,
-    "neutral": 35,
-    "positive": 18
+    "negative": 2897,
+    "neutral": 724,
+    "positive": 327
   },
   "scored_distribution": [
     {
-      "sentiment_label": "neutral",
-      "n": 5698
+      "sentiment_label": "positive",
+      "n": 3532
     },
     {
       "sentiment_label": "negative",
-      "n": 10334
+      "n": 11983
     },
     {
-      "sentiment_label": "positive",
-      "n": 2620
+      "sentiment_label": "neutral",
+      "n": 7230
     }
   ]
 }

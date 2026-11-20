@@ -1,0 +1,74 @@
+[
+  {
+    "bronze_first_name": "quinn",
+    "bronze_phone": "(555) 817-6102",
+    "bronze_tier": "Gold",
+    "customer_id": "C00158",
+    "silver_first_name": "Quinn",
+    "silver_phone": "+1-555-817-6102",
+    "silver_tier": "Gold"
+  },
+  {
+    "bronze_first_name": "Quinn",
+    "bronze_phone": "555.811.0766",
+    "bronze_tier": "GOLD ",
+    "customer_id": "C01172",
+    "silver_first_name": "Quinn",
+    "silver_phone": "+1-555-811-0766",
+    "silver_tier": "Gold"
+  },
+  {
+    "bronze_first_name": "Marley",
+    "bronze_phone": "555.591.8903",
+    "bronze_tier": "STANDARD ",
+    "customer_id": "C02752",
+    "silver_first_name": "Marley",
+    "silver_phone": "+1-555-591-8903",
+    "silver_tier": "Standard"
+  },
+  {
+    "bronze_first_name": "Taylor",
+    "bronze_phone": "+1-555-758-2686",
+    "bronze_tier": "STANDARD ",
+    "customer_id": "C02495",
+    "silver_first_name": "Taylor",
+    "silver_phone": "+1-555-758-2686",
+    "silver_tier": "Standard"
+  },
+  {
+    "bronze_first_name": "hayden",
+    "bronze_phone": "+1-555-614-6126",
+    "bronze_tier": "Standard",
+    "customer_id": "C00079",
+    "silver_first_name": "Hayden",
+    "silver_phone": "+1-555-614-6126",
+    "silver_tier": "Standard"
+  },
+  {
+    "bronze_first_name": "harper",
+    "bronze_phone": "555.792.1590",
+    "bronze_tier": "Silver",
+    "customer_id": "C00722",
+    "silver_first_name": "Harper",
+    "silver_phone": "+1-555-792-1590",
+    "silver_tier": "Silver"
+  },
+  {
+    "bronze_first_name": "sage",
+    "bronze_phone": "(555) 554-0216",
+    "bronze_tier": "Silver",
+    "customer_id": "C00511",
+    "silver_first_name": "Sage",
+    "silver_phone": "+1-555-554-0216",
+    "silver_tier": "Silver"
+  },
+  {
+    "bronze_first_name": "JAMIE",
+    "bronze_phone": "(555) 118-5878",
+    "bronze_tier": "Silver",
+    "customer_id": "C00393",
+    "silver_first_name": "Jamie",
+    "silver_phone": "+1-555-118-5878",
+    "silver_tier": "Silver"
+  }
+]

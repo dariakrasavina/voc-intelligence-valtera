@@ -1,0 +1,10 @@
+[
+  {
+    "catalog": "daria_krasavina",
+    "cdf_config_id": "case_mgmt_to_uc",
+    "create_time": "2026-11-20T18:30:47.923Z",
+    "name": "projects/valtera-voc/branches/production/databases/databricks-postgres/cdf-configs/case_mgmt_to_uc",
+    "postgres_schema": "case_mgmt",
+    "schema": "voc_valtera"
+  }
+]

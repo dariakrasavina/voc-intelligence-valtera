@@ -1,0 +1,48 @@
+{
+  "name": "valtera-voc-app",
+  "url": "https://valtera-voc-app-984752964297111.11.azure.databricksapps.com",
+  "app_status": {
+    "message": "App has status: App is running",
+    "state": "RUNNING"
+  },
+  "compute_status": {
+    "message": "App compute is running.",
+    "state": "ACTIVE"
+  },
+  "resources": [
+    {
+      "name": "sql-warehouse",
+      "sql_warehouse": {
+        "id": "148ccb90800933a1",
+        "permission": "CAN_USE"
+      }
+    },
+    {
+      "genie_space": {
+        "name": "Valtera VOC Insights",
+        "permission": "CAN_RUN",
+        "space_id": "01f1e46e16d61008a7f72226f0aacb03"
+      },
+      "name": "genie-space"
+    },
+    {
+      "name": "postgres",
+      "postgres": {
+        "branch": "projects/valtera-voc/branches/production",
+        "database": "projects/valtera-voc/branches/production/databases/databricks-postgres",
+        "permission": "CAN_CONNECT_AND_CREATE"
+      }
+    }
+  ],
+  "user_api_scopes": [
+    "genie"
+  ],
+  "active_deployment": {
+    "deployment_id": "01f1e517edb11cf0a4ce827d25ae9ce3",
+    "status": {
+      "message": "App started successfully",
+      "state": "SUCCEEDED"
+    },
+    "create_time": "2026-11-20T19:23:56Z"
+  }
+}

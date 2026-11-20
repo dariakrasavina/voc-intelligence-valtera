@@ -9,34 +9,34 @@
   },
   {
     "customer_id": "C00002",
-    "email": "r******",
-    "first_name": "R******",
-    "last_name": "H******",
+    "email": "m******",
+    "first_name": "M******",
+    "last_name": "L******",
+    "loyalty_tier": "Standard",
+    "phone": ""
+  },
+  {
+    "customer_id": "C00003",
+    "email": "p******",
+    "first_name": "P******",
+    "last_name": "V******",
     "loyalty_tier": "Standard",
     "phone": "+******"
   },
   {
-    "customer_id": "C00003",
-    "email": "k******",
-    "first_name": "K******",
-    "last_name": "T******",
-    "loyalty_tier": "Silver",
-    "phone": "+******"
-  },
-  {
     "customer_id": "C00004",
-    "email": "t******",
-    "first_name": "T******",
+    "email": "r******",
+    "first_name": "R******",
     "last_name": "L******",
-    "loyalty_tier": "Silver",
+    "loyalty_tier": "Standard",
     "phone": "+******"
   },
   {
     "customer_id": "C00005",
-    "email": "r******",
-    "first_name": "R******",
+    "email": "d******",
+    "first_name": "D******",
     "last_name": "K******",
-    "loyalty_tier": "Silver",
-    "phone": "+******"
+    "loyalty_tier": "Standard",
+    "phone": ""
   }
 ]

@@ -4,10 +4,10 @@
   "postgres_table": "voc_valtera.lb_escalation_queue",
   "scheduling_policy": "TRIGGERED",
   "sync_pipeline_id": "fa6a096b-5dbc-4f3b-8d66-0f0b394107e9",
-  "sync_update_id": "b7f97f3d-2993-4efc-8e4b-ca01c714f516",
+  "sync_update_id": "ce1aaa71-41f2-48dd-9ace-acc51c7c6b52",
   "sync_state": "COMPLETED",
   "recreated_synced_table": false,
   "app_access": "granted to 814877c5-01ff-4199-bc88-cbd8cdb3796d: can_read=True",
-  "source_rows": 440,
-  "lakebase_rows": 440
+  "source_rows": 318,
+  "lakebase_rows": 318
 }

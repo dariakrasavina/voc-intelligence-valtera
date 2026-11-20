@@ -1,5 +1,5 @@
 ============================= test session starts ==============================
-platform darwin -- Python 3.12.12, pytest-9.2.0, pluggy-1.7.0 -- /Users/daria.krasavina/.cache/uv/builds-v0/.tmpoSKsKb/bin/python
+platform darwin -- Python 3.12.12, pytest-9.2.0, pluggy-1.7.0 -- /Users/daria.krasavina/.cache/uv/builds-v0/.tmpoBDR9x/bin/python
 cachedir: .pytest_cache
 rootdir: /Users/daria.krasavina/FE-Bar, FY2027/voc-intelligence-valtera
 collecting ... collected 16 items
