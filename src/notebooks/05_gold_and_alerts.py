@@ -52,8 +52,12 @@ WITH tp AS (
          max(CASE WHEN parent_topic = 'Vehicle Safety' THEN 1 ELSE 0 END) = 1 AS is_safety
   FROM {ns}.gold_sentence_topics GROUP BY interaction_id),
 se AS (
-  SELECT interaction_id, avg(sentiment_score) AS avg_sentiment, max(negative_prob) AS max_negative_prob
-  FROM {ns}.sentence_sentiment GROUP BY interaction_id)
+  -- Interaction sentiment from SUBSTANTIVE sentences only (>= 4 words): short back-channels such as
+  -- "Cancel cancel." or "Huh?" should not make a routine call negative.
+  SELECT ss.interaction_id, avg(ss.sentiment_score) AS avg_sentiment, max(ss.negative_prob) AS max_negative_prob
+  FROM {ns}.sentence_sentiment ss JOIN {ns}.silver_sentences s USING (sentence_id)
+  WHERE size(split(s.sentence_text, ' ')) >= 4
+  GROUP BY ss.interaction_id)
 SELECT i.interaction_id, i.channel, i.created_at, i.interaction_date, i.call_reason, i.nps_score, i.duration_sec,
        i.customer_id, i.vin, i.model, i.powertrain, i.model_year, i.dealer_id, i.dealer_name, i.dealer_region,
        i.loyalty_tier, coalesce(tp.topics, array()) AS topics, coalesce(tp.parent_topics, array()) AS parent_topics,
@@ -61,7 +65,7 @@ SELECT i.interaction_id, i.channel, i.created_at, i.interaction_date, i.call_rea
        coalesce(tp.primary_parent_topic, 'No topic detected') AS primary_parent_topic,
        coalesce(tp.is_safety, false) AS is_safety,
        round(se.avg_sentiment, 3) AS avg_sentiment, round(se.max_negative_prob, 3) AS max_negative_prob,
-       CASE WHEN se.max_negative_prob >= 0.5 THEN 'negative' WHEN se.avg_sentiment > 0.2 THEN 'positive' ELSE 'neutral' END AS sentiment,
+       CASE WHEN se.avg_sentiment < -0.3 THEN 'negative' WHEN se.avg_sentiment > 0.3 THEN 'positive' ELSE 'neutral' END AS sentiment,
        round(coalesce(tp.max_weight, 0) * (0.5 + coalesce(se.max_negative_prob, 0))
              + CASE WHEN i.nps_score <= 3 THEN 1 ELSE 0 END
              + CASE WHEN tp.is_safety THEN 2 ELSE 0 END, 2) AS escalation_score,
