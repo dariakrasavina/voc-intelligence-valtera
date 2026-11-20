@@ -62,7 +62,7 @@ safety signals that surface 3–5 weeks after customers start calling.
 
 ```
 Contact-center + survey export ──► UC Volume (landing)
-   └─► Lakeflow Declarative Pipeline (Auto Loader → bronze, AUTO CDC customers, sentence split, expectations)
+   └─► Lakeflow Declarative Pipeline in Python (Auto Loader → bronze, AUTO CDC customers/vehicles/dealers, sentence split, expectations)
         └─► Unity Catalog silver (governed: PII tags, masking function, secure view)
              ├─► Rule engine (explainable, unit-tested)       ┐
              ├─► ai_classify v2.1 (plain-language topics)      ├─► gold: sentence topics, interaction insights,

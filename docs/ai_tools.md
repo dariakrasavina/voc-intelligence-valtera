@@ -17,7 +17,7 @@ Skills give the agent current, Databricks-approved guidance for each product, in
 | Skill | Used for |
 |---|---|
 | `databricks-core` | CLI usage, profile/auth handling, data exploration commands |
-| `databricks-pipelines` | Lakeflow Declarative Pipeline in SQL: Auto Loader (`STREAM read_files`), AUTO CDC (SCD1), expectations, materialized views |
+| `databricks-pipelines` | Lakeflow Declarative Pipeline in Python: Auto Loader (`cloudFiles`), AUTO CDC (SCD1) for customers / vehicles / dealers, expectations, materialized views |
 | `databricks-jobs` | Serverless multi-task job, file-arrival trigger syntax, the one-of schedule/trigger/continuous rule |
 | `databricks-lakebase` | Lakebase Autoscaling project, synced table (`create-synced-table`), service-principal grants |
 | `databricks-apps` | AppKit scaffolding (`databricks apps init`), analytics + Lakebase + Genie plugins, typegen, `apps validate` |

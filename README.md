@@ -51,11 +51,14 @@ flowchart LR
   subgraph Land["1 · Land"]
     GEN["Synthetic export<br/>calls · surveys · CRM · vehicles · dealers"] --> VOL[("UC Volume<br/>landing/")]
   end
-  subgraph Ingest["2 · Lakeflow Declarative Pipeline (serverless)"]
-    VOL -->|Auto Loader<br/>STREAM read_files| BR["bronze_* (4 streaming tables)<br/>expectations, schema hints"]
+  subgraph Ingest["2 · Lakeflow Declarative Pipeline (Python, serverless)"]
+    VOL -->|Auto Loader<br/>cloudFiles| BR["bronze_* (4 streaming tables)<br/>expectations, schema hints"]
     BR -->|AUTO CDC SCD1| SC["silver_customers (PII)"]
+    BR -->|AUTO CDC SCD1| SV["silver_vehicles · silver_dealers"]
     BR --> SS["silver_sentences<br/>1 row per sentence + speaker"]
     BR --> SI["silver_interactions (MV)<br/>+ vehicle, dealer, tier"]
+    SV --> SI
+    SC --> SI
   end
   subgraph Gov["3 · Unity Catalog governance"]
     SC --> SEC["customers_secure<br/>mask_pii() + pii tags"]
@@ -85,7 +88,7 @@ system. The job never writes to `landing`, so it can't trigger itself.
 | # | Task | What it does | Code |
 |---|---|---|---|
 | 0 | *(outside the job)* | `scripts/land_export.sh` generates the synthetic export and copies it to the `landing` volume (`backfill` = 90 days, `daily` = one day). This starts the job | `scripts/land_export.sh`, `src/data_gen/` |
-| 1 | `lakeflow_ingest` | Auto Loader → bronze; AUTO CDC customers; sentence split; data-quality checks | `src/pipeline/*.sql` |
+| 1 | `lakeflow_ingest` | Python Lakeflow pipeline: Auto Loader (`cloudFiles`) → 4 bronze tables; AUTO CDC → `silver_customers`, `silver_vehicles`, `silver_dealers`; sentence split → `silver_sentences`; `silver_interactions` joins the silver tables; data-quality expectations at every layer | `src/pipeline/*.py` |
 | 2 | `governance` | Tags PII, creates the masking function and secure view | `src/notebooks/01_governance.py` |
 | 3 | `rule_tagging` | Rule engine (`rule_engine.py` + `tagger.py`) over every customer sentence through a vectorized PySpark `pandas_udf`; writes the sentence text and the words that triggered each tag | `src/notebooks/02_rule_tagging.py` → `src/classification/rule_tag_job.py` |
 | 4 | `ai_classify` | `ai_classify` v2.1 multi-label; labels = each topic's `ai_description` from `category_model.json`; confidence ≥ 0.6; one call per distinct sentence, cached by (text, definitions fingerprint); writes the sentence text, confidence and rationale | `src/notebooks/03_ai_classify.py` → `src/classification/ai_classify_job.py`, `ai_common.py` |
@@ -160,7 +163,7 @@ Full list: [`docs/ai_tools.md`](docs/ai_tools.md).
 
 ```
 src/data_gen/          synthetic export generator (pure Python, seeded)
-src/pipeline/          Lakeflow Declarative Pipeline (SQL)
+src/pipeline/          Lakeflow Declarative Pipeline (Python: Auto Loader, AUTO CDC, expectations)
 src/classification/    rule engine + tagger + category_model.json (the taxonomy)
 src/notebooks/         job tasks 00-60
 src/genie/             Genie Agent definition as code

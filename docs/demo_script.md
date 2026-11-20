@@ -67,9 +67,9 @@ Check in: *"Is time-to-detect the metric your team is measured on, or is it cost
 | Business | "How fast can we see value?" | 30-day pilot on your exports; the alert and queue work from day one, since the rules migrate as data. |
 | Business | "What if the AI is wrong on a safety case?" | AI only adds recall; every safety tag can be checked (rule terms or AI rationale), summaries are marked "verify", and the human owner decides. |
 | Business | "Will my analysts lose control of the taxonomy?" | No. They own `category_model.json`: keywords and plain-language definitions drive both the rules and the AI. |
-| Technical | "Data quality?" | Expectations at bronze (drop missing IDs or empty transcripts), AUTO CDC for customer changes, ground-truth evaluation each run. |
+| Technical | "Data quality?" | Auto Loader with schema hints and rescued data, expectations at bronze and silver (drop missing IDs or empty transcripts, flag bad powertrain / region values), AUTO CDC for customer, vehicle and dealer changes, ground-truth evaluation each run. |
 | Technical | "Security / PII?" | PII tagged and masked in UC; gold, Genie and the app never see it; the app's service principal has SELECT on gold only. |
 | Technical | "Integration with our case system?" | The queue is in Postgres: the case system can read it directly, or we push via an API in phase 3. |
-| Technical | "Scale?" | Serverless pipeline and jobs; classification work grows with *distinct* sentences, not volume. The rule engine runs in parallel with `mapInPandas`. |
+| Technical | "Scale?" | Serverless pipeline and jobs; classification work grows with *distinct* sentences, not volume. The rule engine runs in parallel as a PySpark `pandas_udf`. |
 | Technical | "Why not one LLM for everything?" | Cost, determinism and auditability. Rules give exact explanations; ai_classify handles nuance; ai_query with a specific LLM stays an option. |
 | Technical | "Is it really incremental?" | Yes. Auto Loader tracks processed files: the re-run wrote 0 rows, the next day wrote +70 (Delta history in `evidence/incremental_run.md`). |
