@@ -20,18 +20,24 @@ def sql(q): return spark.sql(q.replace("{ns}", ns))
 # COMMAND ----------
 sql("""
 CREATE OR REPLACE TABLE {ns}.gold_sentence_topics
-COMMENT 'Topic per sentence. detected_by = rules | ai | both. Rules give explainable precision, ai_classify adds paraphrases the rules miss.'
+COMMENT 'Topic per sentence, with the sentence text. detected_by = rules | ai | both. Rules give explainable precision, ai_classify adds paraphrases the rules miss.'
 AS
 WITH r AS (SELECT sentence_id, interaction_id, topic_id, matched_terms FROM {ns}.sentence_rule_tags WHERE via = 'direct'),
-     a AS (SELECT sentence_id, interaction_id, topic_id, confidence, rationale FROM {ns}.sentence_ai_tags)
-SELECT coalesce(r.sentence_id, a.sentence_id) AS sentence_id,
-       coalesce(r.interaction_id, a.interaction_id) AS interaction_id,
+     a AS (SELECT sentence_id, interaction_id, topic_id, confidence, rationale FROM {ns}.sentence_ai_tags),
+     j AS (
+       SELECT coalesce(r.sentence_id, a.sentence_id) AS sentence_id,
+              coalesce(r.interaction_id, a.interaction_id) AS interaction_id,
+              coalesce(r.topic_id, a.topic_id) AS topic_id,
+              CASE WHEN r.topic_id IS NOT NULL AND a.topic_id IS NOT NULL THEN 'both'
+                   WHEN r.topic_id IS NOT NULL THEN 'rules' ELSE 'ai' END AS detected_by,
+              r.matched_terms, a.confidence AS ai_confidence, a.rationale AS ai_rationale
+       FROM r FULL OUTER JOIN a ON r.sentence_id = a.sentence_id AND r.topic_id = a.topic_id)
+SELECT j.sentence_id, j.interaction_id, s.created_at, s.channel, s.sentence_text,
        t.topic_id, t.topic_name, t.parent_topic, t.escalation_weight,
-       CASE WHEN r.topic_id IS NOT NULL AND a.topic_id IS NOT NULL THEN 'both'
-            WHEN r.topic_id IS NOT NULL THEN 'rules' ELSE 'ai' END AS detected_by,
-       r.matched_terms, a.confidence AS ai_confidence, a.rationale AS ai_rationale
-FROM r FULL OUTER JOIN a ON r.sentence_id = a.sentence_id AND r.topic_id = a.topic_id
-JOIN {ns}.dim_topics t ON t.topic_id = coalesce(r.topic_id, a.topic_id)
+       j.detected_by, j.matched_terms, j.ai_confidence, j.ai_rationale
+FROM j
+JOIN {ns}.dim_topics t ON t.topic_id = j.topic_id
+JOIN {ns}.silver_sentences s ON s.sentence_id = j.sentence_id
 """)
 
 sql("""
