@@ -2,21 +2,21 @@
   "overall": [
     {
       "method": "consensus (rules OR ai)",
-      "tp": 7832,
-      "fp": 89,
-      "fn": 4,
-      "precision": 0.989,
-      "recall": 0.999,
-      "f1": 0.994
+      "tp": 7836,
+      "fp": 5,
+      "fn": 0,
+      "precision": 0.999,
+      "recall": 1.0,
+      "f1": 1.0
     },
     {
       "method": "ai_classify",
-      "tp": 7604,
-      "fp": 89,
-      "fn": 232,
-      "precision": 0.988,
-      "recall": 0.97,
-      "f1": 0.979
+      "tp": 7636,
+      "fp": 5,
+      "fn": 200,
+      "precision": 0.999,
+      "recall": 0.974,
+      "f1": 0.987
     },
     {
       "method": "rules",
@@ -33,15 +33,15 @@
       "method": "ai_classify",
       "variant": "nuance",
       "actual": 1574,
-      "found": 1570,
-      "recall": 0.997
+      "found": 1574,
+      "recall": 1.0
     },
     {
       "method": "consensus (rules OR ai)",
       "variant": "nuance",
       "actual": 1574,
-      "found": 1570,
-      "recall": 0.997
+      "found": 1574,
+      "recall": 1.0
     },
     {
       "method": "rules",
@@ -54,8 +54,8 @@
       "method": "ai_classify",
       "variant": "rule",
       "actual": 6262,
-      "found": 6034,
-      "recall": 0.964
+      "found": 6062,
+      "recall": 0.968
     },
     {
       "method": "consensus (rules OR ai)",
@@ -95,7 +95,7 @@
       "topic_name": "Billing - Payment or Financing Issue",
       "method": "ai_classify",
       "actual": 657,
-      "recall": 1.0
+      "recall": 0.828
     },
     {
       "topic_name": "Billing - Payment or Financing Issue",
@@ -185,7 +185,7 @@
       "topic_name": "Praise - Positive Feedback",
       "method": "ai_classify",
       "actual": 823,
-      "recall": 0.818
+      "recall": 1.0
     },
     {
       "topic_name": "Praise - Positive Feedback",
@@ -221,13 +221,13 @@
       "topic_name": "Safety - Unexpected Braking",
       "method": "ai_classify",
       "actual": 227,
-      "recall": 0.982
+      "recall": 1.0
     },
     {
       "topic_name": "Safety - Unexpected Braking",
       "method": "consensus (rules OR ai)",
       "actual": 227,
-      "recall": 0.982
+      "recall": 1.0
     },
     {
       "topic_name": "Safety - Unexpected Braking",
@@ -239,7 +239,7 @@
       "topic_name": "Safety - Warning Light or Airbag",
       "method": "ai_classify",
       "actual": 489,
-      "recall": 1.0
+      "recall": 0.822
     },
     {
       "topic_name": "Safety - Warning Light or Airbag",
@@ -257,7 +257,7 @@
       "topic_name": "Service - Recall Question",
       "method": "ai_classify",
       "actual": 328,
-      "recall": 0.762
+      "recall": 1.0
     },
     {
       "topic_name": "Service - Recall Question",
@@ -358,8 +358,8 @@
       "model": "Aurora EV",
       "model_year": 2026,
       "first_alert_date": "2026-10-31",
-      "peak_lift": "17.60",
-      "last_7d": 30
+      "peak_lift": "18.40",
+      "last_7d": 31
     },
     {
       "topic_name": "Software - OTA Update Failure",
@@ -393,7 +393,7 @@
       "model_year": 2026,
       "first_alert_date": "2026-10-31",
       "days_after_ota_42": 3,
-      "peak_lift": "17.60"
+      "peak_lift": "18.40"
     },
     {
       "topic_name": "Software - OTA Update Failure",

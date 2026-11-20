@@ -5,7 +5,7 @@
     "model": "Aurora EV",
     "model_year": "2026",
     "negative_rate_pct": "95.8",
-    "safety_interactions": "212"
+    "safety_interactions": "213"
   },
   {
     "avg_nps": "3.41",
@@ -21,7 +21,7 @@
     "model": "Ridgeback Hybrid",
     "model_year": "2026",
     "negative_rate_pct": "95.3",
-    "safety_interactions": "81"
+    "safety_interactions": "82"
   },
   {
     "avg_nps": "3.86",
@@ -77,7 +77,7 @@
     "model": "Strata EV",
     "model_year": "2024",
     "negative_rate_pct": "96.4",
-    "safety_interactions": "43"
+    "safety_interactions": "44"
   },
   {
     "avg_nps": "3.28",

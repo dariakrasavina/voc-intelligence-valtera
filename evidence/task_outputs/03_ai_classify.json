@@ -1,133 +1,152 @@
 {
-  "ai_calls_this_run": 0,
-  "seconds": 0.0,
+  "ai_calls_this_run": 350,
+  "seconds": 152.2,
   "cache_size": 350,
+  "errors": 0,
+  "definitions_fingerprint": "280419e7f6251de2",
   "min_confidence": 0.6,
+  "labels": {
+    "Battery - Range Loss": "Customer says the EV's driving range has dropped, is lower than advertised, or the battery drains abnormally fast.",
+    "Billing - Payment or Financing Issue": "Customer reports a billing, payment, lease or financing problem: double charge, wrong amount, unexpected fee, late fee error, missing payment.",
+    "Charging - Charge Port Door Stuck": "The vehicle's charge port door or flap is stuck, will not open, will not close, or is broken.",
+    "Charging - Home Charging Issue": "Customer has a problem charging at HOME: wall box, level 2 charger, mobile connector, breaker tripping, charging stopping overnight.",
+    "Charging - Public Charger Failure": "Customer reports a failed, interrupted, or very slow charging session at a PUBLIC or DC fast charging station (not home charging).",
+    "Dealer - Poor Dealer Experience": "Customer describes a negative experience with dealership staff: rude, pushy, dismissive, ignoring calls, not returning calls, or misleading them.",
+    "Praise - Positive Feedback": "Customer clearly praises the vehicle, the service, or a person (love it, amazing, excellent, very happy). Not polite thanks alone.",
+    "Safety - Driver Assist Malfunction": "SAFETY: a driver-assistance feature (lane keep, lane centering, adaptive cruise, blind spot monitoring, Valtera Pilot) malfunctioned, disengaged unexpectedly, or steered/jerked the car.",
+    "Safety - Unexpected Braking": "SAFETY: the vehicle braked hard by itself, phantom braking, or automatic emergency braking engaged with no real obstacle.",
+    "Safety - Warning Light or Airbag": "SAFETY: a dashboard warning light, airbag or SRS alert, brake warning, or 'service vehicle soon' message appeared.",
+    "Service - Recall Question": "Customer asks about, received, or is waiting on a vehicle recall or safety recall repair.",
+    "Service - Repair Delay": "Customer complains about a long wait for a repair, parts on back order, no service appointment availability, or no loaner/rental car.",
+    "Software - Infotainment or App": "Customer reports the center screen, infotainment, navigation, CarPlay/Android Auto, Bluetooth, phone key, or the Valtera mobile app freezing, crashing or not connecting.",
+    "Software - OTA Update Failure": "Customer says an over-the-air (OTA) software or firmware update failed to install, got stuck, or caused new problems after it installed.",
+    "Warranty - Claim Denied": "Customer says a warranty claim was denied, rejected, or that a repair they expected to be covered is not covered."
+  },
   "tags_by_topic": [
     {
       "topic_name": "Service - Repair Delay",
-      "n": 1052,
-      "avg_conf": 0.812
+      "tagged_sentences": 1052,
+      "avg_confidence": 0.782
     },
     {
       "topic_name": "Software - Infotainment or App",
-      "n": 992,
-      "avg_conf": 0.839
-    },
-    {
-      "topic_name": "Dealer - Poor Dealer Experience",
-      "n": 820,
-      "avg_conf": 0.827
+      "tagged_sentences": 997,
+      "avg_confidence": 0.854
     },
     {
       "topic_name": "Praise - Positive Feedback",
-      "n": 673,
-      "avg_conf": 0.905
+      "tagged_sentences": 823,
+      "avg_confidence": 0.83
+    },
+    {
+      "topic_name": "Dealer - Poor Dealer Experience",
+      "tagged_sentences": 731,
+      "avg_confidence": 0.812
     },
     {
       "topic_name": "Billing - Payment or Financing Issue",
-      "n": 657,
-      "avg_conf": 0.878
-    },
-    {
-      "topic_name": "Safety - Warning Light or Airbag",
-      "n": 489,
-      "avg_conf": 0.844
+      "tagged_sentences": 544,
+      "avg_confidence": 0.859
     },
     {
       "topic_name": "Warranty - Claim Denied",
-      "n": 476,
-      "avg_conf": 0.828
+      "tagged_sentences": 476,
+      "avg_confidence": 0.84
     },
     {
       "topic_name": "Charging - Public Charger Failure",
-      "n": 426,
-      "avg_conf": 0.832
+      "tagged_sentences": 426,
+      "avg_confidence": 0.843
+    },
+    {
+      "topic_name": "Safety - Warning Light or Airbag",
+      "tagged_sentences": 402,
+      "avg_confidence": 0.862
     },
     {
       "topic_name": "Software - OTA Update Failure",
-      "n": 402,
-      "avg_conf": 0.8
+      "tagged_sentences": 402,
+      "avg_confidence": 0.754
     },
     {
       "topic_name": "Battery - Range Loss",
-      "n": 365,
-      "avg_conf": 0.825
+      "tagged_sentences": 365,
+      "avg_confidence": 0.847
     },
     {
       "topic_name": "Safety - Driver Assist Malfunction",
-      "n": 344,
-      "avg_conf": 0.833
-    },
-    {
-      "topic_name": "Charging - Home Charging Issue",
-      "n": 279,
-      "avg_conf": 0.84
+      "tagged_sentences": 344,
+      "avg_confidence": 0.838
     },
     {
       "topic_name": "Service - Recall Question",
-      "n": 250,
-      "avg_conf": 0.872
+      "tagged_sentences": 328,
+      "avg_confidence": 0.86
+    },
+    {
+      "topic_name": "Charging - Home Charging Issue",
+      "tagged_sentences": 279,
+      "avg_confidence": 0.831
     },
     {
       "topic_name": "Charging - Charge Port Door Stuck",
-      "n": 245,
-      "avg_conf": 0.874
+      "tagged_sentences": 245,
+      "avg_confidence": 0.847
     },
     {
       "topic_name": "Safety - Unexpected Braking",
-      "n": 223,
-      "avg_conf": 0.844
+      "tagged_sentences": 227,
+      "avg_confidence": 0.842
     }
   ],
   "examples": [
     {
-      "topic_name": "Service - Repair Delay",
-      "sentence_text": "Overall: The part is on back order and nobody can give me a date.",
-      "confidence": 0.83,
-      "rationale": "The text says the part is on back order and no date can be given, indicating a repair delay due to parts unavailable."
+      "topic_name": "Billing - Payment or Financing Issue",
+      "sentence_text": "Autopay took the wrong amount this month.",
+      "confidence": 0.85,
+      "rationale": "The text says Autopay took the wrong amount this month, indicating a billing/payment problem."
     },
     {
-      "topic_name": "Praise - Positive Feedback",
-      "sentence_text": "Thank you so much, I am really impressed with the service.",
-      "confidence": 0.92,
-      "rationale": "The customer says 'Thank you so much, I am really impressed with the service,' clearly expressing positive feedback."
+      "topic_name": "Dealer - Poor Dealer Experience",
+      "sentence_text": "The salesman was pushy and lied about the price.",
+      "confidence": 0.85,
+      "rationale": "The customer describes the salesman as pushy and lying about the price, indicating a negative experience with dealership staff."
+    },
+    {
+      "topic_name": "Charging - Public Charger Failure",
+      "sentence_text": "The charging network app said the station was available but it was not working.",
+      "confidence": 0.78,
+      "rationale": "Customer reports a station shown as available in the app was not working, indicating a failure at a public charging location."
+    },
+    {
+      "topic_name": "Software - Infotainment or App",
+      "sentence_text": "Navigation crashes and the touchscreen goes black.",
+      "confidence": 0.85,
+      "rationale": "The customer reports that navigation crashes and the touchscreen goes black, which are failures of the infotainment system."
+    },
+    {
+      "topic_name": "Billing - Payment or Financing Issue",
+      "sentence_text": "My lease statement has a fee I do not recognize.",
+      "confidence": 0.87,
+      "rationale": "Customer mentions a fee on their lease statement that they do not recognize, indicating a billing/lease issue."
+    },
+    {
+      "topic_name": "Safety - Unexpected Braking",
+      "sentence_text": "Automatic braking kicked in under an overpass for no reason.",
+      "confidence": 0.88,
+      "rationale": "The customer reports automatic braking engaged with no real obstacle under an overpass."
+    },
+    {
+      "topic_name": "Service - Repair Delay",
+      "sentence_text": "It has been sitting at the service center since the beginning of the month.",
+      "confidence": 0.66,
+      "rationale": "The statement notes the vehicle has been at the service center since the beginning of the month, indicating a prolonged wait for repair."
     },
     {
       "topic_name": "Software - Infotainment or App",
       "sentence_text": "My phone does not work as a key half the time and I am stuck in the parking lot.",
       "confidence": 0.78,
-      "rationale": "The text says the phone does not work as a key, which matches the phone key issue described in the label."
-    },
-    {
-      "topic_name": "Safety - Unexpected Braking",
-      "sentence_text": "The car slammed on the brakes on the highway with nothing in front of me.",
-      "confidence": 0.84,
-      "rationale": "The sentence states the car slammed on the brakes on the highway with nothing in front, indicating unexpected braking."
-    },
-    {
-      "topic_name": "Software - Infotainment or App",
-      "sentence_text": "The center screen freezes every time I start the car.",
-      "confidence": 0.85,
-      "rationale": "The text states the center screen freezes every time the car starts, directly describing an infotainment screen issue."
-    },
-    {
-      "topic_name": "Safety - Unexpected Braking",
-      "sentence_text": "It braked by itself at 65 miles an hour and the truck behind me almost hit me.",
-      "confidence": 0.88,
-      "rationale": "The text states the vehicle \"braked by itself\" while driving, matching the description of unexpected braking."
-    },
-    {
-      "topic_name": "Warranty - Claim Denied",
-      "sentence_text": "The dealer said the camera is not covered under warranty.",
-      "confidence": 0.78,
-      "rationale": "Dealer said the camera is not covered under warranty, indicating a warranty claim was denied."
-    },
-    {
-      "topic_name": "Safety - Warning Light or Airbag",
-      "sentence_text": "Overall: There is a little red symbol of a person with a ball on the dash that will not go away.",
-      "confidence": 0.75,
-      "rationale": "The text describes a persistent red symbol on the dash, which indicates a dashboard warning light."
+      "rationale": "Customer states the phone key fails half the time, which matches the phone key issue described in the Software - Infotainment or App category."
     }
   ]
 }

@@ -1,29 +1,29 @@
 {
   "escalation_queue_write": {
-    "version": 7,
+    "version": 13,
     "operation": "MERGE",
     "operationMetrics": {
       "numTargetRowsCopied": "0",
       "numTargetRowsDeleted": "0",
       "numTargetBytesRemoved": "0",
-      "numTargetDeletionVectorsAdded": "0",
-      "numTargetRowsMatchedUpdated": "0",
+      "numTargetDeletionVectorsAdded": "1",
+      "numTargetRowsMatchedUpdated": "6",
       "numTargetRowsMatchedDeleted": "0",
-      "numTargetRowsUpdated": "0",
-      "numTargetChangeFilesAdded": "0",
+      "numTargetRowsUpdated": "6",
+      "numTargetChangeFilesAdded": "1",
       "numTargetRowsNotMatchedBySourceDeleted": "0",
-      "rewriteTimeMs": "1952",
-      "numTargetFilesAdded": "0",
-      "numTargetBytesAdded": "0",
-      "executionTimeMs": "3517",
-      "materializeSourceTimeMs": "694",
-      "numTargetRowsInserted": "0",
+      "rewriteTimeMs": "3694",
+      "numTargetFilesAdded": "1",
+      "numTargetBytesAdded": "8631",
+      "executionTimeMs": "6577",
+      "materializeSourceTimeMs": "1242",
+      "numTargetRowsInserted": "2",
       "numTargetDeletionVectorsUpdated": "0",
-      "scanTimeMs": "820",
-      "numOutputRows": "0",
+      "scanTimeMs": "1530",
+      "numOutputRows": "8",
       "numTargetDeletionVectorsRemoved": "0",
       "numTargetRowsNotMatchedBySourceUpdated": "0",
-      "numSourceRows": "438",
+      "numSourceRows": "440",
       "numTargetFilesRemoved": "0"
     }
   },
@@ -47,11 +47,11 @@
       "model": "Aurora EV",
       "model_year": 2026,
       "as_of_date": "2026-11-20",
-      "last_7d": 30,
-      "baseline_weekly_avg": "15.50",
+      "last_7d": 31,
+      "baseline_weekly_avg": "15.75",
       "first_alert_date": "2026-10-31",
-      "peak_lift": "17.60",
-      "lift_vs_baseline": "1.94",
+      "peak_lift": "18.40",
+      "lift_vs_baseline": "1.97",
       "is_alert": true
     },
     {
@@ -85,7 +85,7 @@
     {
       "priority": "P1",
       "primary_parent_topic": "Vehicle Safety",
-      "n": 357
+      "n": 359
     },
     {
       "priority": "P2",
@@ -106,15 +106,15 @@
   "topic_detection_source": [
     {
       "detected_by": "both",
-      "n": 6034
+      "n": 6062
     },
     {
       "detected_by": "ai",
-      "n": 1659
+      "n": 1579
     },
     {
       "detected_by": "rules",
-      "n": 228
+      "n": 200
     }
   ],
   "metric_view_sample": [
@@ -122,7 +122,7 @@
       "model": "Aurora EV",
       "model_year": 2026,
       "interactions": 1259,
-      "safety": 212,
+      "safety": 213,
       "neg_pct": "95.8"
     },
     {
@@ -136,7 +136,7 @@
       "model": "Ridgeback Hybrid",
       "model_year": 2026,
       "interactions": 384,
-      "safety": 81,
+      "safety": 82,
       "neg_pct": "95.3"
     },
     {
@@ -185,7 +185,7 @@
       "model": "Strata EV",
       "model_year": 2024,
       "interactions": 304,
-      "safety": 43,
+      "safety": 44,
       "neg_pct": "96.4"
     }
   ]

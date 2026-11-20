@@ -11,10 +11,10 @@
   {
     "first_alert_date": "2026-10-31",
     "is_alert": "true",
-    "last_7d": "30",
+    "last_7d": "31",
     "model": "Aurora EV",
     "model_year": "2026",
-    "peak_lift": "17.60",
+    "peak_lift": "18.40",
     "topic_name": "Safety - Unexpected Braking"
   },
   {

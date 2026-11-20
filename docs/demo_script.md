@@ -45,7 +45,7 @@ Check in: *"Is time-to-detect the metric your team is measured on, or is it cost
 ## 4 · Why trust the tagging (4 min)
 - **SHOW:** Model quality page.
 - **TELL:** "Keyword rules are perfectly explainable but miss every paraphrase: 79.8% recall. AI classification with
-  the same plain-language topic definitions catches them. Together: **99.9% recall, 98.9% precision**. We measure this
+  the same plain-language topic definitions catches them. Together: **100% recall, 99.9% precision**. We measure this
   on every run against labelled data, so if quality drops we see it."
 - **Technical detail:** each rule tag stores the words that triggered it; ai_classify returns a confidence and a rationale.
 

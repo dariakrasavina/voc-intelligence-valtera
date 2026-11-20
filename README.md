@@ -20,8 +20,8 @@ a month. Today a **vendor text-analytics tool** tags them with keyword rules, an
 | KPI | Before | After | Basis |
 |---|---|---|---|
 | Time to detect an emerging safety issue | ~30 days (monthly report) | **2–3 days** | measured: the seeded OTA 4.2 defect (released 2026-10-28) alerted on **2026-10-30** (charge-port door) and **2026-10-31** (unexpected braking) |
-| Complaint topics found (recall) | **79.8%** (keyword rules) | **99.9%** (rules + `ai_classify`) | measured against ground truth, `evidence/task_outputs/07_evaluate.json` |
-| Topic tagging F1 | 0.888 | **0.994** | same |
+| Complaint topics found (recall) | **79.8%** (keyword rules) | **100%** (rules + `ai_classify`) | measured against ground truth, `evidence/task_outputs/07_evaluate.json` |
+| Topic tagging F1 | 0.888 | **0.999** (precision 99.9%: 5 false tags in 7,841) | same |
 | LLM calls for classification | 1 per sentence | **350 for 15,821 sentences (−97.8%)**; **0** on re-runs | `evidence/task_outputs/03_ai_classify.json` |
 | Vendor text-analytics license | ~$600K/yr | Databricks consumption ~$60–90K/yr | *estimate* |
 | Analyst effort on rule upkeep and tag review | ~5 FTE | ~2.5 FTE (≈ $300K/yr returned) | *estimate* |
@@ -87,8 +87,8 @@ system. The job never writes to `landing`, so it can't trigger itself.
 | 0 | *(outside the job)* | `scripts/land_export.sh` generates the synthetic export and copies it to the `landing` volume (`backfill` = 90 days, `daily` = one day). This starts the job | `scripts/land_export.sh`, `src/data_gen/` |
 | 1 | `lakeflow_ingest` | Auto Loader → bronze; AUTO CDC customers; sentence split; data-quality checks | `src/pipeline/*.sql` |
 | 2 | `governance` | Tags PII, creates the masking function and secure view | `src/notebooks/01_governance.py` |
-| 3 | `rule_tagging` | Rule engine over every sentence (`mapInPandas`), storing the words that triggered each tag | `src/notebooks/02_rule_tagging.py`, `src/classification/` |
-| 4 | `ai_classify` | `ai_classify` v2.1 multi-label over distinct customer sentences, confidence ≥ 0.6, cached by text hash | `src/notebooks/03_ai_classify.py` |
+| 3 | `rule_tagging` | Rule engine (`rule_engine.py` + `tagger.py`) over every customer sentence through a vectorized PySpark `pandas_udf`; writes the sentence text and the words that triggered each tag | `src/notebooks/02_rule_tagging.py` → `src/classification/rule_tag_job.py` |
+| 4 | `ai_classify` | `ai_classify` v2.1 multi-label; labels = each topic's `ai_description` from `category_model.json`; confidence ≥ 0.6; one call per distinct sentence, cached by (text, definitions fingerprint); writes the sentence text, confidence and rationale | `src/notebooks/03_ai_classify.py` → `src/classification/ai_classify_job.py`, `ai_common.py` |
 | 5 | `sentiment_model` | Weak-labels with `ai_analyze_sentiment`, trains TF-IDF + logistic regression, registers in UC, scores all sentences | `src/notebooks/04_sentiment_model.py` |
 | 6 | `gold_and_alerts` | Combined topics, interaction insights, daily topic counts, emerging-issue alerts, escalation queue, metric view | `src/notebooks/05_gold_and_alerts.py` |
 | 7 | `lakebase_sync` | Refreshes the Lakebase synced table and checks row counts | `src/notebooks/06_lakebase_sync.py` |
@@ -103,7 +103,7 @@ system. The job never writes to `landing`, so it can't trigger itself.
 | Incremental daily run | [`evidence/incremental_run.md`](evidence/incremental_run.md) | re-run of 90 days wrote **0** rows; next day wrote **+70** interactions / +399 sentences; 0 new ai_classify calls |
 | Row counts per layer | [`evidence/query_results/table_row_counts.json`](evidence/query_results/table_row_counts.json) | 6,116 interactions → 32,832 sentences → 438 queue rows = 438 in Lakebase |
 | Pipeline events | [`evidence/pipeline_events.txt`](evidence/pipeline_events.txt) | flow progress, data-quality metrics |
-| Classifier quality | [`evidence/query_results/classifier_quality.json`](evidence/query_results/classifier_quality.json) | F1 0.888 rules / 0.979 AI / 0.994 combined |
+| Classifier quality | [`evidence/query_results/classifier_quality.json`](evidence/query_results/classifier_quality.json) | F1 0.888 rules / 0.987 AI / 0.999 combined |
 | AI-only catches with rationale | [`evidence/query_results/ai_only_catches.json`](evidence/query_results/ai_only_catches.json) | e.g. "It used to get me to my sister's place and back…" → Range Loss (0.78) |
 | Explainable rule tags | [`evidence/query_results/explainable_rule_tags.json`](evidence/query_results/explainable_rule_tags.json) | e.g. `"phantom braking"` → Unexpected Braking |
 | Emerging issues | [`evidence/query_results/emerging_issues.json`](evidence/query_results/emerging_issues.json) | OTA 4.2 issues first alerted 2026-10-30 / 10-31; 1 unplanted spike on 2026-11-20 |
@@ -114,7 +114,7 @@ system. The job never writes to `landing`, so it can't trigger itself.
 | App build + deployment | [`evidence/app_validation.txt`](evidence/app_validation.txt), [`evidence/app_status.json`](evidence/app_status.json) | validate: types, lint, typecheck, build, tests pass; app RUNNING |
 | Genie answers + generated SQL | [`evidence/genie/genie_conversations.md`](evidence/genie/genie_conversations.md) | 5 business questions answered |
 | Genie benchmark evaluation | [`evidence/genie/genie_benchmark_eval.md`](evidence/genie/genie_benchmark_eval.md) | 3/6 → **5/6** after fixing instructions; the 6th is *needs review* (number formatting) |
-| Unit tests | [`evidence/unit_tests.txt`](evidence/unit_tests.txt) | 12/12 rule-engine tests pass; app: 3/3 route tests, typecheck, lint, build pass (`databricks apps validate`) |
+| Unit tests | [`evidence/unit_tests.txt`](evidence/unit_tests.txt) | 16/16 pass (rule engine + ai_classify labels and cache key); app: 3/3 route tests, typecheck, lint, build pass (`databricks apps validate`) |
 
 Every notebook writes its own JSON summary to the `evidence` volume; `scripts/collect_evidence.sh` copies them here.
 
@@ -123,9 +123,9 @@ Every notebook writes its own JSON summary to the `evidence` volume; `scripts/co
 | Decision | Why | Trade-off / what I'd do next |
 |---|---|---|
 | **Keep a rule engine next to the AI** | Deterministic, explainable to Quality and Legal; a vendor's existing rule set can be migrated as data (`category_model.json`) | Two methods, but one taxonomy file drives both (rules + plain-language `ai_description`) |
-| **Combine with OR (rules or AI)** | Rules alone miss every paraphrase (0% recall on them). The union gets 99.9% recall at 98.9% precision | On real data rule precision will be below the 100% seen here (the synthetic vocabulary matches the rules by construction) |
+| **Combine with OR (rules or AI)** | Rules alone miss every paraphrase (0% recall on them). The union gets 100% recall at 99.9% precision | On real data rule precision will be below the 100% seen here (the synthetic vocabulary matches the rules by construction) |
 | **`ai_classify` instead of `ai_query` + prompt** | Purpose-built, multi-label, returns confidence and a rationale, no prompt to maintain | Fixed Databricks-managed model; `ai_query` with a chosen LLM stays an option |
-| **Classify distinct sentences once and cache them** | Contact-center language repeats heavily: 97.8% fewer calls, 0 on re-runs | The cache must be invalidated when topic definitions change (key on hash of text + definitions) |
+| **Classify distinct sentences once and cache them** | Contact-center language repeats heavily: 97.8% fewer calls, 0 on re-runs | The cache key includes a fingerprint of the definitions, instructions and version, so editing a topic definition re-classifies every sentence (tested in `tests/test_ai_common.py`). A per-label incremental re-score, as in that earlier project's incremental job, would make edits cheaper |
 | **Trained sentiment model instead of per-call LLM sentiment** | Zero token cost at volume, deterministic, owned and versioned in UC | Trained on LLM *weak* labels (352 distinct sentences in this synthetic set). Next: 500 analyst-labelled sentences |
 | **Daily alert rule: ≥10 in 7 days and ≥4× the prior 4-week weekly average** | Simple enough for Safety to trust; checked every day, so the first alert date is known | A 3× threshold produced 2 noise alerts. At 4× it also flags one unplanted low-volume spike, so alerts go to an analyst, and thresholds need tuning on real volume |
 | **Lakebase for the queue** | Millisecond reads, transactional write-back, audit log, while analytics stay on the SQL warehouse | Synced table is TRIGGERED (minutes after each job run), not continuous |
@@ -137,8 +137,10 @@ Every notebook writes its own JSON summary to the `evidence` volume; `scripts/co
 
 - **Claude Code** (Databricks Isaac) was my pair programmer for scaffolding, the synthetic generator, pipeline SQL,
   notebooks, the AppKit UI and debugging (for example the serverless UDF pickling error and the alert-baseline bug).
-- **My own prior work:** the rule engine (`src/classification/rule_engine.py`, `tagger.py`) is code I built (also with Claude Code) for an earlier VOC
-  project. Only the engine was reused; the Valtera taxonomy and rules are new.
+- **My own prior work:** the classification code is ported from an earlier VOC project of mine: the rule engine
+  (`rule_engine.py`, `tagger.py`), the PySpark `pandas_udf` tagging job (`rule_tag_job.py`)
+  and the ai_classify v2.1 track (`ai_common.py`, `ai_classify_job.py`). Only code was reused; the Valtera taxonomy, rules,
+  topic definitions and data are new.
 - **AI inside the solution:** `ai_classify` (topics), `ai_analyze_sentiment` (weak labels), `ai_summarize` (case summaries), Genie (NL querying).
 - **Checking the AI rather than trusting it:** ground-truth evaluation of every classifier on every run, a disclaimer and
   generated SQL on every Genie answer, and "verify" labels on AI case summaries in the app.

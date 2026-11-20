@@ -1,23 +1,18 @@
 [
   {
-    "matched_terms": "\"braked by itself\"",
-    "sentence_text": "It braked by itself at 65 miles an hour and the truck behind me almost hit me.",
-    "topic_name": "Safety - Unexpected Braking"
+    "matched_terms": "\"charge flap\", jam*",
+    "sentence_text": "The charge flap is jammed shut again this morning.",
+    "topic_name": "Charging - Charge Port Door Stuck"
   },
   {
-    "matched_terms": "\"automatic braking\"",
-    "sentence_text": "Automatic braking kicked in under an overpass for no reason.",
-    "topic_name": "Safety - Unexpected Braking"
+    "matched_terms": "\"charge flap\", jam*",
+    "sentence_text": "The charge flap is jammed shut again this morning.",
+    "topic_name": "Charging - Charge Port Door Stuck"
   },
   {
-    "matched_terms": "\"phantom braking\"",
-    "sentence_text": "I had phantom braking twice this week on the same road.",
-    "topic_name": "Safety - Unexpected Braking"
-  },
-  {
-    "matched_terms": "\"slammed on the brakes\"",
-    "sentence_text": "The car slammed on the brakes on the highway with nothing in front of me.",
-    "topic_name": "Safety - Unexpected Braking"
+    "matched_terms": "\"charging port\", \"won't close\"",
+    "sentence_text": "My charging port door won't close, so the car will not lock.",
+    "topic_name": "Charging - Charge Port Door Stuck"
   },
   {
     "matched_terms": "\"phantom braking\"",
@@ -25,8 +20,13 @@
     "topic_name": "Safety - Unexpected Braking"
   },
   {
-    "matched_terms": "\"automatic braking\"",
-    "sentence_text": "Automatic braking kicked in under an overpass for no reason.",
-    "topic_name": "Safety - Unexpected Braking"
+    "matched_terms": "\"charge port\", \"stays open\"",
+    "sentence_text": "Overall: The charge port door stays open after I unplug.",
+    "topic_name": "Charging - Charge Port Door Stuck"
+  },
+  {
+    "matched_terms": "\"charge port\", stuck",
+    "sentence_text": "The charge port door is stuck and will not open.",
+    "topic_name": "Charging - Charge Port Door Stuck"
   }
 ]
