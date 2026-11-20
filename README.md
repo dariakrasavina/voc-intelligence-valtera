@@ -155,18 +155,51 @@ docs/                  presentation deck (deck.md + deck.pdf), demo script for t
 scripts/               evidence collection, Genie evidence, app access setup
 ```
 
+## How it's deployed
+
+Two Databricks Asset Bundles hold the code-defined resources. Everything else is set up once with a CLI
+command, a script, or by a job task the first time it runs. Nothing is created by hand in the UI.
+
+| Resource | Deployed by | Where |
+|---|---|---|
+| Lakeflow pipeline `valtera-voc-ingest` | **Bundle 1** (root) | `databricks.yml`, `resources/pipeline.yml` |
+| Lakeflow Job `valtera-voc-end-to-end` (9 tasks) | **Bundle 1** (root) | `resources/job.yml` |
+| Databricks App `valtera-voc-app` + its resources (SQL warehouse, Lakebase, Genie space) | **Bundle 2** (app) | `app/databricks.yml`, `app/app.yaml` |
+| UC schema `voc_valtera`, volumes `landing` and `evidence` | One-time SQL (step 1 below) | prerequisite |
+| Lakebase project `valtera-voc` | One-time CLI command (step 2 below) | prerequisite |
+| Tables, views, masking function, metric view | Job tasks (pipeline + notebooks) | `src/pipeline/`, `src/notebooks/` |
+| Sentiment model `voc_sentiment_model@champion` | Job task `sentiment_model` (MLflow → UC) | `src/notebooks/30_sentiment_model.py` |
+| Lakebase synced table `lb_escalation_queue` | Job task `lakebase_sync` (created on first run, recreated if broken) | `src/notebooks/50_lakebase_sync.py` |
+| Genie Agent "Valtera VOC Insights" | Script ("Genie as code") | `src/genie/genie_space.py` |
+| Grants for the app's service principal (UC + Lakebase) | Script, run once after the first app deploy; the sync task re-applies the Lakebase grant | `scripts/setup_app_access.sh` |
+
+The app is a separate bundle because `databricks apps init` scaffolds it that way, and it keeps the Node.js app's
+build and deploy cycle independent from the data pipeline.
+
 ## Run it
 
 ```bash
-databricks bundle deploy --profile <profile>                 # pipeline + job
-databricks bundle run voc_end_to_end --profile <profile>     # full backfill (≈8 min, serverless)
-python src/genie/genie_space.py --profile <profile> --warehouse <id>   # create the Genie Agent
-cd app && npm install && databricks bundle deploy --profile <profile> && databricks bundle run app --profile <profile>
-scripts/setup_app_access.sh <profile>                        # least-privilege grants for the app's service principal
-python -m pytest tests                                       # rule-engine tests (no cluster needed)
+# 1. Prerequisites (once): schema, volumes, SQL warehouse
+databricks experimental aitools tools query "CREATE SCHEMA IF NOT EXISTS daria_krasavina.voc_valtera" --warehouse <id> --profile <profile>
+databricks experimental aitools tools query "CREATE VOLUME IF NOT EXISTS daria_krasavina.voc_valtera.landing" --warehouse <id> --profile <profile>
+databricks experimental aitools tools query "CREATE VOLUME IF NOT EXISTS daria_krasavina.voc_valtera.evidence" --warehouse <id> --profile <profile>
+# 2. Lakebase project (once)
+databricks postgres create-project valtera-voc --json '{"spec": {"display_name": "Valtera VOC - escalation queue"}}' --profile <profile>
+# 3. Bundle 1: pipeline + job, then the full backfill (≈8 min, serverless)
+databricks bundle deploy --profile <profile>
+databricks bundle run voc_end_to_end --profile <profile>
+# 4. Genie Agent
+python src/genie/genie_space.py --profile <profile> --warehouse <id>
+# 5. Bundle 2: the app (set the Genie space ID in app/databricks.yml first)
+cd app && npm install && databricks bundle deploy --profile <profile> && databricks bundle run app --profile <profile> && cd ..
+# 6. Least-privilege grants for the app's service principal
+scripts/setup_app_access.sh <profile>
+# Tests (no cluster needed)
+python -m pytest tests
 ```
 
-Prerequisites: a Unity Catalog schema and the `landing` / `evidence` volumes, a SQL warehouse, and a Lakebase project (`valtera-voc`).
+Daily increment: `databricks bundle run voc_end_to_end --params generate_mode=daily,day=YYYY-MM-DD --profile <profile>`.
+The catalog name and warehouse ID are hard-coded in a few places (app SQL queries, Genie script, scripts); change them to deploy elsewhere.
 
 ## Limitations
 
