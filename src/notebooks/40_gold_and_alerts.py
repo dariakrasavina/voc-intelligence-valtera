@@ -154,7 +154,9 @@ else:
     WHEN NOT MATCHED THEN INSERT *
     WHEN NOT MATCHED BY SOURCE THEN DELETE""")
 sql("""COMMENT ON TABLE {ns}.gold_escalation_queue IS 'Open P1/P2 cases from the last 30 days, with AI case summary and recommended next action. Maintained with MERGE (CDF on) and synced to Lakebase (triggered) for the case-management app.'""")
-merge_stats = sql("DESCRIBE HISTORY {ns}.gold_escalation_queue LIMIT 1").select("version", "operation", "operationMetrics").first().asDict()
+merge_stats = (sql("DESCRIBE HISTORY {ns}.gold_escalation_queue")
+               .where("operation IN ('MERGE', 'CREATE TABLE AS SELECT')")
+               .select("version", "operation", "operationMetrics").first().asDict())
 print("escalation queue write:", merge_stats)
 
 # COMMAND ----------
