@@ -7,7 +7,7 @@ W=148ccb90800933a1; NS=daria_krasavina.voc_valtera
 cd "$(dirname "$0")/.."; mkdir -p evidence/task_outputs evidence/query_results
 
 # 1. per-task evidence JSON written by every notebook
-for f in 01_generate_export 02_governance 03_rule_tagging 04_ai_classify 05_sentiment_model 06_gold_and_alerts 07_lakebase_sync 08_evaluate; do
+for f in 01_governance 02_rule_tagging 03_ai_classify 04_sentiment_model 05_gold_and_alerts 06_lakebase_sync 07_evaluate; do
   databricks fs cat "dbfs:/Volumes/daria_krasavina/voc_valtera/evidence/$f.json" --profile "$P" > "evidence/task_outputs/$f.json"
 done
 

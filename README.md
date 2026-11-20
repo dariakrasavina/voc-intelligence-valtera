@@ -20,9 +20,9 @@ a month. Today a **vendor text-analytics tool** tags them with keyword rules, an
 | KPI | Before | After | Basis |
 |---|---|---|---|
 | Time to detect an emerging safety issue | ~30 days (monthly report) | **2–3 days** | measured: the seeded OTA 4.2 defect (released 2026-10-28) alerted on **2026-10-30** (charge-port door) and **2026-10-31** (unexpected braking) |
-| Complaint topics found (recall) | **79.8%** (keyword rules) | **99.9%** (rules + `ai_classify`) | measured against ground truth, `evidence/task_outputs/08_evaluate.json` |
+| Complaint topics found (recall) | **79.8%** (keyword rules) | **99.9%** (rules + `ai_classify`) | measured against ground truth, `evidence/task_outputs/07_evaluate.json` |
 | Topic tagging F1 | 0.888 | **0.994** | same |
-| LLM calls for classification | 1 per sentence | **350 for 15,821 sentences (−97.8%)**; **0** on re-runs | `evidence/task_outputs/04_ai_classify.json` |
+| LLM calls for classification | 1 per sentence | **350 for 15,821 sentences (−97.8%)**; **0** on re-runs | `evidence/task_outputs/03_ai_classify.json` |
 | Vendor text-analytics license | ~$600K/yr | Databricks consumption ~$60–90K/yr | *estimate* |
 | Analyst effort on rule upkeep and tag review | ~5 FTE | ~2.5 FTE (≈ $300K/yr returned) | *estimate* |
 | Vehicles exposed to a bad OTA before rollback | full rollout | ~6,000 fewer (4 weeks earlier × 1,500 vehicles/week ≈ $0.9M at $150/vehicle) | *estimate* |
@@ -92,13 +92,13 @@ The processing job never writes to `landing`, so it can't trigger itself. Each s
 |---|---|---|---|
 | 1 | `generate_export` *(simulator job)* | Writes the synthetic export to the `landing` volume (`backfill` = 90 days, `daily` = one new day) | `src/notebooks/01_generate_export.py`, `src/data_gen/` |
 | 2 | `lakeflow_ingest` *(first task of the processing job)* | Auto Loader → bronze; AUTO CDC customers; sentence split; data-quality checks | `src/pipeline/*.sql` |
-| 3 | `governance` | Tags PII, creates the masking function and secure view | `src/notebooks/02_governance.py` |
-| 4 | `rule_tagging` | Rule engine over every sentence (`mapInPandas`), storing the words that triggered each tag | `src/notebooks/03_rule_tagging.py`, `src/classification/` |
-| 5 | `ai_classify` | `ai_classify` v2.1 multi-label over distinct customer sentences, confidence ≥ 0.6, cached by text hash | `src/notebooks/04_ai_classify.py` |
-| 6 | `sentiment_model` | Weak-labels with `ai_analyze_sentiment`, trains TF-IDF + logistic regression, registers in UC, scores all sentences | `src/notebooks/05_sentiment_model.py` |
-| 7 | `gold_and_alerts` | Combined topics, interaction insights, daily topic counts, emerging-issue alerts, escalation queue, metric view | `src/notebooks/06_gold_and_alerts.py` |
-| 8 | `lakebase_sync` | Refreshes the Lakebase synced table and checks row counts | `src/notebooks/07_lakebase_sync.py` |
-| 9 | `evaluate` | Loads the ground-truth labels, scores rules / AI / combined against them; checks when the OTA 4.2 issue was first detected | `src/notebooks/08_evaluate.py` |
+| 3 | `governance` | Tags PII, creates the masking function and secure view | `src/notebooks/01_governance.py` |
+| 4 | `rule_tagging` | Rule engine over every sentence (`mapInPandas`), storing the words that triggered each tag | `src/notebooks/02_rule_tagging.py`, `src/classification/` |
+| 5 | `ai_classify` | `ai_classify` v2.1 multi-label over distinct customer sentences, confidence ≥ 0.6, cached by text hash | `src/notebooks/03_ai_classify.py` |
+| 6 | `sentiment_model` | Weak-labels with `ai_analyze_sentiment`, trains TF-IDF + logistic regression, registers in UC, scores all sentences | `src/notebooks/04_sentiment_model.py` |
+| 7 | `gold_and_alerts` | Combined topics, interaction insights, daily topic counts, emerging-issue alerts, escalation queue, metric view | `src/notebooks/05_gold_and_alerts.py` |
+| 8 | `lakebase_sync` | Refreshes the Lakebase synced table and checks row counts | `src/notebooks/06_lakebase_sync.py` |
+| 9 | `evaluate` | Loads the ground-truth labels, scores rules / AI / combined against them; checks when the OTA 4.2 issue was first detected | `src/notebooks/07_evaluate.py` |
 
 ## Evidence that it ran (all plain text)
 
@@ -113,10 +113,10 @@ The processing job never writes to `landing`, so it can't trigger itself. Each s
 | AI-only catches with rationale | [`evidence/query_results/ai_only_catches.json`](evidence/query_results/ai_only_catches.json) | e.g. "It used to get me to my sister's place and back…" → Range Loss (0.78) |
 | Explainable rule tags | [`evidence/query_results/explainable_rule_tags.json`](evidence/query_results/explainable_rule_tags.json) | e.g. `"phantom braking"` → Unexpected Braking |
 | Emerging issues | [`evidence/query_results/emerging_issues.json`](evidence/query_results/emerging_issues.json) | OTA 4.2 issues first alerted 2026-10-30 / 10-31; 1 unplanted spike on 2026-11-20 |
-| Sentiment model (MLflow / UC) | [`evidence/task_outputs/05_sentiment_model.json`](evidence/task_outputs/05_sentiment_model.json) | accuracy 0.958, macro-F1 0.899 vs. held-out weak labels |
+| Sentiment model (MLflow / UC) | [`evidence/task_outputs/04_sentiment_model.json`](evidence/task_outputs/04_sentiment_model.json) | accuracy 0.958, macro-F1 0.899 vs. held-out weak labels |
 | PII masking | [`evidence/query_results/masked_pii.json`](evidence/query_results/masked_pii.json) | `K******`, `+******` |
 | Escalation queue + AI summaries | [`evidence/query_results/escalation_queue_sample.json`](evidence/query_results/escalation_queue_sample.json) | "Car braked suddenly at 45mph, nearly causing rear-end collision." |
-| Lakebase sync | [`evidence/task_outputs/07_lakebase_sync.json`](evidence/task_outputs/07_lakebase_sync.json) | sync COMPLETED, 438 = 438 rows, app read access verified |
+| Lakebase sync | [`evidence/task_outputs/06_lakebase_sync.json`](evidence/task_outputs/06_lakebase_sync.json) | sync COMPLETED, 438 = 438 rows, app read access verified |
 | App build + deployment | [`evidence/app_validation.txt`](evidence/app_validation.txt), [`evidence/app_status.json`](evidence/app_status.json) | validate: types, lint, typecheck, build, tests pass; app RUNNING |
 | Genie answers + generated SQL | [`evidence/genie/genie_conversations.md`](evidence/genie/genie_conversations.md) | 5 business questions answered |
 | Genie benchmark evaluation | [`evidence/genie/genie_benchmark_eval.md`](evidence/genie/genie_benchmark_eval.md) | 3/6 → **5/6** after fixing instructions; the 6th is *needs review* (number formatting) |
@@ -180,8 +180,8 @@ command, a script, or by a job task the first time it runs. Nothing is created b
 | UC schema `voc_valtera`, volumes `landing` and `evidence` | One-time SQL (step 1 below) | prerequisite |
 | Lakebase project `valtera-voc` | One-time CLI command (step 2 below) | prerequisite |
 | Tables, views, masking function, metric view | Job tasks (pipeline + notebooks) | `src/pipeline/`, `src/notebooks/` |
-| Sentiment model `voc_sentiment_model@champion` | Job task `sentiment_model` (MLflow → UC) | `src/notebooks/05_sentiment_model.py` |
-| Lakebase synced table `lb_escalation_queue` | Job task `lakebase_sync` (created on first run, recreated if broken) | `src/notebooks/07_lakebase_sync.py` |
+| Sentiment model `voc_sentiment_model@champion` | Job task `sentiment_model` (MLflow → UC) | `src/notebooks/04_sentiment_model.py` |
+| Lakebase synced table `lb_escalation_queue` | Job task `lakebase_sync` (created on first run, recreated if broken) | `src/notebooks/06_lakebase_sync.py` |
 | Genie Agent "Valtera VOC Insights" | Script ("Genie as code") | `src/genie/genie_space.py` |
 | Grants for the app's service principal (UC + Lakebase) | Script, run once after the first app deploy; the sync task re-applies the Lakebase grant | `scripts/setup_app_access.sh` |
 

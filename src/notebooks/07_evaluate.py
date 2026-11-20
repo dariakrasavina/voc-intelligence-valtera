@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # 08 · Evaluation: rules vs. ai_classify vs. consensus (against ground truth)
+# MAGIC # 07 · Evaluation: rules vs. ai_classify vs. consensus (against ground truth)
 # MAGIC The synthetic generator recorded the true topic of every complaint sentence (and whether it was
 # MAGIC phrased with the "expected" vocabulary or as a paraphrase). That lets us measure, not guess:
 # MAGIC precision / recall / F1 per method, per phrasing style and per topic.
@@ -67,7 +67,7 @@ first_detect = spark.sql(f"""
   ORDER BY first_alert_date""").toPandas()
 print("\nSeeded OTA 4.2 issue (shipped 2026-10-28): first alert per topic for the 2026 Aurora EV:"); print(first_detect.to_string(index=False))
 os.makedirs(ev, exist_ok=True)
-with open(f"{ev}/08_evaluate.json", "w") as f:
+with open(f"{ev}/07_evaluate.json", "w") as f:
     json.dump({"overall": overall.to_dict("records"), "recall_by_phrasing": by_variant.to_dict("records"),
                "recall_by_topic": by_topic.to_dict("records"), "emerging_issue_alerts": alerts.to_dict("records"),
                "ota_42_first_detection": first_detect.to_dict("records")}, f, indent=2, default=str)

@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # 03 · Rule-engine topic tagging (deterministic, explainable)
+# MAGIC # 02 · Rule-engine topic tagging (deterministic, explainable)
 # MAGIC Runs the pure-Python rule engine (`src/classification`) over every sentence with `mapInPandas`.
 # MAGIC The rules are **data** (`category_model.json`): business users can change keywords without code.
 # MAGIC Every tag records the words that triggered it, so each count in the app is explainable.
@@ -65,7 +65,7 @@ summary = spark.sql(f"""
 print(f"sentences scanned: {n_sent:,}  |  wall time: {elapsed}s")
 print(summary.to_string(index=False))
 os.makedirs(ev, exist_ok=True)
-with open(f"{ev}/03_rule_tagging.json", "w") as f:
+with open(f"{ev}/02_rule_tagging.json", "w") as f:
     json.dump({"sentences_scanned": n_sent, "seconds": elapsed,
                "direct_tags_by_topic": summary.to_dict("records"),
                "example_explanations": spark.sql(f"""SELECT r.topic_name, s.sentence_text, r.matched_terms

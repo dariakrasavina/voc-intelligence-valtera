@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # 04 · GenAI topic classification with `ai_classify` (v2.1, multi-label)
+# MAGIC # 03 · GenAI topic classification with `ai_classify` (v2.1, multi-label)
 # MAGIC The rule engine is precise but only catches wording it was told about. `ai_classify` reads the
 # MAGIC **plain-language topic definitions** from the same `category_model.json` and catches paraphrases
 # MAGIC ("that little door where you plug in won't budge").
@@ -72,7 +72,7 @@ cache_n = spark.table(f"{ns}.ai_classify_cache").count()
 print(f"ai_classify calls this run: {n_new:,} in {elapsed}s | cache size: {cache_n:,}")
 print(summary.to_string(index=False))
 os.makedirs(ev, exist_ok=True)
-with open(f"{ev}/04_ai_classify.json", "w") as f:
+with open(f"{ev}/03_ai_classify.json", "w") as f:
     json.dump({"ai_calls_this_run": n_new, "seconds": elapsed, "cache_size": cache_n, "min_confidence": min_conf,
                "tags_by_topic": summary.to_dict("records"),
                "examples": spark.sql(f"""SELECT a.topic_name, s.sentence_text, a.confidence, a.rationale

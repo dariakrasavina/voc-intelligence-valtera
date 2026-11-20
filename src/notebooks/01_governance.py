@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # 02 · Unity Catalog governance
+# MAGIC # 01 · Unity Catalog governance
 # MAGIC * PII columns in `silver_customers` are **tagged** (`pii`) so they are discoverable and auditable.
 # MAGIC * A masking function + `customers_secure` view expose customers to analysts, the app and Genie
 # MAGIC   **without** names/emails/phones unless the reader is in the `valtera_voc_pii_readers` group.
@@ -48,6 +48,6 @@ tags = spark.sql(f"""SELECT table_name, column_name, tag_name, tag_value
                      WHERE schema_name = '{sch}' ORDER BY 1, 2""").toPandas()
 print(tags.to_string(index=False))
 os.makedirs(ev, exist_ok=True)
-with open(f"{ev}/02_governance.json", "w") as f:
+with open(f"{ev}/01_governance.json", "w") as f:
     json.dump({"statements": log, "column_tags": tags.to_dict("records"),
                "masked_sample": spark.sql(f"SELECT customer_id, first_name, email, loyalty_tier FROM {ns}.customers_secure LIMIT 3").toPandas().to_dict("records")}, f, indent=2, default=str)
