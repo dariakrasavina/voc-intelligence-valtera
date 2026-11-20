@@ -34,9 +34,11 @@ print('%-14s %3d files %10d bytes   first: %s   last: %s' % ('$f', len(fs), sum(
   echo; echo "# Generator summary (deterministic, seed 42: regenerating reproduces the landed files exactly)"
   T=$(mktemp -d); python3 src/data_gen/generate_synthetic_voc.py --out "$T/b" --mode backfill; python3 src/data_gen/generate_synthetic_voc.py --out "$T/d" --mode daily --day 2026-11-20; rm -rf "$T"
   echo; echo "# Raw sample: one call transcript as landed (interactions_20261105.json, first record)"
-  databricks fs cat dbfs:/Volumes/daria_krasavina/voc_valtera/landing/interactions/interactions_20261105.json --profile "$P" | head -1 | python3 -m json.tool
+  databricks fs cat dbfs:/Volumes/daria_krasavina/voc_valtera/landing/interactions/interactions_20261105.json --profile "$P" > /tmp/_raw_inter.json
+  python3 -c "import json; print(json.dumps(json.loads(open('/tmp/_raw_inter.json').readline()), indent=2))"
   echo; echo "# Raw sample: first 5 CRM records as landed (messy on purpose; cleaned in silver_customers)"
-  databricks fs cat dbfs:/Volumes/daria_krasavina/voc_valtera/landing/customers/customers_0001_initial.json --profile "$P" | head -5
+  databricks fs cat dbfs:/Volumes/daria_krasavina/voc_valtera/landing/customers/customers_0001_initial.json --profile "$P" > /tmp/_raw_cust.json
+  python3 -c "print(''.join(open('/tmp/_raw_cust.json').readlines()[:5]), end='')"
 } > $D/landing_volume.txt
 
 # Lakeflow pipeline event log: rows written and data-quality expectation results for the latest updates
@@ -47,4 +49,36 @@ SELECT origin.update_id, min(timestamp) AS at, origin.flow_name AS flow,
 FROM event_log('$PID') WHERE event_type = 'flow_progress' AND details:flow_progress.status = 'COMPLETED'
   AND timestamp > current_timestamp() - INTERVAL 1 DAY
 GROUP BY ALL ORDER BY at DESC LIMIT 40" --warehouse 148ccb90800933a1 --profile "$P" > $D/lakeflow_pipeline_event_log.json
+# Lakebase: schemas and tables created (synced queue schema + app-owned case_mgmt schema)
+databricks psql --project valtera-voc --profile "$P" -- -c "\\dn" -c "SELECT table_schema, table_name, table_type FROM information_schema.tables WHERE table_schema IN ('voc_valtera','case_mgmt') ORDER BY 1,2;" 2>&1 | grep -v -E 'Connect|Project|Branch|Endpoint' > $D/lakebase_schemas_and_tables.txt
+
+# App write-back, end to end: app -> Lakebase case_mgmt -> Lakehouse Sync -> UC history -> gold_case_status
+{
+  echo "# 1. Saved in the app -> Lakebase Postgres case_mgmt.case_actions (latest state) and case_action_log (audit)"
+  databricks psql --project valtera-voc --profile "$P" -- -c "SELECT case_id, status, assignee, note, updated_by, updated_at FROM case_mgmt.case_actions ORDER BY updated_at DESC;" -c "SELECT id, case_id, status, assignee, updated_by, logged_at FROM case_mgmt.case_action_log ORDER BY id;" 2>&1 | grep -v -E 'Connect|Project|Branch|Endpoint'
+  echo; echo "# 2. Lakehouse Sync (CDC) -> Unity Catalog daria_krasavina.voc_valtera.lb_case_actions_history"
+  databricks experimental aitools tools query "SELECT _pg_change_type, case_id, status, assignee, CAST(_timestamp AS STRING) AS synced_at FROM daria_krasavina.voc_valtera.lb_case_actions_history ORDER BY _sort_by" --warehouse 148ccb90800933a1 --profile "$P"
+  echo; echo "# 3. gold_case_status (what Monitoring and Genie read)"
+  databricks experimental aitools tools query "SELECT case_id, priority, primary_topic, status, assignee, note, CAST(last_updated_at AS STRING) AS last_updated_at FROM daria_krasavina.voc_valtera.gold_case_status WHERE status <> 'Open' ORDER BY last_updated_at" --warehouse 148ccb90800933a1 --profile "$P"
+} > evidence/app_writeback.md
+
+# App pages, the queries each page uses, and the Genie wiring (from the deployed source)
+python3 - > $D/databricks_app_pages.md <<'PY'
+import re, os, json
+src = open("app/client/src/App.tsx").read()
+print("# Databricks App pages (app/client/src)\n\n| Route | Page | Data used |\n|---|---|---|")
+for path, comp in re.findall(r"path: '([^']+)', element: <(\w+)", src):
+    f = "app/client/src/pages/%s.tsx" % comp
+    body = open(f).read() if os.path.exists(f) else ""
+    q = sorted(set(re.findall(r"(?:queryKey=\"|useAnalyticsQuery\(')(\w+)", body)))
+    extra = []
+    if "/api/cases" in body: extra.append("Lakebase via /api/cases (read queue, write case actions)")
+    if "useGenieChat" in body: extra.append("Genie Agent via useGenieChat (alias voc)")
+    print("| `%s` | %s | %s |" % (path, comp, ", ".join(["SQL: " + x for x in q] + extra)))
+d = json.load(open("evidence/assets/databricks_app.json"))
+print("\n## Deployed app resources\n")
+for r in d.get("resources") or []:
+    print("- %s: %s" % (r["name"], json.dumps({k: v for k, v in r.items() if k != "name"})))
+print("\nuser_api_scopes: %s (Genie runs on behalf of the signed-in user)" % d.get("user_api_scopes"))
+PY
 echo "asset snapshots written to $D"

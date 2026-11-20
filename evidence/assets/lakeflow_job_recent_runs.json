@@ -1,5 +1,11 @@
 [
   {
+    "run_id": 341185253280121,
+    "trigger": "FILE_ARRIVAL",
+    "result": "SUCCESS",
+    "start_time": 1795206313690
+  },
+  {
     "run_id": 544525181135495,
     "trigger": "ONE_TIME",
     "result": "SUCCESS",
@@ -52,11 +58,5 @@
     "trigger": "ONE_TIME",
     "result": "FAILED",
     "start_time": 1795197020845
-  },
-  {
-    "run_id": 208804545908465,
-    "trigger": "ONE_TIME",
-    "result": "SUCCESS",
-    "start_time": 1795189528965
   }
 ]

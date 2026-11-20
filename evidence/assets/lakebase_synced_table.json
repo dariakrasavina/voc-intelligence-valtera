@@ -3,7 +3,7 @@
   "spec": null,
   "status": {
     "detailed_state": "SYNCED_TABLE_ONLINE_NO_PENDING_UPDATE",
-    "message": "Synced table creation succeeded using Delta Live Tables: https://adb-984752964297111.11.azuredatabricks.net#joblist/pipelines/fa6a096b-5dbc-4f3b-8d66-0f0b394107e9/updates/ce1aaa71-41f2-48dd-9ace-acc51c7c6b52.",
+    "message": "Synced table creation succeeded using Delta Live Tables: https://adb-984752964297111.11.azuredatabricks.net#joblist/pipelines/fa6a096b-5dbc-4f3b-8d66-0f0b394107e9/updates/54359606-7715-453e-aff0-c2a7d153b31a.",
     "last_sync": {
       "delta_table_sync_info": {
         "delta_commit_time": "2026-11-20T19:44:56.258Z",

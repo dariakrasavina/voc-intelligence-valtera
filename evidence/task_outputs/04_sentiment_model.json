@@ -1,8 +1,8 @@
 {
   "model": "daria_krasavina.voc_valtera.voc_sentiment_model",
-  "version": 10,
+  "version": 11,
   "alias": "champion",
-  "mlflow_run_id": "a4c674057d1547fcbefe101138dcbd9c",
+  "mlflow_run_id": "f65d6a4dd9b24c09b62c9ce689935ce2",
   "metrics_vs_weak_labels": {
     "accuracy": 0.9873417721518988,
     "macro_f1": 0.9819804338032377,

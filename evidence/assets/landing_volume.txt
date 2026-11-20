@@ -1,0 +1,61 @@
+# Landing volume /Volumes/daria_krasavina/voc_valtera/landing
+interactions    91 files    4425716 bytes   first: interactions_20260822.json   last: interactions_20261120.json
+customers        2 files     854068 bytes   first: customers_0001_initial.json   last: customers_0002_changes.json
+vehicles         1 files     512137 bytes   first: vehicles.json   last: vehicles.json
+dealers          2 files       3710 bytes   first: dealers.json   last: dealers_redelivery_20261120.json
+_ground_truth    2 files     996212 bytes   first: labels.json   last: labels_20261120.json
+
+# Generator summary (deterministic, seed 42: regenerating reproduces the landed files exactly)
+{"mode": "backfill", "interactions_written": 6166, "labels": 5904, "dealers": 20, "customers": 3200, "vehicles": 3200}
+{"mode": "daily", "interactions_written": 70, "labels": 74, "dealers": 20, "customers": 3200, "vehicles": 3200}
+
+# Raw sample: one call transcript as landed (interactions_20261105.json, first record)
+{
+  "interaction_id": "I2026110500000",
+  "channel": "call",
+  "created_at": "2026-11-05T16:48:54Z",
+  "customer_id": "C00643",
+  "vin": "7VALAU000643",
+  "dealer_id": "D014",
+  "language": "english",
+  "call_reason": "Recall",
+  "duration_sec": 1208,
+  "nps_score": null,
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Thank you for calling Valtera Motors customer care, this is Raj, how can I help?"
+    },
+    {
+      "speaker": "customer",
+      "text": "Uh, it's a Aurora EV, the 2026 one."
+    },
+    {
+      "speaker": "customer",
+      "text": "Hah."
+    },
+    {
+      "speaker": "customer",
+      "text": "I- I got a letter saying something on my car might be defective and needs to be fixed for free."
+    },
+    {
+      "speaker": "agent",
+      "text": "One moment please while I check that."
+    },
+    {
+      "speaker": "agent",
+      "text": "You'll get a confirmation email shortly."
+    },
+    {
+      "speaker": "customer",
+      "text": "Thanks, bye bye."
+    }
+  ]
+}
+
+# Raw sample: first 5 CRM records as landed (messy on purpose; cleaned in silver_customers)
+{"customer_id": "C00001", "first_name": "Kai", "last_name": "Haddad", "email": "kai.haddad1@example.com", "phone": "(555) 325-7359", "state": "CO", "region": "West", "loyalty_tier": "standard", "updated_at": "2026-08-01T00:00:00Z", "op": "UPSERT"}
+{"customer_id": "C00002", "first_name": "Marley", "last_name": "Lindqvist", "email": "marley.lindqvist2@example.com", "phone": null, "state": "AZ", "region": "West", "loyalty_tier": "Standard", "updated_at": "2026-08-01T00:00:00Z", "op": "UPSERT"}
+{"customer_id": "C00003", "first_name": "Parker", "last_name": "Varga", "email": "parker.varga3@example.com", "phone": "(555) 266-6065", "state": "FL", "region": "South", "loyalty_tier": "Standard", "updated_at": "2026-08-01T00:00:00Z", "op": "UPSERT"}
+{"customer_id": "C00004", "first_name": "Remy", "last_name": "Lindqvist", "email": "remy.lindqvist4@example.com", "phone": "555.510.4386", "state": "TX", "region": "South", "loyalty_tier": "STANDARD ", "updated_at": "2026-08-01T00:00:00Z", "op": "UPSERT"}
+{"customer_id": "C00005", "first_name": "dakota", "last_name": "kowalski", "email": "dakota.kowalski5@example.com", "phone": null, "state": "NJ", "region": "Northeast", "loyalty_tier": "STANDARD ", "updated_at": "2026-08-01T00:00:00Z", "op": "UPSERT"}

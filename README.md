@@ -109,10 +109,10 @@ system. The job never writes to `landing`, so it can't trigger itself.
 
 | What | File | Key result |
 |---|---|---|
-| Final end-to-end job run | [`evidence/job_run_summary.txt`](evidence/job_run_summary.txt) | 9/9 tasks SUCCESS (run `544525181135495`) |
+| Final end-to-end job run | [`evidence/job_run_summary.txt`](evidence/job_run_summary.txt) | 9/9 tasks SUCCESS (run `341185253280121`, started by the file-arrival trigger) |
 | Notebooks with their outputs | [`evidence/notebooks/`](evidence/notebooks/) | all 8 job notebooks as `.ipynb`, with the cell outputs of that run |
 | Deployed asset definitions + status | [`evidence/assets/`](evidence/assets/) | pipeline, job + recent runs, Lakebase project + synced table + Lakehouse Sync, Postgres checks, Genie space, UC model, app |
-| File-arrival trigger | [`evidence/triggered_run.md`](evidence/triggered_run.md) | a landed export started the job automatically, 8/8 tasks SUCCESS |
+| File-arrival trigger | [`evidence/triggered_run.md`](evidence/triggered_run.md) | a new file in the landing volume started the job by itself; 9/9 tasks SUCCESS |
 | Incremental daily run | [`evidence/incremental_run.md`](evidence/incremental_run.md) | rebuild wrote **6,166** interactions; the next day's file added only **+70** interactions / +480 sentences; 43 new ai_classify calls |
 | Row counts per layer | [`evidence/query_results/table_row_counts.json`](evidence/query_results/table_row_counts.json) | 6,236 interactions → 39,934 sentences → 318 queue rows = 318 in Lakebase |
 | Synthetic export landed in the volume | [`evidence/assets/landing_volume.txt`](evidence/assets/landing_volume.txt) | files and sizes per source, the generator's summary, raw transcript and CRM samples |
@@ -124,6 +124,9 @@ system. The job never writes to `landing`, so it can't trigger itself.
 | Sentiment model (MLflow / UC) | [`evidence/task_outputs/04_sentiment_model.json`](evidence/task_outputs/04_sentiment_model.json) | accuracy 0.987, macro-F1 0.982 vs. held-out weak labels (3,948 labelled sentences); interaction mix 62% negative / 30% neutral / 8% positive |
 | PII masking | [`evidence/query_results/masked_pii.json`](evidence/query_results/masked_pii.json) | `K******`, `+******` |
 | Escalation queue + AI summaries | [`evidence/query_results/escalation_queue_sample.json`](evidence/query_results/escalation_queue_sample.json) | "Car braked suddenly at 45mph, nearly causing rear-end collision." |
+| Lakebase project, schemas, tables | [`evidence/assets/lakebase_project.json`](evidence/assets/lakebase_project.json), [`evidence/assets/lakebase_schemas_and_tables.txt`](evidence/assets/lakebase_schemas_and_tables.txt), [`evidence/assets/lakebase_synced_table.json`](evidence/assets/lakebase_synced_table.json) | project `valtera-voc` (Postgres 17); schema `voc_valtera` (synced `lb_escalation_queue`) and the app-owned `case_mgmt` |
+| App write-back, end to end | [`evidence/app_writeback.md`](evidence/app_writeback.md) | case saved in the app → Lakebase `case_mgmt` + audit log → Lakehouse Sync → `lb_case_actions_history` → `gold_case_status` |
+| App pages + Genie in the app | [`evidence/assets/databricks_app_pages.md`](evidence/assets/databricks_app_pages.md), [`evidence/assets/databricks_app.json`](evidence/assets/databricks_app.json) | 5 pages (Overview, Topics, Escalation queue, Monitoring, Ask Genie), the data each uses, app resources incl. the Genie space and the `genie` user scope |
 | Lakebase sync | [`evidence/task_outputs/06_lakebase_sync.json`](evidence/task_outputs/06_lakebase_sync.json) | sync COMPLETED, 318 = 318 rows, app read access verified |
 | App build + deployment | [`evidence/app_validation.txt`](evidence/app_validation.txt), [`evidence/app_status.json`](evidence/app_status.json) | validate: types, lint, typecheck, build, tests pass; app RUNNING |
 | Genie answers + generated SQL | [`evidence/genie/genie_conversations.md`](evidence/genie/genie_conversations.md) | 5 business questions answered |
@@ -239,4 +242,4 @@ The catalog name and warehouse ID are hard-coded in a few places (app SQL querie
 
 - The data is synthetic, but deliberately noisy (fillers, back-channels, transcription-style text, typos, messy CRM fields; about 4,000 distinct customer sentences). The numbers show the method works; they are not a production benchmark.
 - The incremental path has been run for one extra day. Every run retrains the sentiment model and registers a new version; a champion/challenger check before promoting it is a next step.
-- Evidence is from the final run `544525181135495` (data 2026-08-22 → 2026-11-20); `scripts/collect_evidence.sh`, `scripts/export_run_notebooks.py` and `scripts/snapshot_assets.sh` regenerate it.
+- Evidence is from the final run `341185253280121` (started by the file-arrival trigger) (data 2026-08-22 → 2026-11-20); `scripts/collect_evidence.sh`, `scripts/export_run_notebooks.py` and `scripts/snapshot_assets.sh` regenerate it.

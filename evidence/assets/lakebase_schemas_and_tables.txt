@@ -1,0 +1,18 @@
+                  List of schemas
+    Name     |                Owner                 
+-------------+--------------------------------------
+ __db_system | databricks_control_plane
+ appkit      | 814877c5-01ff-4199-bc88-cbd8cdb3796d
+ case_mgmt   | 814877c5-01ff-4199-bc88-cbd8cdb3796d
+ public      | pg_database_owner
+ voc_valtera | <redacted>
+ wal2delta   | cloud_admin
+(6 rows)
+
+ table_schema |     table_name      | table_type 
+--------------+---------------------+------------
+ case_mgmt    | case_action_log     | BASE TABLE
+ case_mgmt    | case_actions        | BASE TABLE
+ voc_valtera  | lb_escalation_queue | BASE TABLE
+(3 rows)
+

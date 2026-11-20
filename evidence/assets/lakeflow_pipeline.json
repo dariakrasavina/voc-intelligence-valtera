@@ -20,6 +20,11 @@
   },
   "latest_updates": [
     {
+      "creation_time": "2026-11-20T20:25:17.256Z",
+      "state": "COMPLETED",
+      "update_id": "46124798-a70a-4a4b-9b02-e02ceac908cc"
+    },
+    {
       "creation_time": "2026-11-20T19:39:36.809Z",
       "state": "COMPLETED",
       "update_id": "6166af45-78ba-44a1-98a9-b289e3a3190f"
@@ -28,11 +33,6 @@
       "creation_time": "2026-11-20T19:01:49.300Z",
       "state": "COMPLETED",
       "update_id": "92873994-c03a-4fda-9b93-f34de08d83c4"
-    },
-    {
-      "creation_time": "2026-11-20T18:59:50.220Z",
-      "state": "COMPLETED",
-      "update_id": "331ad89d-bbe7-46bc-ad4e-7645703cb4b9"
     }
   ]
 }

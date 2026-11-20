@@ -1,7 +1,7 @@
 # Genie Agent benchmark evaluation
 
 Agent: **Valtera VOC Insights** (`01f1e46e16d61008a7f72226f0aacb03`), created and curated by `src/notebooks/08_genie_space.py` (job task `genie_space`).
-The task fails if fewer than 90% of benchmarks are correct. Final run `01f1e50d9ec918ca80cc273f6a1ea89c`: **19 / 20 correct (95%)**.
+The task fails if fewer than 90% of benchmarks are correct. Final run `01f1e521286c1518a3ff2aeb5fbb1c65` (job run 341185253280121, on the final noisy dataset): **19 / 20 correct (95%)**.
 
 ## How it got there (2026-11-20)
 
@@ -11,6 +11,7 @@ The task fails if fewer than 90% of benchmarks are correct. Final run `01f1e50d9
 | 2 | 18/20 (90%) | reference SQL aligned with equivalent answers (survey filter for NPS, no presentation-only rounding) |
 | 3 | 19/20 (95%) | `peak_lift` vs `lift_vs_baseline` disambiguated in column descriptions; summary instruction no longer adds date columns |
 | 4 | 19/20 (95%) | detractor reference uses the survey filter; the remaining miss is a rounding/format judgement |
+| 5 | 19/20 (95%) | same curation, re-run on the regenerated, noisy data (part of every job run) |
 
 ## Final results
 

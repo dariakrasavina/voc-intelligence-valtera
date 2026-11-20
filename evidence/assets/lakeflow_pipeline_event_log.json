@@ -1,0 +1,282 @@
+[
+  {
+    "at": "2026-11-20T15:27:06.076-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_interactions",
+    "output_rows": "6236",
+    "update_id": "46124798-a70a-4a4b-9b02-e02ceac908cc"
+  },
+  {
+    "at": "2026-11-20T15:26:46.105-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_dealers_cdc",
+    "output_rows": "",
+    "update_id": "46124798-a70a-4a4b-9b02-e02ceac908cc"
+  },
+  {
+    "at": "2026-11-20T15:26:29.540-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_dealers",
+    "output_rows": "",
+    "update_id": "46124798-a70a-4a4b-9b02-e02ceac908cc"
+  },
+  {
+    "at": "2026-11-20T15:26:20.404-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_sentences",
+    "output_rows": "",
+    "update_id": "46124798-a70a-4a4b-9b02-e02ceac908cc"
+  },
+  {
+    "at": "2026-11-20T15:26:18.453-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_customers_cdc",
+    "output_rows": "",
+    "update_id": "46124798-a70a-4a4b-9b02-e02ceac908cc"
+  },
+  {
+    "at": "2026-11-20T15:26:18.406-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_vehicles_cdc",
+    "output_rows": "",
+    "update_id": "46124798-a70a-4a4b-9b02-e02ceac908cc"
+  },
+  {
+    "at": "2026-11-20T15:26:14.260-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_interactions",
+    "output_rows": "",
+    "update_id": "46124798-a70a-4a4b-9b02-e02ceac908cc"
+  },
+  {
+    "at": "2026-11-20T15:26:13.622-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_vehicles",
+    "output_rows": "",
+    "update_id": "46124798-a70a-4a4b-9b02-e02ceac908cc"
+  },
+  {
+    "at": "2026-11-20T15:26:13.606-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_customers",
+    "output_rows": "",
+    "update_id": "46124798-a70a-4a4b-9b02-e02ceac908cc"
+  },
+  {
+    "at": "2026-11-20T14:41:16.272-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_interactions",
+    "output_rows": "6236",
+    "update_id": "6166af45-78ba-44a1-98a9-b289e3a3190f"
+  },
+  {
+    "at": "2026-11-20T14:41:04.635-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_sentences",
+    "output_rows": "",
+    "update_id": "6166af45-78ba-44a1-98a9-b289e3a3190f"
+  },
+  {
+    "at": "2026-11-20T14:40:56.849-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_interactions",
+    "output_rows": "",
+    "update_id": "6166af45-78ba-44a1-98a9-b289e3a3190f"
+  },
+  {
+    "at": "2026-11-20T14:40:41.755-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_customers_cdc",
+    "output_rows": "",
+    "update_id": "6166af45-78ba-44a1-98a9-b289e3a3190f"
+  },
+  {
+    "at": "2026-11-20T14:40:40.842-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_dealers_cdc",
+    "output_rows": "",
+    "update_id": "6166af45-78ba-44a1-98a9-b289e3a3190f"
+  },
+  {
+    "at": "2026-11-20T14:40:40.822-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_vehicles_cdc",
+    "output_rows": "",
+    "update_id": "6166af45-78ba-44a1-98a9-b289e3a3190f"
+  },
+  {
+    "at": "2026-11-20T14:40:35.738-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_vehicles",
+    "output_rows": "",
+    "update_id": "6166af45-78ba-44a1-98a9-b289e3a3190f"
+  },
+  {
+    "at": "2026-11-20T14:40:35.730-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_customers",
+    "output_rows": "",
+    "update_id": "6166af45-78ba-44a1-98a9-b289e3a3190f"
+  },
+  {
+    "at": "2026-11-20T14:40:35.711-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_dealers",
+    "output_rows": "",
+    "update_id": "6166af45-78ba-44a1-98a9-b289e3a3190f"
+  },
+  {
+    "at": "2026-11-20T14:03:06.003-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_interactions",
+    "output_rows": "6166",
+    "update_id": "92873994-c03a-4fda-9b93-f34de08d83c4"
+  },
+  {
+    "at": "2026-11-20T14:02:58.262-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_sentences",
+    "output_rows": "",
+    "update_id": "92873994-c03a-4fda-9b93-f34de08d83c4"
+  },
+  {
+    "at": "2026-11-20T14:02:57.372-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_dealers_cdc",
+    "output_rows": "",
+    "update_id": "92873994-c03a-4fda-9b93-f34de08d83c4"
+  },
+  {
+    "at": "2026-11-20T14:02:55.851-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_customers_cdc",
+    "output_rows": "",
+    "update_id": "92873994-c03a-4fda-9b93-f34de08d83c4"
+  },
+  {
+    "at": "2026-11-20T14:02:55.839-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_vehicles_cdc",
+    "output_rows": "",
+    "update_id": "92873994-c03a-4fda-9b93-f34de08d83c4"
+  },
+  {
+    "at": "2026-11-20T14:02:52.270-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_vehicles",
+    "output_rows": "",
+    "update_id": "92873994-c03a-4fda-9b93-f34de08d83c4"
+  },
+  {
+    "at": "2026-11-20T14:02:52.264-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_interactions",
+    "output_rows": "",
+    "update_id": "92873994-c03a-4fda-9b93-f34de08d83c4"
+  },
+  {
+    "at": "2026-11-20T14:02:52.259-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_dealers",
+    "output_rows": "",
+    "update_id": "92873994-c03a-4fda-9b93-f34de08d83c4"
+  },
+  {
+    "at": "2026-11-20T14:02:52.241-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_customers",
+    "output_rows": "",
+    "update_id": "92873994-c03a-4fda-9b93-f34de08d83c4"
+  },
+  {
+    "at": "2026-11-20T14:01:42.469-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_interactions",
+    "output_rows": "6166",
+    "update_id": "331ad89d-bbe7-46bc-ad4e-7645703cb4b9"
+  },
+  {
+    "at": "2026-11-20T14:01:35.871-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_customers_cdc",
+    "output_rows": "",
+    "update_id": "331ad89d-bbe7-46bc-ad4e-7645703cb4b9"
+  },
+  {
+    "at": "2026-11-20T14:01:35.746-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_dealers_cdc",
+    "output_rows": "",
+    "update_id": "331ad89d-bbe7-46bc-ad4e-7645703cb4b9"
+  },
+  {
+    "at": "2026-11-20T14:01:35.724-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_vehicles_cdc",
+    "output_rows": "",
+    "update_id": "331ad89d-bbe7-46bc-ad4e-7645703cb4b9"
+  },
+  {
+    "at": "2026-11-20T14:01:34.470-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_sentences",
+    "output_rows": "",
+    "update_id": "331ad89d-bbe7-46bc-ad4e-7645703cb4b9"
+  },
+  {
+    "at": "2026-11-20T14:01:22.164-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_interactions",
+    "output_rows": "",
+    "update_id": "331ad89d-bbe7-46bc-ad4e-7645703cb4b9"
+  },
+  {
+    "at": "2026-11-20T14:01:20.936-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_customers",
+    "output_rows": "",
+    "update_id": "331ad89d-bbe7-46bc-ad4e-7645703cb4b9"
+  },
+  {
+    "at": "2026-11-20T14:01:20.921-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_dealers",
+    "output_rows": "",
+    "update_id": "331ad89d-bbe7-46bc-ad4e-7645703cb4b9"
+  },
+  {
+    "at": "2026-11-20T14:01:20.909-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.bronze_vehicles",
+    "output_rows": "",
+    "update_id": "331ad89d-bbe7-46bc-ad4e-7645703cb4b9"
+  },
+  {
+    "at": "2026-11-20T12:12:29.912-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_interactions",
+    "output_rows": "6116",
+    "update_id": "5754bec1-9171-4e66-a9e1-68e03717b148"
+  },
+  {
+    "at": "2026-11-20T12:12:22.047-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_sentences",
+    "output_rows": "",
+    "update_id": "5754bec1-9171-4e66-a9e1-68e03717b148"
+  },
+  {
+    "at": "2026-11-20T12:12:20.122-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_vehicles_cdc",
+    "output_rows": "",
+    "update_id": "5754bec1-9171-4e66-a9e1-68e03717b148"
+  },
+  {
+    "at": "2026-11-20T12:12:20.063-05:00",
+    "expectations": "[]",
+    "flow": "daria_krasavina.voc_valtera.silver_dealers_cdc",
+    "output_rows": "",
+    "update_id": "5754bec1-9171-4e66-a9e1-68e03717b148"
+  }
+]
