@@ -2,7 +2,7 @@
   {
     "first_alert_date": "2026-10-30",
     "is_alert": "true",
-    "last_7d": "42",
+    "last_7d": "45",
     "model": "Aurora EV",
     "model_year": "2026",
     "peak_lift": "24.80",
@@ -11,7 +11,7 @@
   {
     "first_alert_date": "2026-10-31",
     "is_alert": "true",
-    "last_7d": "33",
+    "last_7d": "30",
     "model": "Aurora EV",
     "model_year": "2026",
     "peak_lift": "17.60",
@@ -20,10 +20,19 @@
   {
     "first_alert_date": "2026-10-31",
     "is_alert": "true",
-    "last_7d": "19",
+    "last_7d": "23",
     "model": "Aurora EV",
     "model_year": "2026",
     "peak_lift": "7.64",
     "topic_name": "Software - OTA Update Failure"
+  },
+  {
+    "first_alert_date": "2026-11-20",
+    "is_alert": "true",
+    "last_7d": "11",
+    "model": "Aurora EV",
+    "model_year": "2024",
+    "peak_lift": "4.40",
+    "topic_name": "Software - Infotainment or App"
   }
 ]

@@ -1,8 +1,8 @@
 {
   "model": "daria_krasavina.voc_valtera.voc_sentiment_model",
-  "version": 2,
+  "version": 4,
   "alias": "champion",
-  "mlflow_run_id": "e4d9df5f1a4643b38cbed81176de34d0",
+  "mlflow_run_id": "25cb5a6cdd41420e83820d1e9cd661c2",
   "metrics_vs_weak_labels": {
     "accuracy": 0.9577464788732394,
     "macro_f1": 0.89914294459749,
@@ -18,15 +18,15 @@
   "scored_distribution": [
     {
       "sentiment_label": "neutral",
-      "n": 5627
+      "n": 5698
     },
     {
       "sentiment_label": "negative",
-      "n": 10211
+      "n": 10334
     },
     {
       "sentiment_label": "positive",
-      "n": 2589
+      "n": 2620
     }
   ]
 }

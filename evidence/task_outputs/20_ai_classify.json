@@ -6,77 +6,77 @@
   "tags_by_topic": [
     {
       "topic_name": "Service - Repair Delay",
-      "n": 1049,
+      "n": 1052,
       "avg_conf": 0.812
     },
     {
       "topic_name": "Software - Infotainment or App",
-      "n": 979,
+      "n": 992,
       "avg_conf": 0.839
     },
     {
       "topic_name": "Dealer - Poor Dealer Experience",
-      "n": 818,
+      "n": 820,
       "avg_conf": 0.827
     },
     {
       "topic_name": "Praise - Positive Feedback",
-      "n": 666,
+      "n": 673,
       "avg_conf": 0.905
     },
     {
       "topic_name": "Billing - Payment or Financing Issue",
-      "n": 649,
+      "n": 657,
       "avg_conf": 0.878
     },
     {
       "topic_name": "Safety - Warning Light or Airbag",
-      "n": 485,
+      "n": 489,
       "avg_conf": 0.844
     },
     {
       "topic_name": "Warranty - Claim Denied",
-      "n": 472,
+      "n": 476,
       "avg_conf": 0.828
     },
     {
       "topic_name": "Charging - Public Charger Failure",
-      "n": 421,
+      "n": 426,
       "avg_conf": 0.832
     },
     {
       "topic_name": "Software - OTA Update Failure",
-      "n": 389,
-      "avg_conf": 0.801
+      "n": 402,
+      "avg_conf": 0.8
     },
     {
       "topic_name": "Battery - Range Loss",
-      "n": 357,
-      "avg_conf": 0.824
+      "n": 365,
+      "avg_conf": 0.825
     },
     {
       "topic_name": "Safety - Driver Assist Malfunction",
-      "n": 342,
+      "n": 344,
       "avg_conf": 0.833
     },
     {
       "topic_name": "Charging - Home Charging Issue",
-      "n": 275,
+      "n": 279,
       "avg_conf": 0.84
     },
     {
       "topic_name": "Service - Recall Question",
-      "n": 247,
+      "n": 250,
       "avg_conf": 0.872
     },
     {
       "topic_name": "Charging - Charge Port Door Stuck",
-      "n": 235,
-      "avg_conf": 0.873
+      "n": 245,
+      "avg_conf": 0.874
     },
     {
       "topic_name": "Safety - Unexpected Braking",
-      "n": 220,
+      "n": 223,
       "avg_conf": 0.844
     }
   ],

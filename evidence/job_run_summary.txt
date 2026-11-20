@@ -1,10 +1,10 @@
-job run 327620437213971 SUCCESS | run page: https://adb-984752964297111.11.azuredatabricks.net/?o=984752964297111#job/791845510507972/run/327620437213971
-  land_export        SUCCESS     64s
+job run 781729027153465 SUCCESS | run page: https://adb-984752964297111.11.azuredatabricks.net/?o=984752964297111#job/791845510507972/run/781729027153465
+  land_export        SUCCESS     42s
   lakeflow_ingest    SUCCESS     74s
-  ai_classify        SUCCESS     32s
-  governance         SUCCESS     27s
-  rule_tagging       SUCCESS     39s
-  sentiment_model    SUCCESS     65s
-  gold_and_alerts    SUCCESS     37s
-  evaluate           SUCCESS     24s
-  lakebase_sync      SUCCESS     75s
+  ai_classify        SUCCESS     33s
+  governance         SUCCESS     32s
+  rule_tagging       SUCCESS     38s
+  sentiment_model    SUCCESS     68s
+  gold_and_alerts    SUCCESS     36s
+  evaluate           SUCCESS     22s
+  lakebase_sync      SUCCESS     67s

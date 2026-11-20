@@ -22,7 +22,7 @@ a month. Today a **vendor text-analytics tool** tags them with keyword rules, an
 | Time to detect an emerging safety issue | ~30 days (monthly report) | **2–3 days** | measured: the seeded OTA 4.2 defect (released 2026-10-28) alerted on **2026-10-30** (charge-port door) and **2026-10-31** (unexpected braking) |
 | Complaint topics found (recall) | **79.8%** (keyword rules) | **99.9%** (rules + `ai_classify`) | measured against ground truth, `evidence/task_outputs/60_evaluate.json` |
 | Topic tagging F1 | 0.888 | **0.994** | same |
-| LLM calls for classification | 1 per sentence | **350 for 15,634 sentences (−97.8%)**; **0** on re-runs | `evidence/task_outputs/20_ai_classify.json` |
+| LLM calls for classification | 1 per sentence | **350 for 15,821 sentences (−97.8%)**; **0** on re-runs | `evidence/task_outputs/20_ai_classify.json` |
 | Vendor text-analytics license | ~$600K/yr | Databricks consumption ~$60–90K/yr | *estimate* |
 | Analyst effort on rule upkeep and tag review | ~5 FTE | ~2.5 FTE (≈ $300K/yr returned) | *estimate* |
 | Vehicles exposed to a bad OTA before rollback | full rollout | ~6,000 fewer (4 weeks earlier × 1,500 vehicles/week ≈ $0.9M at $150/vehicle) | *estimate* |
@@ -32,9 +32,11 @@ a month. Today a **vendor text-analytics tool** tags them with keyword rules, an
 
 ## What it does (the demo)
 
-1. **Overview:** *"3 emerging issues"*. The 2026 Aurora EV shows charge-port-door, unexpected-braking and OTA-failure
-   complaints spiking after OTA 4.2, with peak lift of 24.8×, 17.6× and 7.6× over the 4-week baseline.
-2. **Escalation queue:** 433 P1/P2 cases served from **Lakebase**. Each has an AI case summary and a recommended action.
+1. **Overview:** *"4 emerging issues"*. Three are the 2026 Aurora EV after OTA 4.2: charge-port door, unexpected
+   braking and OTA failure, with peak lift of 24.8×, 17.6× and 7.6× over the 4-week baseline. The fourth is a smaller spike
+   I did *not* plant (2024 Aurora EV infotainment, 11 vs. 2.5/week). That's why an alert opens an analyst review instead of
+   escalating automatically.
+2. **Escalation queue:** 438 P1/P2 cases served from **Lakebase**. Each has an AI case summary and a recommended action.
    An agent sets status, assignee and a note, which are saved to Lakebase with an audit log.
 3. **Ask Genie:** *"When was the charge port door problem on the 2026 Aurora EV first detected?"* → **2026-10-30**, with
    the generated SQL shown ([`evidence/genie/genie_conversations.md`](evidence/genie/genie_conversations.md)).
@@ -93,18 +95,19 @@ The whole flow runs as **one Lakeflow Job** (`valtera-voc-end-to-end`, 9 tasks, 
 
 | What | File | Key result |
 |---|---|---|
-| Clean end-to-end job run | [`evidence/job_run_summary.txt`](evidence/job_run_summary.txt) | 9/9 tasks SUCCESS |
+| Final end-to-end job run | [`evidence/job_run_summary.txt`](evidence/job_run_summary.txt) | 9/9 tasks SUCCESS (run `781729027153465`) |
 | Incremental daily run | [`evidence/incremental_run.md`](evidence/incremental_run.md) | re-run of 90 days wrote **0** rows; next day wrote **+70** interactions / +399 sentences; 0 new ai_classify calls |
-| Row counts per layer | [`evidence/query_results/table_row_counts.json`](evidence/query_results/table_row_counts.json) | 6,046 interactions → 32,433 sentences → 433 queue rows = 433 in Lakebase |
+| Row counts per layer | [`evidence/query_results/table_row_counts.json`](evidence/query_results/table_row_counts.json) | 6,116 interactions → 32,832 sentences → 438 queue rows = 438 in Lakebase |
 | Pipeline events | [`evidence/pipeline_events.txt`](evidence/pipeline_events.txt) | flow progress, data-quality metrics |
 | Classifier quality | [`evidence/query_results/classifier_quality.json`](evidence/query_results/classifier_quality.json) | F1 0.888 rules / 0.979 AI / 0.994 combined |
 | AI-only catches with rationale | [`evidence/query_results/ai_only_catches.json`](evidence/query_results/ai_only_catches.json) | e.g. "It used to get me to my sister's place and back…" → Range Loss (0.78) |
 | Explainable rule tags | [`evidence/query_results/explainable_rule_tags.json`](evidence/query_results/explainable_rule_tags.json) | e.g. `"phantom braking"` → Unexpected Braking |
-| Emerging issues | [`evidence/query_results/emerging_issues.json`](evidence/query_results/emerging_issues.json) | first alert 2026-10-30 / 10-31 |
+| Emerging issues | [`evidence/query_results/emerging_issues.json`](evidence/query_results/emerging_issues.json) | OTA 4.2 issues first alerted 2026-10-30 / 10-31; 1 unplanted spike on 2026-11-20 |
 | Sentiment model (MLflow / UC) | [`evidence/task_outputs/30_sentiment_model.json`](evidence/task_outputs/30_sentiment_model.json) | accuracy 0.958, macro-F1 0.899 vs. held-out weak labels |
 | PII masking | [`evidence/query_results/masked_pii.json`](evidence/query_results/masked_pii.json) | `K******`, `+******` |
 | Escalation queue + AI summaries | [`evidence/query_results/escalation_queue_sample.json`](evidence/query_results/escalation_queue_sample.json) | "Car braked suddenly at 45mph, nearly causing rear-end collision." |
-| Lakebase sync | [`evidence/task_outputs/50_lakebase_sync.json`](evidence/task_outputs/50_lakebase_sync.json) | source rows = Lakebase rows |
+| Lakebase sync | [`evidence/task_outputs/50_lakebase_sync.json`](evidence/task_outputs/50_lakebase_sync.json) | sync COMPLETED, 438 = 438 rows, app read access verified |
+| App build + deployment | [`evidence/app_validation.txt`](evidence/app_validation.txt), [`evidence/app_status.json`](evidence/app_status.json) | validate: types, lint, typecheck, build, tests pass; app RUNNING |
 | Genie answers + generated SQL | [`evidence/genie/genie_conversations.md`](evidence/genie/genie_conversations.md) | 5 business questions answered |
 | Genie benchmark evaluation | [`evidence/genie/genie_benchmark_eval.md`](evidence/genie/genie_benchmark_eval.md) | 3/6 → **5/6** after fixing instructions; the 6th is *needs review* (number formatting) |
 | Unit tests | [`evidence/unit_tests.txt`](evidence/unit_tests.txt) | 12/12 rule-engine tests pass; app: 3/3 route tests, typecheck, lint, build pass (`databricks apps validate`) |
@@ -120,7 +123,7 @@ Every notebook writes its own JSON summary to the `evidence` volume; `scripts/co
 | **`ai_classify` instead of `ai_query` + prompt** | Purpose-built, multi-label, returns confidence and a rationale, no prompt to maintain | Fixed Databricks-managed model; `ai_query` with a chosen LLM stays an option |
 | **Classify distinct sentences once and cache them** | Contact-center language repeats heavily: 97.8% fewer calls, 0 on re-runs | The cache must be invalidated when topic definitions change (key on hash of text + definitions) |
 | **Trained sentiment model instead of per-call LLM sentiment** | Zero token cost at volume, deterministic, owned and versioned in UC | Trained on LLM *weak* labels (352 distinct sentences in this synthetic set). Next: 500 analyst-labelled sentences |
-| **Daily alert rule: ≥10 in 7 days and ≥4× the prior 4-week weekly average** | Simple enough for Safety to trust; checked every day, so the first alert date is known | A 3× threshold produced 2 noise alerts; thresholds need tuning on real volume |
+| **Daily alert rule: ≥10 in 7 days and ≥4× the prior 4-week weekly average** | Simple enough for Safety to trust; checked every day, so the first alert date is known | A 3× threshold produced 2 noise alerts. At 4× it also flags one unplanted low-volume spike, so alerts go to an analyst, and thresholds need tuning on real volume |
 | **Lakebase for the queue** | Millisecond reads, transactional write-back, audit log, while analytics stay on the SQL warehouse | Synced table is TRIGGERED (minutes after each job run), not continuous |
 | **MERGE the queue, never replace it** | The synced table streams the queue's Change Data Feed. My first version rebuilt it with `CREATE OR REPLACE`, which broke the stream (`DIFFERENT_DELTA_TABLE_READ_BY_STREAMING_SOURCE`) | The sync task now checks Lakebase rows = gold rows and fails otherwise, recovering once with a full refresh |
 | **No PII beyond silver** | Gold, Genie and the app only use `customer_id`; names, emails and phones are masked | Agents who need contact details would get them through the PII-reader group |
@@ -169,4 +172,4 @@ Prerequisites: a Unity Catalog schema and the `landing` / `evidence` volumes, a 
 
 - Synthetic data has limited variety (about 350 distinct customer sentences), so the numbers here show the method works; they are not a production benchmark.
 - The incremental path has been run for one extra day; a file-arrival trigger on the landing volume is the next step for production.
-- Evidence tables are from the clean 90-day backfill run (`327620437213971`); the app and Genie now also include the 2026-11-20 daily increment.
+- Evidence is from the final full run (`781729027153465`, data 2026-08-22 → 2026-11-20). The incremental proof is from the 2026-11-20 daily run (`615261678774193`).

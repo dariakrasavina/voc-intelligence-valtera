@@ -1,16 +1,44 @@
 {
+  "escalation_queue_write": {
+    "version": 7,
+    "operation": "MERGE",
+    "operationMetrics": {
+      "numTargetRowsCopied": "0",
+      "numTargetRowsDeleted": "0",
+      "numTargetBytesRemoved": "0",
+      "numTargetDeletionVectorsAdded": "0",
+      "numTargetRowsMatchedUpdated": "0",
+      "numTargetRowsMatchedDeleted": "0",
+      "numTargetRowsUpdated": "0",
+      "numTargetChangeFilesAdded": "0",
+      "numTargetRowsNotMatchedBySourceDeleted": "0",
+      "rewriteTimeMs": "1952",
+      "numTargetFilesAdded": "0",
+      "numTargetBytesAdded": "0",
+      "executionTimeMs": "3517",
+      "materializeSourceTimeMs": "694",
+      "numTargetRowsInserted": "0",
+      "numTargetDeletionVectorsUpdated": "0",
+      "scanTimeMs": "820",
+      "numOutputRows": "0",
+      "numTargetDeletionVectorsRemoved": "0",
+      "numTargetRowsNotMatchedBySourceUpdated": "0",
+      "numSourceRows": "438",
+      "numTargetFilesRemoved": "0"
+    }
+  },
   "emerging_issue_alerts": [
     {
       "topic_name": "Charging - Charge Port Door Stuck",
       "parent_topic": "Battery & Charging",
       "model": "Aurora EV",
       "model_year": 2026,
-      "as_of_date": "2026-11-19",
-      "last_7d": 42,
-      "baseline_weekly_avg": "27.25",
+      "as_of_date": "2026-11-20",
+      "last_7d": 45,
+      "baseline_weekly_avg": "28.75",
       "first_alert_date": "2026-10-30",
       "peak_lift": "24.80",
-      "lift_vs_baseline": "1.54",
+      "lift_vs_baseline": "1.57",
       "is_alert": true
     },
     {
@@ -18,12 +46,12 @@
       "parent_topic": "Vehicle Safety",
       "model": "Aurora EV",
       "model_year": 2026,
-      "as_of_date": "2026-11-19",
-      "last_7d": 33,
-      "baseline_weekly_avg": "14.00",
+      "as_of_date": "2026-11-20",
+      "last_7d": 30,
+      "baseline_weekly_avg": "15.50",
       "first_alert_date": "2026-10-31",
       "peak_lift": "17.60",
-      "lift_vs_baseline": "2.36",
+      "lift_vs_baseline": "1.94",
       "is_alert": true
     },
     {
@@ -31,12 +59,25 @@
       "parent_topic": "Software & Connectivity",
       "model": "Aurora EV",
       "model_year": 2026,
-      "as_of_date": "2026-11-19",
-      "last_7d": 19,
-      "baseline_weekly_avg": "12.50",
+      "as_of_date": "2026-11-20",
+      "last_7d": 23,
+      "baseline_weekly_avg": "13.25",
       "first_alert_date": "2026-10-31",
       "peak_lift": "7.64",
-      "lift_vs_baseline": "1.52",
+      "lift_vs_baseline": "1.74",
+      "is_alert": true
+    },
+    {
+      "topic_name": "Software - Infotainment or App",
+      "parent_topic": "Software & Connectivity",
+      "model": "Aurora EV",
+      "model_year": 2024,
+      "as_of_date": "2026-11-20",
+      "last_7d": 11,
+      "baseline_weekly_avg": "2.50",
+      "first_alert_date": "2026-11-20",
+      "peak_lift": "4.40",
+      "lift_vs_baseline": "4.40",
       "is_alert": true
     }
   ],
@@ -44,12 +85,12 @@
     {
       "priority": "P1",
       "primary_parent_topic": "Vehicle Safety",
-      "n": 358
+      "n": 357
     },
     {
       "priority": "P2",
       "primary_parent_topic": "Battery & Charging",
-      "n": 27
+      "n": 30
     },
     {
       "priority": "P2",
@@ -59,93 +100,93 @@
     {
       "priority": "P2",
       "primary_parent_topic": "Software & Connectivity",
-      "n": 21
+      "n": 24
     }
   ],
   "topic_detection_source": [
     {
       "detected_by": "both",
-      "n": 5954
+      "n": 6034
     },
     {
       "detected_by": "ai",
-      "n": 1650
+      "n": 1659
     },
     {
       "detected_by": "rules",
-      "n": 223
+      "n": 228
     }
   ],
   "metric_view_sample": [
     {
       "model": "Aurora EV",
       "model_year": 2026,
-      "interactions": 1235,
-      "safety": 209,
+      "interactions": 1259,
+      "safety": 212,
       "neg_pct": "95.8"
     },
     {
       "model": "Ridgeback",
       "model_year": 2026,
-      "interactions": 655,
+      "interactions": 658,
       "safety": 130,
-      "neg_pct": "94.0"
+      "neg_pct": "93.9"
     },
     {
       "model": "Ridgeback Hybrid",
       "model_year": 2026,
-      "interactions": 380,
+      "interactions": 384,
       "safety": 81,
       "neg_pct": "95.3"
     },
     {
       "model": "Strata EV",
       "model_year": 2026,
-      "interactions": 565,
-      "safety": 77,
-      "neg_pct": "94.3"
+      "interactions": 573,
+      "safety": 79,
+      "neg_pct": "94.4"
     },
     {
       "model": "Cove",
       "model_year": 2026,
-      "interactions": 376,
-      "safety": 72,
-      "neg_pct": "91.0"
+      "interactions": 381,
+      "safety": 73,
+      "neg_pct": "91.1"
     },
     {
       "model": "Ridgeback",
       "model_year": 2024,
-      "interactions": 330,
+      "interactions": 333,
       "safety": 70,
-      "neg_pct": "93.6"
+      "neg_pct": "93.7"
     },
     {
       "model": "Aurora EV",
       "model_year": 2025,
-      "interactions": 496,
-      "safety": 66,
+      "interactions": 499,
+      "safety": 67,
       "neg_pct": "97.0"
     },
     {
       "model": "Ridgeback",
       "model_year": 2025,
-      "interactions": 309,
-      "safety": 56,
-      "neg_pct": "91.9"
+      "interactions": 311,
+      "safety": 57,
+      "neg_pct": "92.0"
     },
     {
       "model": "Cove",
       "model_year": 2025,
-      "interactions": 231,
+      "interactions": 236,
       "safety": 46,
-      "neg_pct": "94.4"
+      "neg_pct": "94.5"
     },
     {
       "model": "Strata EV",
       "model_year": 2024,
-      "interactions": 301,
+      "interactions": 304,
       "safety": 43,
-      "neg_pct": "96.7"
+      "neg_pct": "96.4"
     }
   ]
 }

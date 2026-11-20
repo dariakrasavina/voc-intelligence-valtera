@@ -1,87 +1,87 @@
 [
   {
     "avg_nps": "3.32",
-    "interactions": "1235",
+    "interactions": "1259",
     "model": "Aurora EV",
     "model_year": "2026",
     "negative_rate_pct": "95.8",
-    "safety_interactions": "209"
+    "safety_interactions": "212"
   },
   {
     "avg_nps": "3.41",
-    "interactions": "655",
+    "interactions": "658",
     "model": "Ridgeback",
     "model_year": "2026",
-    "negative_rate_pct": "94.0",
+    "negative_rate_pct": "93.9",
     "safety_interactions": "130"
   },
   {
     "avg_nps": "3.33",
-    "interactions": "380",
+    "interactions": "384",
     "model": "Ridgeback Hybrid",
     "model_year": "2026",
     "negative_rate_pct": "95.3",
     "safety_interactions": "81"
   },
   {
-    "avg_nps": "3.85",
-    "interactions": "565",
+    "avg_nps": "3.86",
+    "interactions": "573",
     "model": "Strata EV",
     "model_year": "2026",
-    "negative_rate_pct": "94.3",
-    "safety_interactions": "77"
+    "negative_rate_pct": "94.4",
+    "safety_interactions": "79"
   },
   {
     "avg_nps": "3.84",
-    "interactions": "376",
+    "interactions": "381",
     "model": "Cove",
     "model_year": "2026",
-    "negative_rate_pct": "91.0",
-    "safety_interactions": "72"
+    "negative_rate_pct": "91.1",
+    "safety_interactions": "73"
   },
   {
-    "avg_nps": "4.02",
-    "interactions": "330",
+    "avg_nps": "3.98",
+    "interactions": "333",
     "model": "Ridgeback",
     "model_year": "2024",
-    "negative_rate_pct": "93.6",
+    "negative_rate_pct": "93.7",
     "safety_interactions": "70"
   },
   {
     "avg_nps": "3.01",
-    "interactions": "496",
+    "interactions": "499",
     "model": "Aurora EV",
     "model_year": "2025",
     "negative_rate_pct": "97.0",
-    "safety_interactions": "66"
+    "safety_interactions": "67"
   },
   {
-    "avg_nps": "3.58",
-    "interactions": "309",
+    "avg_nps": "3.56",
+    "interactions": "311",
     "model": "Ridgeback",
     "model_year": "2025",
-    "negative_rate_pct": "91.9",
-    "safety_interactions": "56"
+    "negative_rate_pct": "92.0",
+    "safety_interactions": "57"
   },
   {
-    "avg_nps": "3.53",
-    "interactions": "231",
+    "avg_nps": "3.51",
+    "interactions": "236",
     "model": "Cove",
     "model_year": "2025",
-    "negative_rate_pct": "94.4",
+    "negative_rate_pct": "94.5",
     "safety_interactions": "46"
   },
   {
-    "avg_nps": "3.26",
-    "interactions": "301",
+    "avg_nps": "3.31",
+    "interactions": "304",
     "model": "Strata EV",
     "model_year": "2024",
-    "negative_rate_pct": "96.7",
+    "negative_rate_pct": "96.4",
     "safety_interactions": "43"
   },
   {
-    "avg_nps": "3.25",
-    "interactions": "300",
+    "avg_nps": "3.28",
+    "interactions": "301",
     "model": "Strata EV",
     "model_year": "2025",
     "negative_rate_pct": "96.7",
@@ -89,7 +89,7 @@
   },
   {
     "avg_nps": "3.77",
-    "interactions": "184",
+    "interactions": "185",
     "model": "Cove",
     "model_year": "2024",
     "negative_rate_pct": "95.1",
@@ -97,26 +97,26 @@
   },
   {
     "avg_nps": "3.2",
-    "interactions": "173",
+    "interactions": "176",
     "model": "Ridgeback Hybrid",
     "model_year": "2024",
-    "negative_rate_pct": "92.5",
-    "safety_interactions": "34"
+    "negative_rate_pct": "92.6",
+    "safety_interactions": "35"
   },
   {
-    "avg_nps": "3.37",
-    "interactions": "366",
+    "avg_nps": "3.38",
+    "interactions": "369",
     "model": "Aurora EV",
     "model_year": "2024",
-    "negative_rate_pct": "94.8",
+    "negative_rate_pct": "94.9",
     "safety_interactions": "34"
   },
   {
-    "avg_nps": "3.25",
-    "interactions": "145",
+    "avg_nps": "3.16",
+    "interactions": "147",
     "model": "Ridgeback Hybrid",
     "model_year": "2025",
-    "negative_rate_pct": "94.5",
+    "negative_rate_pct": "94.6",
     "safety_interactions": "29"
   }
 ]

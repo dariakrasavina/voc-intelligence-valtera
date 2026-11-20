@@ -48,8 +48,8 @@ safety signals that surface 3–5 weeks after customers start calling.
 
 # 4 · Demo storyline (what you will see)
 
-1. **Overview:** "3 emerging issues". The 2026 Aurora EV shows charge-port-door and unexpected-braking complaints
-   spiking after OTA 4.2 (Oct 28). The rule fired on **Oct 30 for charge-port door and Oct 31 for unexpected braking, 2–3 days after release**.
+1. **Overview:** "4 emerging issues". Three are the 2026 Aurora EV after OTA 4.2 (Oct 28): charge-port door, unexpected
+   braking, OTA failure. One is a small infotainment spike, which is why alerts go to an analyst. The rule fired on **Oct 30 for charge-port door and Oct 31 for unexpected braking, 2–3 days after release**.
 2. **Escalation queue:** the P1 braking cases with an AI case summary and recommended action. Assign one to the
    safety investigation team and add a note; it is saved to Lakebase with an audit log.
 3. **Ask Genie:** "When was the charge port door problem on the 2026 Aurora EV first detected?" and "Which dealers
@@ -104,7 +104,7 @@ One Lakeflow Job runs it end to end, daily and incrementally. Everything is a Da
 
 # 8 · Cost and scale choices
 
-- **97.8% fewer LLM calls:** 15,634 customer sentences needed only 350 ai_classify calls (one per *distinct* sentence,
+- **97.8% fewer LLM calls:** 15,821 customer sentences needed only 350 ai_classify calls (one per *distinct* sentence,
   cached). The second full run made **0** new calls, so daily increments only pay for new wording.
 - **Zero-token sentiment:** an LLM labels a sample once, and a small trained model scores everything after that.
 - **Serverless everywhere:** pipeline, job and SQL. Lakebase scales to zero when the app is idle.

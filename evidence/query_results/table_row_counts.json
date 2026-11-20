@@ -4,27 +4,27 @@
     "t": "silver_customers"
   },
   {
-    "n": "433",
+    "n": "438",
     "t": "lb_escalation_queue (Lakebase)"
   },
   {
-    "n": "6046",
+    "n": "6116",
     "t": "bronze_interactions"
   },
   {
-    "n": "32433",
+    "n": "32832",
     "t": "silver_sentences"
   },
   {
-    "n": "6046",
+    "n": "6116",
     "t": "gold_interaction_insights"
   },
   {
-    "n": "7827",
+    "n": "7921",
     "t": "gold_sentence_topics"
   },
   {
-    "n": "433",
+    "n": "438",
     "t": "gold_escalation_queue"
   }
 ]

@@ -18,7 +18,9 @@ Check in: *"Is time-to-detect the metric your team is measured on, or is it cost
 
 ## 1 · Overview: the safety signal (5 min)
 - **TELL:** "This is the screen your quality lead opens every morning."
-- **SHOW:** KPI row (with period and source) → red **emerging issues** card → Aurora EV trend chart.
+- **SHOW:** KPI row (with period and source) → red **emerging issues** card (4 alerts) → Aurora EV trend chart.
+  - If asked about the 4th alert (2024 Aurora EV infotainment, 11 vs. 2.5/week): "Real spikes happen at low volume. The
+    rule raises it and an analyst decides; that's why it doesn't escalate on its own." 
   - "OTA 4.2 went out Oct 28. The charge-port-door alert fired **Oct 30**, and unexpected braking fired **Oct 31**: 24.8× and
     17.6× their normal weekly volume."
 - **TELL (business):** "Under the monthly report you'd have seen this at the end of November. That's about 4 weeks of
@@ -49,7 +51,7 @@ Check in: *"Is time-to-detect the metric your team is measured on, or is it cost
 
 ## 5 · Cost, operations, next steps (3 min) — TELL
 - "One serverless job, daily and incremental. Yesterday's re-run processed 0 old files, and today's run processed only today's 70 interactions."
-- "We classify each *distinct* sentence once: 350 AI calls instead of 15,634, and zero on re-runs. Sentiment
+- "We classify each *distinct* sentence once: 350 AI calls instead of 15,821, and zero on re-runs. Sentiment
   uses a small trained model, so there's no per-call cost."
 - "30/60/90: run on 3 months of your real exports and migrate your vendor rule set → analysts label 500 sentences and we
   tune → run alongside the vendor for a month, then retire the license."

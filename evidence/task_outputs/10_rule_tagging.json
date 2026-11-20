@@ -1,66 +1,66 @@
 {
-  "sentences_scanned": 32433,
-  "seconds": 20.9,
+  "sentences_scanned": 32832,
+  "seconds": 16.8,
   "direct_tags_by_topic": [
     {
-      "topic_name": "Service - Repair Delay",
-      "tagged_sentences": 820
+      "topic_name": "Praise - Positive Feedback",
+      "tagged_sentences": 823
     },
     {
-      "topic_name": "Praise - Positive Feedback",
-      "tagged_sentences": 813
+      "topic_name": "Service - Repair Delay",
+      "tagged_sentences": 822
     },
     {
       "topic_name": "Software - Infotainment or App",
-      "tagged_sentences": 773
+      "tagged_sentences": 785
     },
     {
       "topic_name": "Dealer - Poor Dealer Experience",
-      "tagged_sentences": 562
+      "tagged_sentences": 564
     },
     {
       "topic_name": "Billing - Payment or Financing Issue",
-      "tagged_sentences": 511
+      "tagged_sentences": 518
     },
     {
       "topic_name": "Warranty - Claim Denied",
-      "tagged_sentences": 368
+      "tagged_sentences": 372
     },
     {
       "topic_name": "Safety - Warning Light or Airbag",
-      "tagged_sentences": 367
+      "tagged_sentences": 371
     },
     {
       "topic_name": "Charging - Public Charger Failure",
-      "tagged_sentences": 335
+      "tagged_sentences": 339
     },
     {
       "topic_name": "Software - OTA Update Failure",
-      "tagged_sentences": 304
-    },
-    {
-      "topic_name": "Safety - Driver Assist Malfunction",
-      "tagged_sentences": 257
+      "tagged_sentences": 316
     },
     {
       "topic_name": "Battery - Range Loss",
-      "tagged_sentences": 256
+      "tagged_sentences": 264
+    },
+    {
+      "topic_name": "Safety - Driver Assist Malfunction",
+      "tagged_sentences": 258
     },
     {
       "topic_name": "Service - Recall Question",
-      "tagged_sentences": 240
+      "tagged_sentences": 244
     },
     {
       "topic_name": "Charging - Home Charging Issue",
-      "tagged_sentences": 217
+      "tagged_sentences": 220
     },
     {
       "topic_name": "Charging - Charge Port Door Stuck",
-      "tagged_sentences": 181
+      "tagged_sentences": 190
     },
     {
       "topic_name": "Safety - Unexpected Braking",
-      "tagged_sentences": 173
+      "tagged_sentences": 176
     }
   ],
   "example_explanations": [
