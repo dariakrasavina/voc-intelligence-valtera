@@ -135,15 +135,26 @@ Every notebook writes its own JSON summary to the `evidence` volume; `scripts/co
 
 ## How I used AI to build this
 
-- **Claude Code** (Databricks Isaac) was my pair programmer for scaffolding, the synthetic generator, pipeline SQL,
-  notebooks, the AppKit UI and debugging (for example the serverless UDF pickling error and the alert-baseline bug).
+Full list: [`docs/ai_tools.md`](docs/ai_tools.md).
+
+- **Claude Code** (Databricks Isaac) was my pair programmer for the whole build: data generator, pipeline SQL, notebooks,
+  the AppKit app, tests, evidence and docs. Debugging included the serverless UDF pickling error, the alert-baseline bug,
+  the Lakebase change-feed break and a file-arrival trigger loop. I reviewed and directed every change.
+- **Databricks agent skills** (`databricks aitools`, v0.2.30): `databricks-core`, `-pipelines`, `-jobs`, `-lakebase`,
+  `-apps`, `-app-design`, `-ai-functions` and `-dabs` gave the agent current guidance per product. Both bundles pass
+  `bundle validate --strict`.
+- **Databricks AppKit** for the app (analytics, Lakebase and Genie plugins, typegen, `apps validate`), the CLI's
+  `experimental aitools` SQL tools for checks, and **Genie benchmark evaluation** (3/6 → 5/6 after fixing instructions).
+- **Glean** to find the FE Bar requirements.
 - **My own prior work:** the classification code is ported from an earlier VOC project of mine: the rule engine
   (`rule_engine.py`, `tagger.py`), the PySpark `pandas_udf` tagging job (`rule_tag_job.py`)
   and the ai_classify v2.1 track (`ai_common.py`, `ai_classify_job.py`). Only code was reused; the Valtera taxonomy, rules,
   topic definitions and data are new.
-- **AI inside the solution:** `ai_classify` (topics), `ai_analyze_sentiment` (weak labels), `ai_summarize` (case summaries), Genie (NL querying).
-- **Checking the AI rather than trusting it:** ground-truth evaluation of every classifier on every run, a disclaimer and
-  generated SQL on every Genie answer, and "verify" labels on AI case summaries in the app.
+- **AI inside the solution:** `ai_classify` (topics), `ai_analyze_sentiment` (weak labels for a trained model),
+  `ai_summarize` (case summaries), a Genie Agent (natural-language questions).
+- **Checking the AI rather than trusting it:** ground-truth evaluation of every classifier on every run, a
+  definition-aware ai_classify cache, Genie benchmarks, generated SQL and a disclaimer on every Genie answer, and
+  "verify" labels on AI case summaries in the app.
 
 ## Repo layout
 
@@ -157,7 +168,7 @@ resources/, databricks.yml   bundle: pipeline + job
 app/                   Databricks App (AppKit): UI, SQL queries, Lakebase case routes, tests (separate bundle)
 tests/                 rule-engine unit tests
 evidence/              text evidence of execution
-docs/                  presentation deck (deck.md + deck.pdf), demo script for the roleplay
+docs/                  presentation deck (deck.md + deck.pdf), demo script for the roleplay, AI tools used
 scripts/               evidence collection, Genie evidence, app access setup
 ```
 
