@@ -1,33 +1,38 @@
 # Genie Agent benchmark evaluation
 
-Space `01f1e46e16d61008a7f72226f0aacb03` (Valtera VOC Insights). Benchmarks are defined in `src/genie/genie_space.py`.
+Agent: **Valtera VOC Insights** (`01f1e46e16d61008a7f72226f0aacb03`), created and curated by `src/notebooks/08_genie_space.py` (job task `genie_space`).
+The task fails if fewer than 90% of benchmarks are correct. Final run `01f1e50d9ec918ca80cc273f6a1ea89c`: **19 / 20 correct (95%)**.
 
-## Run 1: initial instructions
+## How it got there (2026-11-20)
 
-result: **3 / 6 correct** (eval run `01f1e4731e0111918d65b6c41c14ebef`)
-
-| Question | Assessment | Reasons |
+| Run | Result | What changed |
 |---|---|---|
-| What percent of interactions are negative for EVs vs ICE vehicles? | BAD | RESULT_MISSING_ROWS, LLM_JUDGE_INCORRECT_METRIC_CALCULATION |
-|  ↳ Genie SQL | `SELECT CASE WHEN `powertrain` = 'EV' THEN 'EV' ELSE 'ICE' END AS `vehicle_type`, COUNT(DISTINCT CASE WHEN `sentiment` = 'negative' THEN `interaction_id` END) AS `negative_interactions`, COUNT(DISTINCT `interaction_id`) AS `total_interactions`, ROUND(try_divide(100.0 * COUNT(DISTINCT CASE WHEN `sentiment` = 'negative' THEN `interaction_id` END),COUNT(DISTINCT `interaction_id`)), 1) AS `negative_pct` | |
-| Which topic and vehicle had the biggest spike versus its baseline? | GOOD |  |
-| How many interactions mentioned a charge port door problem for the 2026 Aurora EV? | GOOD |  |
-| How many P1 cases are in the escalation queue? | GOOD |  |
-| What is the average NPS by vehicle model? | BAD | RESULT_EXTRA_ROWS, LLM_JUDGE_MISSING_OR_INCORRECT_AGGREGATION |
-|  ↳ Genie SQL | `SELECT `model`, `model_year`, AVG(`nps_score`) AS `avg_nps` FROM `daria_krasavina`.`voc_valtera`.`gold_interaction_insights` WHERE `model` IS NOT NULL   AND `model_year` IS NOT NULL   AND `nps_score` IS NOT NULL GROUP BY `model`, `model_year` ORDER BY `avg_nps` DESC, `model` ASC, `model_year` ASC` | |
-| Which dealer has the most poor dealer experience complaints? | BAD | RESULT_MISSING_COLUMNS, LLM_JUDGE_INCORRECT_METRIC_CALCULATION |
-|  ↳ Genie SQL | `WITH `dealer_complaints` AS (   SELECT     `dealer_name`,     COUNT(DISTINCT `interaction_id`) AS `poor_dealer_experience_complaints`   FROM `daria_krasavina`.`voc_valtera`.`gold_interaction_insights`   WHERE `primary_topic` = 'Dealer - Poor Dealer Experience'     AND `dealer_name` IS NOT NULL   GROUP BY `dealer_name` ), `ranked_dealers` AS (   SELECT     `dealer_name`,     `poor_dealer_experience` | |
+| 1 | 17/20 (85%) — task failed the gate | first curated version (20 benchmarks) |
+| 2 | 18/20 (90%) | reference SQL aligned with equivalent answers (survey filter for NPS, no presentation-only rounding) |
+| 3 | 19/20 (95%) | `peak_lift` vs `lift_vs_baseline` disambiguated in column descriptions; summary instruction no longer adds date columns |
+| 4 | 19/20 (95%) | detractor reference uses the survey filter; the remaining miss is a rounding/format judgement |
 
-## Run 2: after fixing instructions (powertrain values, topic-mention counting, model-year aggregation)
+## Final results
 
-result: **5 / 6 correct** (eval run `01f1e473d246133e93fcbaec9117e1cf`)
-
-| Question | Assessment | Reasons |
+| Assessment | Question | Reasons |
 |---|---|---|
-| What percent of interactions are negative for each powertrain? | GOOD |  |
-| How many interactions mentioned a charge port door problem for the 2026 Aurora EV? | GOOD |  |
-| How many P1 cases are in the escalation queue? | GOOD |  |
-| What is the average NPS by vehicle model, all model years combined? | NEEDS_REVIEW | LLM_JUDGE_FORMATTING_ERROR |
-| Which dealer has the most poor dealer experience complaints? | GOOD |  |
-| Which active emerging issue has the biggest spike versus its baseline? | GOOD |  |
-
+| GOOD | How many P1 cases are in the escalation queue? |  |
+| GOOD | How many emerging issue alerts are active? |  |
+| GOOD | How many interactions came from Gold tier customers? |  |
+| GOOD | How many interactions came from calls and how many from surveys? |  |
+| GOOD | How many interactions mentioned a charge port door problem for the 2026 Aurora EV? |  |
+| GOOD | How many interactions were there for the Strata EV, all model years? |  |
+| GOOD | How many safety-related interactions were there in October 2026? |  |
+| GOOD | How many tagged sentences were found only by the AI classifier and not by the rules? |  |
+| GOOD | How many unexpected braking mentions were there for the 2026 Aurora EV in November 2026? |  |
+| GOOD | What is the average NPS by vehicle model, all model years combined? |  |
+| GOOD | What is the average escalation score of P1 cases in the queue? |  |
+| GOOD | What percent of interactions are negative for each powertrain? |  |
+| GOOD | What share of P1 cases in the escalation queue are vehicle safety cases? |  |
+| GOOD | When was the charge port door problem on the 2026 Aurora EV first detected? |  |
+| GOOD | Which 3 dealers have the most P1 cases in the escalation queue? |  |
+| GOOD | Which active emerging issue has the biggest spike versus its baseline? |  |
+| GOOD | Which complaint topic has the most mentions overall? |  |
+| GOOD | Which dealer has the most poor dealer experience complaints? |  |
+| GOOD | Which dealer region has the highest average NPS? |  |
+| NEEDS_REVIEW | What is the detractor rate for surveys? | LLM_JUDGE_FORMATTING_ERROR |

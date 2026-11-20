@@ -99,7 +99,7 @@ the Genie Agent, grants and Lakebase setup are scripted. All of it is in Git.
   Gold tables, Genie and the app never see names, emails, phones or VINs.
 - **Model governance:** the sentiment model is tracked in MLflow and registered in UC (`voc_sentiment_model@champion`).
 - **Measured, not assumed:** every run scores the classifiers against ground truth and writes the metrics to a table.
-- **Genie as code:** instructions, example SQL and benchmark questions are version-controlled. Benchmarks went from 3/6 to 5/6 after fixing three ambiguities.
+- **Genie Agent built by the job:** column descriptions, joins, measures, filters, example SQL and 20 benchmarks are version-controlled; benchmarks went from 85% to 95% after curation, and the job fails below 90%.
 
 ---
 

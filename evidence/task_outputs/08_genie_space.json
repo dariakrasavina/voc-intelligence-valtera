@@ -1,0 +1,132 @@
+{
+  "space_id": "01f1e46e16d61008a7f72226f0aacb03",
+  "action": "updated",
+  "benchmarks": 20,
+  "eval_run_id": "01f1e50d9ec918ca80cc273f6a1ea89c",
+  "correct": 19,
+  "questions": 20,
+  "pass_rate": 0.95,
+  "needs_review": 1,
+  "results": [
+    {
+      "question": "How many interactions came from Gold tier customers?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "SELECT COUNT(DISTINCT `interaction_id`) AS `interactions`\nFROM `daria_krasavina`.`voc_valtera`.`gold_interaction_insights`\nWHERE `loyalty_tier` IS NOT NULL\n  AND `loyalty_tier` ILIKE '%Gold%'"
+    },
+    {
+      "question": "Which 3 dealers have the most P1 cases in the escalation queue?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "WITH `dealer_p1` AS (\n  SELECT\n    `dealer_name`,\n    COUNT(*) AS `p1_cases`\n  FROM `daria_krasavina`.`voc_valtera`.`gold_escalation_queue`\n  WHERE `priority` = 'P1'\n    AND `dealer_name` IS NOT NULL\n  GROUP BY `dealer_name`\n),\n`ranked_dealers` AS (\n  SELECT\n    `dealer_name`,\n    `p1_cases`,\n    RANK() OVER (ORDER BY `p1_cases` DESC) AS `dealer_rank`\n  FROM `dealer_p1`\n)\nSELECT\n  `dealer_name`,\n  `p1_cases`\nFROM `ranked_dealers`\nWHERE `dealer_rank` <= 3\nORDER BY `dealer_rank` ASC, `dealer_name` ASC"
+    },
+    {
+      "question": "When was the charge port door problem on the 2026 Aurora EV first detected?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "SELECT `first_alert_date`\nFROM `daria_krasavina`.`voc_valtera`.`gold_emerging_issues`\nWHERE `topic_name` ILIKE '%Charge Port Door Stuck%'\n  AND `model` ILIKE '%Aurora EV%'\n  AND `model_year` = 2026\n  AND `first_alert_date` IS NOT NULL\nORDER BY `first_alert_date` ASC\nLIMIT 1"
+    },
+    {
+      "question": "What is the detractor rate for surveys?",
+      "assessment": "NEEDS_REVIEW",
+      "reasons": "LLM_JUDGE_FORMATTING_ERROR",
+      "genie_sql": "SELECT 100.0 * AVG(CASE WHEN `nps_score` <= 6 THEN 1.0 ELSE 0.0 END) AS `detractor_rate_pct`\nFROM `daria_krasavina`.`voc_valtera`.`gold_interaction_insights`\nWHERE `channel` = 'survey'"
+    },
+    {
+      "question": "Which dealer has the most poor dealer experience complaints?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "WITH `dealer_topic_counts` AS (\n  SELECT\n    `dealer_name`,\n    SUM(`interactions`) AS `complaint_mentions`,\n    RANK() OVER (ORDER BY SUM(`interactions`) DESC) AS `dealer_rank`\n  FROM `daria_krasavina`.`voc_valtera`.`gold_topic_daily`\n  WHERE `topic_name` = 'Dealer - Poor Dealer Experience'\n    AND `dealer_name` IS NOT NULL\n  GROUP BY `dealer_name`\n)\nSELECT\n  `dealer_name`,\n  `complaint_mentions`\nFROM `dealer_topic_counts`\nWHERE `dealer_rank` <= 1\nORDER BY `complaint_mentions` DESC, `dealer_name` ASC"
+    },
+    {
+      "question": "Which active emerging issue has the biggest spike versus its baseline?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "WITH `ranked` AS (\n  SELECT\n    `topic_name`,\n    `model`,\n    `model_year`,\n    `first_alert_date`,\n    `peak_lift`,\n    `last_7d`,\n    RANK() OVER (ORDER BY `peak_lift` DESC) AS `rank`\n  FROM `daria_krasavina`.`voc_valtera`.`gold_emerging_issues`\n  WHERE `is_alert` = true\n    AND `peak_lift` IS NOT NULL\n    AND `topic_name` IS NOT NULL\n    AND `model` IS NOT NULL\n    AND `model_year` IS NOT NULL\n)\nSELECT\n  `topic_name`,\n  `model`,\n  `model_year`,\n  `first_alert_date`,\n  `peak_lift`,\n  `last_7d`\nFROM `ranked`\nWHERE `rank` <= 1\nORDER BY `peak_lift` DESC, `topic_name` ASC, `model` ASC, `model_year` ASC"
+    },
+    {
+      "question": "How many interactions were there for the Strata EV, all model years?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "SELECT COUNT(DISTINCT `interaction_id`) AS `interactions`\nFROM `daria_krasavina`.`voc_valtera`.`gold_interaction_insights`\nWHERE `model` = 'Strata EV'"
+    },
+    {
+      "question": "How many interactions came from calls and how many from surveys?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "SELECT `channel`, COUNT(DISTINCT `interaction_id`) AS `interactions`\nFROM `daria_krasavina`.`voc_valtera`.`gold_interaction_insights`\nWHERE `channel` IS NOT NULL\nGROUP BY `channel`\nORDER BY `channel` ASC"
+    },
+    {
+      "question": "How many emerging issue alerts are active?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "SELECT COUNT(*) AS `active_alerts`\nFROM `daria_krasavina`.`voc_valtera`.`gold_emerging_issues`\nWHERE `is_alert` = true"
+    },
+    {
+      "question": "How many interactions mentioned a charge port door problem for the 2026 Aurora EV?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "SELECT SUM(`interactions`) AS `interactions`\nFROM `daria_krasavina`.`voc_valtera`.`gold_topic_daily`\nWHERE `topic_name` = 'Charging - Charge Port Door Stuck'\n  AND `model` = 'Aurora EV'\n  AND `model_year` = 2026"
+    },
+    {
+      "question": "What percent of interactions are negative for each powertrain?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "SELECT\n  `powertrain`,\n  ROUND(100.0 * AVG(CASE WHEN `sentiment` = 'negative' THEN 1.0 ELSE 0.0 END), 1) AS `negative_pct`\nFROM `daria_krasavina`.`voc_valtera`.`gold_interaction_insights`\nWHERE `powertrain` IS NOT NULL\nGROUP BY `powertrain`\nORDER BY `powertrain`"
+    },
+    {
+      "question": "What is the average NPS by vehicle model, all model years combined?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "SELECT `model`, AVG(`nps_score`) AS `avg_nps` FROM `daria_krasavina`.`voc_valtera`.`gold_interaction_insights` WHERE `channel` = 'survey' AND `model` IS NOT NULL AND `nps_score` IS NOT NULL GROUP BY `model` ORDER BY `avg_nps` DESC"
+    },
+    {
+      "question": "How many tagged sentences were found only by the AI classifier and not by the rules?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "SELECT COUNT(*) AS `tagged_sentences_ai_only`\nFROM `daria_krasavina`.`voc_valtera`.`gold_sentence_topics`\nWHERE `detected_by` = 'ai'"
+    },
+    {
+      "question": "How many unexpected braking mentions were there for the 2026 Aurora EV in November 2026?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "SELECT SUM(`interactions`) AS `unexpected_braking_mentions`\nFROM `daria_krasavina`.`voc_valtera`.`gold_topic_daily`\nWHERE `topic_name` = 'Safety - Unexpected Braking'\n  AND `model` = 'Aurora EV'\n  AND `model_year` = 2026\n  AND `interaction_date` >= DATE '2026-11-01'\n  AND `interaction_date` < DATE '2026-12-01'"
+    },
+    {
+      "question": "How many P1 cases are in the escalation queue?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "SELECT COUNT(*) AS `p1_cases`\nFROM `daria_krasavina`.`voc_valtera`.`gold_escalation_queue`\nWHERE `priority` = 'P1'"
+    },
+    {
+      "question": "What share of P1 cases in the escalation queue are vehicle safety cases?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "SELECT COUNT(*) AS `p1_cases_total`, SUM(CASE WHEN `primary_parent_topic` = 'Vehicle Safety' THEN 1 ELSE 0 END) AS `vehicle_safety_p1_cases`, try_divide(100.0 * SUM(CASE WHEN `primary_parent_topic` = 'Vehicle Safety' THEN 1 ELSE 0 END),COUNT(*)) AS `vehicle_safety_share_pct` FROM `daria_krasavina`.`voc_valtera`.`gold_escalation_queue` WHERE `priority` = 'P1' AND `primary_parent_topic` IS NOT NULL"
+    },
+    {
+      "question": "Which complaint topic has the most mentions overall?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "WITH `topic_mentions` AS (\n  SELECT\n    `topic_name`,\n    SUM(`interactions`) AS `mentions`\n  FROM `daria_krasavina`.`voc_valtera`.`gold_topic_daily`\n  WHERE `parent_topic` <> 'Positive Feedback'\n    AND `topic_name` IS NOT NULL\n  GROUP BY `topic_name`\n), `ranked_topics` AS (\n  SELECT\n    `topic_name`,\n    `mentions`,\n    RANK() OVER (ORDER BY `mentions` DESC) AS `mention_rank`\n  FROM `topic_mentions`\n)\nSELECT\n  `topic_name`,\n  `mentions`\nFROM `ranked_topics`\nWHERE `mention_rank` <= 1\nORDER BY `mentions` DESC, `topic_name` ASC"
+    },
+    {
+      "question": "Which dealer region has the highest average NPS?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "WITH `region_nps` AS (\n  SELECT\n    `dealer_region`,\n    AVG(`nps_score`) AS `avg_nps`\n  FROM `daria_krasavina`.`voc_valtera`.`gold_interaction_insights`\n  WHERE `channel` = 'survey'\n    AND `dealer_region` IS NOT NULL\n    AND `nps_score` IS NOT NULL\n  GROUP BY `dealer_region`\n), `ranked` AS (\n  SELECT\n    `dealer_region`,\n    `avg_nps`,\n    RANK() OVER (ORDER BY `avg_nps` DESC) AS `rank`\n  FROM `region_nps`\n)\nSELECT\n  `dealer_region`,\n  `avg_nps`\nFROM `ranked`\nWHERE `rank` = 1"
+    },
+    {
+      "question": "What is the average escalation score of P1 cases in the queue?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "SELECT AVG(`escalation_score`) AS `avg_escalation_score`\nFROM `daria_krasavina`.`voc_valtera`.`gold_escalation_queue`\nWHERE `priority` = 'P1'"
+    },
+    {
+      "question": "How many safety-related interactions were there in October 2026?",
+      "assessment": "GOOD",
+      "reasons": "",
+      "genie_sql": "SELECT COUNT(DISTINCT `interaction_id`) AS `safety_interactions`\nFROM `daria_krasavina`.`voc_valtera`.`gold_interaction_insights`\nWHERE `is_safety` = true\n  AND `interaction_date` >= DATE '2026-10-01'\n  AND `interaction_date` < DATE '2026-11-01'"
+    }
+  ]
+}

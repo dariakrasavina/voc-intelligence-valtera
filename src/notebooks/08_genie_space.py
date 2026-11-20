@@ -93,10 +93,10 @@ TABLES = {
         col("is_alert", "True when the alert rule (>= 10 interactions in 7 days and >= 4x the prior 4-week weekly "
             "average) fired in the last 30 days.", ["active alert", "spiking", "emerging", "trending issue"]),
         col("first_alert_date", "First day the alert rule fired for this topic and vehicle.", ["detected on", "first detected"]),
-        col("peak_lift", "Highest lift (last 7 days / baseline) on any alert day.", ["spike size", "peak lift"]),
+        col("peak_lift", "Size of the spike: the highest lift (last 7 days / baseline) on any alert day. Use this for 'biggest spike' or 'largest increase'.", ["spike", "spike size", "biggest increase", "peak lift"]),
         col("last_7d", "Interactions in the 7 days up to as_of_date.", ["last week"]),
         col("baseline_weekly_avg", "Average weekly interactions in the 4 weeks before the last 7 days.", ["baseline"]),
-        col("lift_vs_baseline", "Latest last_7d / baseline."),
+        col("lift_vs_baseline", "Current lift on the latest day only (last_7d / baseline). Not the spike size; use peak_lift for spikes.", ["current lift"]),
         col("as_of_date", "Latest date in the data."),
     ],
     f"{NS}.gold_escalation_queue": [
@@ -165,11 +165,11 @@ EXAMPLES = [  # (question, sql, parameters[(name, type, description, default)], 
     ("Weekly mentions of a topic for a vehicle",
      f"SELECT DATE_TRUNC('WEEK', interaction_date) AS week, SUM(interactions) AS mentions FROM {NS}.gold_topic_daily WHERE topic_name = :topic AND model = :model AND model_year = :model_year GROUP BY 1 ORDER BY 1",
      [("topic", "STRING", "Leaf topic name", "Safety - Unexpected Braking"), ("model", "STRING", "Vehicle model", "Aurora EV"),
-      ("model_year", "INT", "Model year", "2026")], "Trends of one topic over time: gold_topic_daily, SUM(interactions)."),
+      ("model_year", "STRING", "Model year", "2026")], "Trends of one topic over time: gold_topic_daily, SUM(interactions)."),
     ("Top complaint topics for a powertrain between two dates",
      f"SELECT topic_name, SUM(interactions) AS mentions FROM {NS}.gold_topic_daily WHERE powertrain = :powertrain AND parent_topic <> 'Positive Feedback' AND interaction_date BETWEEN :start_date AND :end_date GROUP BY topic_name ORDER BY mentions DESC LIMIT 10",
-     [("powertrain", "STRING", "EV, HYBRID or ICE", "EV"), ("start_date", "DATE", "First day", "2026-10-21"),
-      ("end_date", "DATE", "Last day", "2026-11-20")], "Ranking topics: exclude Positive Feedback."),
+     [("powertrain", "STRING", "EV, HYBRID or ICE", "EV"), ("start_date", "STRING", "First day (YYYY-MM-DD)", "2026-10-21"),
+      ("end_date", "STRING", "Last day (YYYY-MM-DD)", "2026-11-20")], "Ranking topics: exclude Positive Feedback."),
     ("Dealers with the highest share of negative interactions",
      f"SELECT dealer_name, COUNT(*) AS interactions, ROUND(100.0 * AVG(CASE WHEN sentiment = 'negative' THEN 1 ELSE 0 END), 1) AS negative_pct FROM {NS}.gold_interaction_insights GROUP BY dealer_name HAVING COUNT(*) >= 50 ORDER BY negative_pct DESC LIMIT 10",
      [], "Rates per dealer: require a minimum volume."),
@@ -199,7 +199,7 @@ Answer questions about Valtera Motors customer calls and surveys (synthetic data
 - Never return customer names, emails, phone numbers or VINs.
 
 ## Instructions you must follow when providing summaries
-- Round percentages to 1 decimal and state the date range you used."""
+- Round percentages to 1 decimal. Mention the date range in the text of the answer; do not add date columns to the query result."""
 
 SAMPLE_QUESTIONS = ["Which issues are spiking right now?",
                     "When was the charge port door problem on the 2026 Aurora EV first detected?",
@@ -220,7 +220,7 @@ BENCHMARKS = [
     ("How many emerging issue alerts are active?",
      f"SELECT COUNT(*) AS active_alerts FROM {NS}.gold_emerging_issues WHERE is_alert"),
     ("What is the average NPS by vehicle model, all model years combined?",
-     f"SELECT model, ROUND(AVG(nps_score), 2) AS avg_nps FROM {NS}.gold_interaction_insights WHERE nps_score IS NOT NULL GROUP BY model"),
+     f"SELECT model, AVG(nps_score) AS avg_nps FROM {NS}.gold_interaction_insights WHERE channel = 'survey' AND nps_score IS NOT NULL GROUP BY model"),
     ("How many interactions mentioned a charge port door problem for the 2026 Aurora EV?",
      f"SELECT SUM(interactions) AS interactions FROM {NS}.gold_topic_daily WHERE topic_name = 'Charging - Charge Port Door Stuck' AND model = 'Aurora EV' AND model_year = 2026"),
     ("Which dealer has the most poor dealer experience complaints?",
@@ -240,11 +240,11 @@ BENCHMARKS = [
     ("How many tagged sentences were found only by the AI classifier and not by the rules?",
      f"SELECT COUNT(*) AS ai_only FROM {NS}.gold_sentence_topics WHERE detected_by = 'ai'"),
     ("What is the average escalation score of P1 cases in the queue?",
-     f"SELECT ROUND(AVG(escalation_score), 2) AS avg_escalation_score FROM {NS}.gold_escalation_queue WHERE priority = 'P1'"),
+     f"SELECT AVG(escalation_score) AS avg_escalation_score FROM {NS}.gold_escalation_queue WHERE priority = 'P1'"),
     ("Which dealer region has the highest average NPS?",
-     f"SELECT dealer_region, ROUND(AVG(nps_score), 2) AS avg_nps FROM {NS}.gold_interaction_insights WHERE nps_score IS NOT NULL GROUP BY dealer_region ORDER BY avg_nps DESC LIMIT 1"),
+     f"SELECT dealer_region, AVG(nps_score) AS avg_nps FROM {NS}.gold_interaction_insights WHERE channel = 'survey' AND nps_score IS NOT NULL GROUP BY dealer_region ORDER BY avg_nps DESC LIMIT 1"),
     ("What is the detractor rate for surveys?",
-     f"SELECT ROUND(100.0 * AVG(CASE WHEN nps_score <= 6 THEN 1.0 ELSE 0.0 END), 1) AS detractor_rate_pct FROM {NS}.gold_interaction_insights WHERE nps_score IS NOT NULL"),
+     f"SELECT ROUND(100.0 * AVG(CASE WHEN nps_score <= 6 THEN 1.0 ELSE 0.0 END), 1) AS detractor_rate_pct FROM {NS}.gold_interaction_insights WHERE channel = 'survey'"),
     ("Which 3 dealers have the most P1 cases in the escalation queue?",
      f"SELECT dealer_name, COUNT(*) AS p1_cases FROM {NS}.gold_escalation_queue WHERE priority = 'P1' GROUP BY dealer_name ORDER BY p1_cases DESC LIMIT 3"),
     ("How many unexpected braking mentions were there for the 2026 Aurora EV in November 2026?",

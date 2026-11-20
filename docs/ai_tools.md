@@ -30,7 +30,7 @@ Skills give the agent current, Databricks-approved guidance for each product, in
 |---|---|
 | **Databricks AppKit** (`@databricks/appkit`, `@databricks/appkit-ui`) | The app framework: `useAnalyticsQuery`, charts, `useGenieChat`, `GenieQueryVisualization`, `lakebase()` plugin, `appkit generate-types`, built-in agent docs (`npx @databricks/appkit docs`) |
 | **Databricks CLI** `experimental aitools tools` | Running and checking SQL from the agent (`query`, `get-default-warehouse`), for every data check, grant and evidence query |
-| **Genie benchmark evaluation** (`databricks genie genie-create-eval-run`, Beta) | Scored the Genie Agent against 6 benchmark questions: 3/6 → 5/6 after fixing its instructions |
+| **Genie benchmark evaluation** (Genie eval-runs API, Beta) | Runs 20 benchmark questions from `08_genie_space` on every job run; 85% → 95% after fixing ambiguities; the task fails below 90% |
 
 ### Other assistants
 | Tool | Used for |
@@ -45,7 +45,7 @@ Skills give the agent current, Databricks-approved guidance for each product, in
 | `ai_analyze_sentiment` | `04_sentiment_model` | Weak labels, once, to train a small sentiment model (no per-call cost afterwards) |
 | Trained sentiment model (scikit-learn, MLflow, UC `@champion`) | `04_sentiment_model` | Owned, versioned, zero-token scoring at volume |
 | `ai_summarize` | `05_gold_and_alerts` | One-line case summaries for P1/P2 cases (cached per case) |
-| **Genie Agent** "Valtera VOC Insights" | `src/genie/genie_space.py`, app "Ask Genie" tab | Natural-language questions over the gold tables and metric view, with generated SQL shown |
+| **Genie Agent** "Valtera VOC Insights" | `src/notebooks/08_genie_space.py` (job task), app "Ask Genie" tab | Natural-language questions over the gold tables and metric view, with generated SQL shown |
 
 ## 3. How the AI output is checked
 

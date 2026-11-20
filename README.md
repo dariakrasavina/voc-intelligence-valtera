@@ -80,7 +80,7 @@ flowchart LR
   end
 ```
 
-**One Lakeflow Job** (`valtera-voc-end-to-end`, 8 tasks, serverless) runs the whole flow. It's **started by a
+**One Lakeflow Job** (`valtera-voc-end-to-end`, 9 tasks, serverless) runs the whole flow. It's **started by a
 file-arrival trigger** on the `landing` volume: a new export file starts a run 2 minutes after the writes stop, at most once
 every 5 minutes. The synthetic export is landed from outside the job by `scripts/land_export.sh`, which plays the source
 system. The job never writes to `landing`, so it can't trigger itself.
@@ -96,6 +96,7 @@ system. The job never writes to `landing`, so it can't trigger itself.
 | 6 | `gold_and_alerts` | Combined topics, interaction insights, daily topic counts, emerging-issue alerts, escalation queue, metric view | `src/notebooks/05_gold_and_alerts.py` |
 | 7 | `lakebase_sync` | Refreshes the Lakebase synced table and checks row counts | `src/notebooks/06_lakebase_sync.py` |
 | 8 | `evaluate` | Loads the ground-truth labels, scores rules / AI / combined against them; checks when the OTA 4.2 issue was first detected | `src/notebooks/07_evaluate.py` |
+| 9 | `genie_space` | Creates or updates the Genie Agent (column descriptions and synonyms, joins, measures, filters, expressions, example SQL, short instructions, 20 benchmarks), checks every SQL statement on the warehouse, runs the benchmarks and fails below 90% | `src/notebooks/08_genie_space.py` |
 
 ## Evidence that it ran (all plain text)
 
@@ -116,7 +117,7 @@ system. The job never writes to `landing`, so it can't trigger itself.
 | Lakebase sync | [`evidence/task_outputs/06_lakebase_sync.json`](evidence/task_outputs/06_lakebase_sync.json) | sync COMPLETED, 438 = 438 rows, app read access verified |
 | App build + deployment | [`evidence/app_validation.txt`](evidence/app_validation.txt), [`evidence/app_status.json`](evidence/app_status.json) | validate: types, lint, typecheck, build, tests pass; app RUNNING |
 | Genie answers + generated SQL | [`evidence/genie/genie_conversations.md`](evidence/genie/genie_conversations.md) | 5 business questions answered |
-| Genie benchmark evaluation | [`evidence/genie/genie_benchmark_eval.md`](evidence/genie/genie_benchmark_eval.md) | 3/6 → **5/6** after fixing instructions; the 6th is *needs review* (number formatting) |
+| Genie benchmark evaluation | [`evidence/genie/genie_benchmark_eval.md`](evidence/genie/genie_benchmark_eval.md) | **19/20 (95%)** on 20 benchmarks; the job fails below 90% |
 | Unit tests | [`evidence/unit_tests.txt`](evidence/unit_tests.txt) | 16/16 pass (rule engine + ai_classify labels and cache key); app: 3/3 route tests, typecheck, lint, build pass (`databricks apps validate`) |
 
 Every notebook writes its own JSON summary to the `evidence` volume; `scripts/collect_evidence.sh` copies them here.
@@ -134,7 +135,7 @@ Every notebook writes its own JSON summary to the `evidence` volume; `scripts/co
 | **Lakebase for the queue** | Millisecond reads, transactional write-back, audit log, while analytics stay on the SQL warehouse | Synced table is TRIGGERED (minutes after each job run), not continuous |
 | **MERGE the queue, never replace it** | The synced table streams the queue's Change Data Feed. My first version rebuilt it with `CREATE OR REPLACE`, which broke the stream (`DIFFERENT_DELTA_TABLE_READ_BY_STREAMING_SOURCE`) | The sync task now checks Lakebase rows = gold rows and fails otherwise, recovering once with a full refresh |
 | **No PII beyond silver** | Gold, Genie and the app only use `customer_id`; names, emails and phones are masked | Agents who need contact details would get them through the PII-reader group |
-| **Genie Agent as code** | Instructions, example SQL, column descriptions and benchmarks are version-controlled and re-deployable | Must be kept in sync with gold schema changes. Benchmarks found 3 real ambiguities (hybrid ≠ ICE, primary vs. any topic, model-year aggregation), which the instructions now cover |
+| **Genie Agent created by a notebook in the job** | Every run re-applies the curated definition (column configs, joins, snippets, examples, short instructions) and re-runs 20 benchmarks, so a data or schema change that breaks Genie fails the job | Benchmarks found real ambiguities (hybrid ≠ ICE, primary vs. any topic, spike = peak_lift), now encoded as column descriptions rather than long instructions |
 
 ## How I used AI to build this
 
@@ -147,7 +148,7 @@ Full list: [`docs/ai_tools.md`](docs/ai_tools.md).
   `-apps`, `-app-design`, `-ai-functions` and `-dabs` gave the agent current guidance per product. Both bundles pass
   `bundle validate --strict`.
 - **Databricks AppKit** for the app (analytics, Lakebase and Genie plugins, typegen, `apps validate`), the CLI's
-  `experimental aitools` SQL tools for checks, and **Genie benchmark evaluation** (3/6 → 5/6 after fixing instructions).
+  `experimental aitools` SQL tools for checks, and **Genie benchmark evaluation** (20 benchmarks, 85% → 95% after curation; the job fails below 90%).
 - **Glean** to find the FE Bar requirements.
 - **My own prior work:** the classification code is ported from an earlier VOC project of mine: the rule engine
   (`rule_engine.py`, `tagger.py`), the PySpark `pandas_udf` tagging job (`rule_tag_job.py`)
@@ -166,7 +167,6 @@ src/data_gen/          synthetic export generator (pure Python, seeded)
 src/pipeline/          Lakeflow Declarative Pipeline (Python: Auto Loader, AUTO CDC, expectations)
 src/classification/    rule engine + tagger + category_model.json (the taxonomy)
 src/notebooks/         job tasks 00-60
-src/genie/             Genie Agent definition as code
 resources/, databricks.yml   bundle: pipeline + job
 app/                   Databricks App (AppKit): UI, SQL queries, Lakebase case routes, tests (separate bundle)
 tests/                 rule-engine unit tests
@@ -183,7 +183,7 @@ command, a script, or by a job task the first time it runs. Nothing is created b
 | Resource | Deployed by | Where |
 |---|---|---|
 | Lakeflow pipeline `valtera-voc-ingest` | **Bundle 1** (root) | `databricks.yml`, `resources/pipeline.yml` |
-| Lakeflow Job `valtera-voc-end-to-end` (8 tasks, file-arrival trigger) | **Bundle 1** (root) | `resources/job.yml` |
+| Lakeflow Job `valtera-voc-end-to-end` (9 tasks, file-arrival trigger) | **Bundle 1** (root) | `resources/job.yml` |
 | Synthetic export (the "source system") | Script, run from a laptop | `scripts/land_export.sh` |
 | Databricks App `valtera-voc-app` + its resources (SQL warehouse, Lakebase, Genie space) | **Bundle 2** (app) | `app/databricks.yml`, `app/app.yaml` |
 | UC schema `voc_valtera`, volumes `landing` and `evidence` | One-time SQL (step 1 below) | prerequisite |
@@ -191,7 +191,7 @@ command, a script, or by a job task the first time it runs. Nothing is created b
 | Tables, views, masking function, metric view | Job tasks (pipeline + notebooks) | `src/pipeline/`, `src/notebooks/` |
 | Sentiment model `voc_sentiment_model@champion` | Job task `sentiment_model` (MLflow → UC) | `src/notebooks/04_sentiment_model.py` |
 | Lakebase synced table `lb_escalation_queue` | Job task `lakebase_sync` (created on first run, recreated if broken) | `src/notebooks/06_lakebase_sync.py` |
-| Genie Agent "Valtera VOC Insights" | Script ("Genie as code") | `src/genie/genie_space.py` |
+| Genie Agent "Valtera VOC Insights" | Job task `genie_space` (creates or updates it, then runs the benchmarks) | `src/notebooks/08_genie_space.py` |
 | Grants for the app's service principal (UC + Lakebase) | Script, run once after the first app deploy; the sync task re-applies the Lakebase grant | `scripts/setup_app_access.sh` |
 
 The app is a separate bundle because `databricks apps init` scaffolds it that way, and it keeps the Node.js app's
@@ -210,8 +210,7 @@ databricks postgres create-project valtera-voc --json '{"spec": {"display_name":
 #    file-arrival trigger (≈2 min wait + ≈8 min run, serverless)
 databricks bundle deploy --profile <profile>
 scripts/land_export.sh <profile> backfill
-# 4. Genie Agent
-python src/genie/genie_space.py --profile <profile> --warehouse <id>
+# 4. Genie Agent: created by the job's genie_space task (08_genie_space.py); note its space ID from the task output
 # 5. Bundle 2: the app (set the Genie space ID in app/databricks.yml first)
 cd app && npm install && databricks bundle deploy --profile <profile> && databricks bundle run app --profile <profile> && cd ..
 # 6. Least-privilege grants for the app's service principal
