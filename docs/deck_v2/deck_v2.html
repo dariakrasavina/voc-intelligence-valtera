@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Valtera Motors · VOC Intelligence</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=DM+Mono:wght@400;500&display=block">
+<style>
+:root{
+  --oat:#F9F7F4; --oat2:#EEEAE4; --card:#FFFFFF; --ink:#16282E; --navy:#1B3139; --body:#3E4A4F; --muted:#5A5755; --mono:#8A847E;
+  --lava:#FF3621; --lava-d:#C8240F; --blue:#2272B4; --amber:#E8A33D; --green:#00A972; --line:#E2DDD5;
+}
+@page{size:1280px 720px;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#ccc}
+body{font-family:'DM Sans',-apple-system,Helvetica,Arial,sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.slide{position:relative;width:1280px;height:720px;overflow:hidden;background:var(--oat);page-break-after:always;break-after:page;padding:0 70px}
+.slide:last-child{page-break-after:auto;break-after:auto}
+.mono{font-family:'DM Mono',ui-monospace,Menlo,monospace}
+/* header / footer rows */
+.hdr{position:absolute;top:30px;left:70px;right:70px;display:flex;justify-content:space-between;font:400 10.5px/1 'DM Mono',monospace;letter-spacing:.16em;color:var(--mono);text-transform:uppercase}
+.hdr b{color:var(--ink);font-weight:500;margin-left:14px}
+.ftr{position:absolute;bottom:22px;left:70px;right:70px;border-top:1px solid var(--line);padding-top:12px;display:flex;justify-content:space-between;align-items:center;font:400 10px/1 'DM Mono',monospace;letter-spacing:.14em;color:var(--mono);text-transform:uppercase}
+.ftr .brand{font:500 13px/1 'DM Mono',monospace;letter-spacing:.02em;color:var(--ink);text-transform:none}
+.ftr .brand i{font-style:normal;color:var(--lava)}
+/* type */
+.eyebrow{font:400 12.5px/1 'DM Mono',monospace;letter-spacing:.16em;color:var(--lava);text-transform:uppercase;margin:78px 0 12px}
+h1{font-weight:700;font-size:46px;line-height:1.04;letter-spacing:-.035em;margin:0 0 12px;color:var(--ink)}
+h1 .dot,.dot{color:var(--lava)}
+.lede{font-size:17.5px;line-height:1.45;color:var(--body);margin:0 0 20px;max-width:1040px}
+.lede b{color:var(--ink)}
+.small{font-size:12px;color:var(--muted);line-height:1.4}
+.tag{display:inline-block;font:500 10px/1 'DM Mono',monospace;letter-spacing:.08em;padding:4px 7px;border-radius:3px;text-transform:uppercase;vertical-align:middle}
+.tag.m{background:#E3F4EC;color:#04714D}
+.tag.e{background:#FDF0DA;color:#8A5A0B}
+.tag.b{background:#FFE6E1;color:var(--lava-d)}
+/* cards */
+.grid{display:grid;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--ink);border-radius:4px;padding:16px 18px}
+.card.l{border-top-color:var(--lava)} .card.bl{border-top-color:var(--blue)} .card.a{border-top-color:var(--amber)} .card.g{border-top-color:var(--green)} .card.n{border-top-color:var(--mono)}
+.card .k{font:400 10.5px/1 'DM Mono',monospace;letter-spacing:.14em;color:var(--mono);text-transform:uppercase;margin-bottom:9px}
+.card.l .k{color:var(--lava)} .card.bl .k{color:var(--blue)} .card.a .k{color:#B07812} .card.g .k{color:#04815A}
+.card h3{font-size:19px;font-weight:600;letter-spacing:-.01em;margin:0 0 6px}
+.card p{font-size:13.5px;line-height:1.45;color:var(--body);margin:0}
+.big{font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--ink)}
+.dark{background:var(--navy);color:#fff}
+.code{background:var(--navy);color:#D9E2E5;border-radius:6px;padding:14px 16px;font:400 12px/1.55 'DM Mono',monospace;white-space:pre}
+.code .c{color:#8FA3AA;font-style:italic} .code .s{color:#7FD1A8} .code .kw{color:#FF8A75}
+table.t{border-collapse:separate;border-spacing:0;width:100%;font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+table.t th{background:var(--navy);color:#fff;font:500 10.5px/1.2 'DM Mono',monospace;letter-spacing:.1em;text-transform:uppercase;text-align:left;padding:10px 12px}
+table.t td{padding:9px 12px;border-top:1px solid #EFEBE5;vertical-align:top;color:var(--body);line-height:1.35}
+table.t td b{color:var(--ink)}
+table.t td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.chip{display:inline-block;font:500 11px/1 'DM Sans';padding:5px 8px;border-radius:3px;background:#FFE6E1;color:var(--lava-d);margin:2px 3px 2px 0;white-space:nowrap}
+.chip.dk{background:var(--navy);color:#fff}
+</style>
+</head>
+<body>
+
+<!-- ============ 01 TITLE ============ -->
+<section class="slide" style="padding:0">
+  <svg width="1280" height="720" style="position:absolute;inset:0" aria-hidden="true">
+    <polygon points="820,0 1280,0 1280,520" fill="#FF3621"/>
+    <polygon points="1010,0 1280,0 1280,300" fill="#FF8A75" opacity=".55"/>
+    <polygon points="1280,360 1280,720 900,720" fill="#1B3139"/>
+    <polygon points="1280,520 1280,720 1080,720" fill="#C8240F" opacity=".9"/>
+    <text x="-20" y="800" font-family="DM Sans" font-weight="700" font-size="400" letter-spacing="-28" fill="#F0EDE8">voc</text>
+  </svg>
+  <div style="position:absolute;left:70px;top:44px;font:700 22px/1 'DM Sans';letter-spacing:-.02em;color:var(--ink)">databricks</div>
+  <div style="position:absolute;left:70px;top:150px;width:760px">
+    <div class="mono" style="font-size:12.5px;letter-spacing:.16em;color:var(--lava);text-transform:uppercase;margin-bottom:18px">Customer success story · Automotive · Voice of the customer</div>
+    <div style="font-weight:700;font-size:74px;line-height:.98;letter-spacing:-.045em">Valtera Motors hears a defect in <span style="color:var(--lava)">2 days</span>, not 30<span class="dot">.</span></div>
+    <p style="font-size:19px;line-height:1.45;color:var(--body);margin:24px 0 0;max-width:640px">VOC Intelligence on the Databricks Data Intelligence Platform: every call and survey tagged, every emerging issue flagged, every serious case owned.</p>
+  </div>
+  <div style="position:absolute;left:70px;bottom:44px;display:flex;gap:56px;font:400 10.5px/1.6 'DM Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--mono)">
+    <div>Audience<br><span style="color:var(--ink)">VP CX &amp; Vehicle Quality</span></div>
+    <div>Built with<br><span style="color:var(--ink)">Lakeflow · Unity Catalog · AI Functions · Lakebase · Apps · Genie</span></div>
+    <div>Date<br><span style="color:var(--ink)">November 2026</span></div>
+  </div>
+</section>
+
+<!-- ============ 02 EXEC SUMMARY ============ -->
+<section class="slide">
+  <div class="hdr"><span>Valtera Motors · VOC Intelligence</span><span>Executive summary<b>02</b></span></div>
+  <div class="eyebrow">// The short version</div>
+  <h1>From a monthly report to a daily safety signal<span class="dot">.</span></h1>
+  <p class="lede">Valtera read 240K customer calls and surveys a month through a vendor keyword tool and a month-end export. On Databricks, one governed flow now tags every sentence with AI, flags spikes daily and routes each serious case to an owner.</p>
+  <div class="grid" style="grid-template-columns:repeat(4,1fr);margin-top:8px">
+    <div class="card l"><div class="k">Year-1 value</div><div class="big" style="font-size:58px">$4.0M</div><p style="margin-top:10px"><b>$2.3M revenue protected</b> + $1.7M cost and risk avoided, on ~$75K/yr of Databricks consumption.</p><div style="margin-top:10px"><span class="tag e">estimate</span></div></div>
+    <div class="card bl"><div class="k">Time to detect</div><div class="big" style="font-size:58px">2 days</div><p style="margin-top:10px">OTA 4.2 shipped Oct 28. The first alert fired <b>Oct 30</b>. The vendor report would have shown it on Nov 30.</p><div style="margin-top:10px"><span class="tag m">measured</span></div></div>
+    <div class="card g"><div class="k">Complaints tagged</div><div class="big" style="font-size:58px">99.4%</div><p style="margin-top:10px">Up from <b>77.9%</b> with keyword rules. AI catches the paraphrases; rules keep every tag explainable.</p><div style="margin-top:10px"><span class="tag m">measured</span></div></div>
+    <div class="card a"><div class="k">Cases with an owner</div><div class="big" style="font-size:58px">318</div><p style="margin-top:10px">P1/P2 cases, each with an AI summary, recommended action, assignee and audit log. Before: <b>none</b>.</p><div style="margin-top:10px"><span class="tag m">built</span></div></div>
+  </div>
+  <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr 1fr;background:#fff;border:1px solid var(--line);border-radius:4px">
+    <div style="padding:14px 18px;border-right:1px solid var(--line)"><div class="mono" style="font-size:10.5px;letter-spacing:.14em;color:var(--lava)">PROBLEM</div><p style="font-size:14px;margin:6px 0 0;color:var(--body)">Keyword rules missed 1 in 5 complaints, and safety signals reached Quality 3–5 weeks late with no case owner.</p></div>
+    <div style="padding:14px 18px;border-right:1px solid var(--line)"><div class="mono" style="font-size:10.5px;letter-spacing:.14em;color:var(--blue)">SOLUTION</div><p style="font-size:14px;margin:6px 0 0;color:var(--body)">Lakeflow, Unity Catalog, AI Functions, MLflow, Lakebase, Apps and Genie in one serverless job, deployed from Git.</p></div>
+    <div style="padding:14px 18px"><div class="mono" style="font-size:10.5px;letter-spacing:.14em;color:#04815A">OUTCOME</div><p style="font-size:14px;margin:6px 0 0;color:var(--body)">The OTA 4.2 defect was flagged 31 days before the vendor report (27 days for the safety alert), protecting an estimated $2.3M in owner revenue.</p></div>
+  </div>
+  <div style="margin-top:14px;display:flex;gap:10px;align-items:center;font-size:13px;color:var(--muted)"><span class="tag m">measured</span> = from the running system, on synthetic data &nbsp; <span class="tag e">estimate</span> = sizing assumption for an OEM of Valtera's size, to validate in the pilot</div>
+  <div class="ftr"><span>VOC Intelligence · 00 · Summary</span><span>Valtera Motors is fictional · all data synthetic</span><span class="brand"><i>[</i>databricks<i>]</i></span></div>
+</section>
+
+<!-- ============ 03 PROBLEM ============ -->
+<section class="slide">
+  <div class="hdr"><span>Valtera Motors · VOC Intelligence</span><span>The problem<b>03</b></span></div>
+  <div class="eyebrow">// 01 · The problem first</div>
+  <h1>240,000 customer voices a month, read once a month<span class="dot">.</span></h1>
+  <p class="lede">180K contact-center calls and 60K post-service surveys went into a vendor text-analytics tool. Quality and Safety got an export at month-end. Three things broke.</p>
+  <div class="grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="card l"><div class="k">01 · Missed</div><div class="big" style="font-size:44px">1 in 5</div><h3 style="margin-top:8px">complaints the rules never match</h3><p>Customers don't use the keywords. Rules missed <b>1,320 of 5,978</b> complaint topics in the sample.</p>
+      <div style="margin-top:12px;padding:10px 12px;background:var(--oat);border-left:3px solid var(--lava);font-size:13.5px;font-style:italic;color:var(--ink)">"That little door where you plug in won't budge."</div></div>
+    <div class="card bl"><div class="k">02 · Late</div><div class="big" style="font-size:44px">3–5 wks</div><h3 style="margin-top:8px">before Safety sees a new defect</h3><p>A defect introduced by a software update reaches the monthly report weeks after customers start calling. Meanwhile, the update keeps rolling out to <b>~1,500 vehicles a week</b>.</p></div>
+    <div class="card a"><div class="k">03 · Unowned</div><div class="big" style="font-size:44px">0</div><h3 style="margin-top:8px">safety cases with an owner</h3><p>Tags lived in the vendor tool, cut off from vehicle, dealer and OTA data. No queue, no assignee, no audit trail. A braking complaint was a row in a spreadsheet.</p></div>
+  </div>
+  <div style="margin-top:16px;display:flex;gap:28px;align-items:baseline;background:#fff;border:1px solid var(--line);border-radius:4px;padding:12px 18px">
+    <span class="mono" style="font-size:10.5px;letter-spacing:.14em;color:var(--mono);text-transform:uppercase">Cost of the status quo</span>
+    <span style="font-size:14px"><b>~$600K/yr</b> vendor license</span>
+    <span style="font-size:14px"><b>~5 FTE</b> on rule upkeep and tag review</span>
+    <span style="font-size:14px"><b>~$0.9M</b> exposure per bad OTA</span>
+    <span style="font-size:14px"><b>Owners lost</b> who never got a call back</span>
+    <span class="tag e" style="margin-left:auto">estimate</span>
+  </div>
+  <div class="ftr"><span>VOC Intelligence · 01 · The problem</span><span>Valtera Motors is fictional · all data synthetic</span><span class="brand"><i>[</i>databricks<i>]</i></span></div>
+</section>
+
+<!-- ============ 04 OTA 4.2 TIMELINE ============ -->
+<section class="slide">
+  <div class="hdr"><span>Valtera Motors · VOC Intelligence</span><span>OTA 4.2 incident<b>04</b></span></div>
+  <div class="eyebrow">// 01 · A real example from the data</div>
+  <h1>OTA 4.2: the signal was in the calls 2 days after release<span class="dot">.</span></h1>
+  <p class="lede">Software update 4.2 for the 2026 Aurora EV went out on Oct 28. Three complaint topics spiked. Each one was flagged when it crossed <b>≥10 mentions in 7 days and ≥4× its 4-week baseline</b>.</p>
+  <svg width="1140" height="300" viewBox="0 0 1140 300" style="display:block;margin-top:4px" role="img" aria-label="Timeline from Oct 24 to Dec 2: OTA release Oct 28, alerts Oct 30, Oct 31 and Nov 3, vendor month-end report Nov 30">
+    <!-- gap band -->
+    <rect x="310" y="40" width="729" height="150" fill="#FFE6E1" rx="4"/>
+    <text x="674" y="98" text-anchor="middle" font-family="DM Sans" font-weight="700" font-size="38" letter-spacing="-1.2" fill="#C8240F">31 days earlier</text>
+    <text x="674" y="128" text-anchor="middle" font-family="DM Sans" font-size="16" fill="#3E4A4F">≈ 4 weeks of rollout paused · ~6,000 fewer vehicles on a bad update</text>
+    <text x="674" y="152" text-anchor="middle" font-family="DM Mono" font-size="10.5" letter-spacing="1.4" fill="#8A847E">1,500 VEHICLES / WEEK × 4 WEEKS · ESTIMATE</text>
+    <!-- axis -->
+    <line x1="40" y1="215" x2="1100" y2="215" stroke="#16282E" stroke-width="2"/>
+    <g font-family="DM Mono" font-size="11" fill="#8A847E" text-anchor="middle">
+      <line x1="40" y1="211" x2="40" y2="219" stroke="#8A847E"/><text x="40" y="290">OCT 24</text>
+      <line x1="256" y1="211" x2="256" y2="219" stroke="#8A847E"/><text x="256" y="290">NOV 1</text>
+      <line x1="607" y1="211" x2="607" y2="219" stroke="#8A847E"/><text x="607" y="290">NOV 14</text>
+      <line x1="1093" y1="211" x2="1093" y2="219" stroke="#8A847E"/><text x="1093" y="290">DEC 2</text>
+    </g>
+    <!-- release -->
+    <line x1="148" y1="30" x2="148" y2="215" stroke="#16282E" stroke-width="2" stroke-dasharray="4 4"/>
+    <rect x="70" y="8" width="156" height="26" rx="3" fill="#16282E"/>
+    <text x="148" y="26" text-anchor="middle" font-family="DM Mono" font-size="11.5" fill="#fff">OCT 28 · OTA 4.2</text>
+    <!-- alerts -->
+    <g font-family="DM Sans">
+      <circle cx="202" cy="215" r="9" fill="#FF3621" stroke="#F9F7F4" stroke-width="2"/>
+      <circle cx="229" cy="215" r="9" fill="#FF3621" stroke="#F9F7F4" stroke-width="2"/>
+      <circle cx="310" cy="215" r="9" fill="#FF3621" stroke="#F9F7F4" stroke-width="2"/>
+      <text x="60" y="244" font-size="13" font-weight="700" fill="#16282E">Oct 30 · Charge-port door</text><text x="60" y="262" font-size="12" fill="#5A5755">9.6× baseline · 2 days</text>
+      <text x="262" y="244" font-size="13" font-weight="700" fill="#16282E">Oct 31 · OTA failure</text><text x="262" y="262" font-size="12" fill="#5A5755">6.5× · 3 days</text>
+      <text x="420" y="244" font-size="13" font-weight="700" fill="#16282E">Nov 3 · Unexpected braking</text><text x="420" y="262" font-size="12" fill="#5A5755">10.4× · 6 days · P1 safety</text>
+      <line x1="229" y1="224" x2="270" y2="232" stroke="#8A847E"/>
+      <line x1="310" y1="224" x2="425" y2="232" stroke="#8A847E"/>
+    </g>
+    <!-- vendor report -->
+    <rect x="1031" y="207" width="16" height="16" fill="#16282E" transform="rotate(45 1039 215)"/>
+    <text x="1039" y="244" text-anchor="end" font-family="DM Sans" font-size="13" font-weight="700" fill="#16282E">Nov 30 · Vendor month-end report</text>
+    <text x="1039" y="262" text-anchor="end" font-family="DM Sans" font-size="12" fill="#5A5755">first time Quality would have seen it</text>
+  </svg>
+  <p style="font-size:13px;color:var(--muted);margin:6px 0 0;max-width:1100px"><span class="tag m">measured</span>&nbsp; Alert dates and lift from <span class="mono">gold_emerging_issues</span>. A 4th, unplanted spike (2026 Ridgeback Hybrid infotainment, 6.9×) was also flagged, which is why alerts open an analyst review instead of escalating automatically.</p>
+  <div class="ftr"><span>VOC Intelligence · 01 · The problem</span><span>Valtera Motors is fictional · all data synthetic</span><span class="brand"><i>[</i>databricks<i>]</i></span></div>
+</section>
+
+<!-- ============ 05 ARCHITECTURE ============ -->
+<section class="slide">
+  <div class="hdr"><span>Valtera Motors · VOC Intelligence</span><span>Architecture<b>05</b></span></div>
+  <div class="eyebrow">// 02 · The solution</div>
+  <h1>One governed flow, from call transcript to case owner<span class="dot">.</span></h1>
+  <p class="lede">Everything runs on one platform with one copy of the data. Each stage is a Databricks product, deployed from Git as code.</p>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;position:relative">
+    <div class="card n" style="padding:14px"><div class="k">01 · Land</div><h3 style="font-size:16.5px">UC Volumes</h3><p style="font-size:12.5px">Calls, surveys, CRM, vehicle and dealer exports land as files. A <b>file-arrival trigger</b> starts the run.</p><div style="margin-top:10px"><span class="chip">Unity Catalog Volumes</span></div></div>
+    <div class="card bl" style="padding:14px"><div class="k">02 · Ingest</div><h3 style="font-size:16.5px">Lakeflow Declarative Pipelines</h3><p style="font-size:12.5px">Auto Loader to bronze, AUTO CDC for customers, vehicles and dealers, one row per sentence, expectations at every layer.</p><div style="margin-top:10px"><span class="chip">Auto Loader</span><span class="chip">AUTO CDC</span></div></div>
+    <div class="card g" style="padding:14px"><div class="k">03 · Govern</div><h3 style="font-size:16.5px">Unity Catalog</h3><p style="font-size:12.5px">PII tags, <span class="mono" style="font-size:11.5px">mask_pii()</span>, secure view and lineage. Gold, Genie and the app never see names, phones or VINs.</p><div style="margin-top:10px"><span class="chip">Tags &amp; masks</span><span class="chip">Lineage</span></div></div>
+    <div class="card l" style="padding:14px"><div class="k">04 · Understand</div><h3 style="font-size:16.5px">AI Functions + MLflow</h3><p style="font-size:12.5px"><span class="mono" style="font-size:11.5px">ai_classify</span> topics, <span class="mono" style="font-size:11.5px">ai_summarize</span> cases, a sentiment model in UC, an explainable rule engine and daily spike alerts.</p><div style="margin-top:10px"><span class="chip">ai_classify</span><span class="chip">MLflow</span><span class="chip">Metric view</span></div></div>
+    <div class="card a" style="padding:14px"><div class="k">05 · Act</div><h3 style="font-size:16.5px">Lakebase · Apps · Genie</h3><p style="font-size:12.5px">Escalation queue in Lakebase Postgres, a Databricks App for agents, Genie for questions in plain English.</p><div style="margin-top:10px"><span class="chip">Lakebase</span><span class="chip">Apps</span><span class="chip">Genie</span></div></div>
+  </div>
+  <svg width="1140" height="34" viewBox="0 0 1140 34" style="display:block" aria-hidden="true">
+    <path d="M 1026 2 L 1026 18 L 114 18 L 114 2" fill="none" stroke="#FF3621" stroke-width="2" stroke-dasharray="5 4"/>
+    <polygon points="108,8 114,0 120,8" fill="#FF3621"/>
+    <text x="570" y="32" text-anchor="middle" font-family="DM Mono" font-size="11" letter-spacing="1.2" fill="#C8240F">CLOSED LOOP · CASE UPDATES STREAM BACK TO THE LAKEHOUSE WITH LAKEHOUSE SYNC</text>
+  </svg>
+  <div style="margin-top:12px;display:flex;align-items:center;gap:18px;background:var(--navy);color:#fff;border-radius:4px;padding:13px 18px">
+    <span class="mono" style="font-size:10.5px;letter-spacing:.14em;color:#FF8A75;text-transform:uppercase">Orchestration</span>
+    <span style="font-size:14px"><b>One Lakeflow Job</b> · 9 tasks · serverless · incremental</span>
+    <span style="font-size:14px;color:#C9D3D6">Pipeline, job and app are Declarative Automation Bundles in Git</span>
+    <span style="font-size:14px;color:#C9D3D6;margin-left:auto">9/9 tasks SUCCESS</span>
+  </div>
+  <div class="ftr"><span>VOC Intelligence · 02 · The solution</span><span>Valtera Motors is fictional · all data synthetic</span><span class="brand"><i>[</i>databricks<i>]</i></span></div>
+</section>
+
+<!-- ============ 06 GAP -> PRODUCT -> RESULT ============ -->
+<section class="slide">
+  <div class="hdr"><span>Valtera Motors · VOC Intelligence</span><span>How the gap closed<b>06</b></span></div>
+  <div class="eyebrow">// 02 · Gap → product → result</div>
+  <h1>Each Databricks product closes one specific gap<span class="dot">.</span></h1>
+  <table class="t" style="margin-top:14px">
+    <thead><tr><th style="width:24%">Gap at Valtera</th><th style="width:27%">Databricks product</th><th style="width:30%">What changed</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td><b>Keyword rules miss paraphrases</b></td><td>AI Functions · <span class="mono">ai_classify</span> on plain-language topic definitions</td><td>The same taxonomy file drives rules and AI. Each AI tag carries a confidence and a reason.</td><td class="num"><b>77.9% → 99.4%</b> recall</td></tr>
+      <tr><td><b>Month-end export</b></td><td>Lakeflow Jobs + Declarative Pipelines, file-arrival trigger</td><td>A new export starts the run by itself and processes only the new rows (+70 interactions on a new day).</td><td class="num"><b>~30 → 2 days</b> to detect</td></tr>
+      <tr><td><b>Data stuck in a vendor tool</b></td><td>Unity Catalog</td><td>Complaints join vehicle, dealer and OTA data. PII is tagged and masked, with lineage end to end.</td><td class="num"><b>0</b> PII beyond silver</td></tr>
+      <tr><td><b>No one owns the case</b></td><td>Lakebase + Databricks Apps</td><td>P1/P2 queue with AI summary and next action. Agents assign and comment; every change is audited.</td><td class="num"><b>318</b> cases routed</td></tr>
+      <tr><td><b>Questions wait on report requests</b></td><td>Genie (AI/BI)</td><td>Quality leads ask in plain English and see the generated SQL. 20 benchmarks run on every job.</td><td class="num"><b>19/20</b> benchmarks (95%)</td></tr>
+      <tr><td><b>AI cost grows with volume</b></td><td>Distinct-sentence cache + MLflow model in UC</td><td>Each distinct sentence is classified once; sentiment comes from a small trained model, not an LLM per call.</td><td class="num"><b>−66%</b> LLM calls</td></tr>
+    </tbody>
+  </table>
+  <div class="ftr"><span>VOC Intelligence · 02 · The solution</span><span>Valtera Motors is fictional · all data synthetic</span><span class="brand"><i>[</i>databricks<i>]</i></span></div>
+</section>
+
+<!-- ============ 07 CLASSIFICATION ============ -->
+<section class="slide">
+  <div class="hdr"><span>Valtera Motors · VOC Intelligence</span><span>Classification quality<b>07</b></span></div>
+  <div class="eyebrow">// 03 · Measured against ground truth on every run</div>
+  <h1>Rules for precision, AI for recall, both for coverage<span class="dot">.</span></h1>
+  <div style="display:grid;grid-template-columns:600px 1fr;gap:28px;margin-top:10px">
+    <div class="card" style="border-top-color:var(--ink)">
+      <div class="k">Topic tags vs. ground truth · 5,978 labelled complaint topics</div>
+      <svg width="560" height="300" viewBox="0 0 560 300" role="img" aria-label="Recall: rules 77.9%, ai_classify 97.4%, combined 99.4%. Precision: rules 100%, ai_classify 96.1%, combined 96.1%.">
+        <g font-family="DM Sans" font-size="13" fill="#16282E">
+          <text x="0" y="18" font-family="DM Mono" font-size="11" letter-spacing="1.3" fill="#8A847E">RECALL · SHARE OF COMPLAINTS FOUND</text>
+          <text x="0" y="48">Keyword rules</text><rect x="140" y="34" width="279" height="20" rx="4" fill="#E8A33D"/><text x="428" y="49" font-weight="700">77.9%</text>
+          <text x="0" y="78">ai_classify</text><rect x="140" y="64" width="349" height="20" rx="4" fill="#2272B4"/><text x="498" y="79" font-weight="700">97.4%</text>
+          <text x="0" y="108" font-weight="700">Rules + AI</text><rect x="140" y="94" width="356" height="20" rx="4" fill="#FF3621"/><text x="505" y="109" font-weight="700">99.4%</text>
+          <text x="0" y="168" font-family="DM Mono" font-size="11" letter-spacing="1.3" fill="#8A847E">PRECISION · SHARE OF TAGS THAT ARE RIGHT</text>
+          <text x="0" y="198">Keyword rules</text><rect x="140" y="184" width="358" height="20" rx="4" fill="#E8A33D"/><text x="507" y="199" font-weight="700">100%¹</text>
+          <text x="0" y="228">ai_classify</text><rect x="140" y="214" width="344" height="20" rx="4" fill="#2272B4"/><text x="493" y="229" font-weight="700">96.1%</text>
+          <text x="0" y="258" font-weight="700">Rules + AI</text><rect x="140" y="244" width="344" height="20" rx="4" fill="#FF3621"/><text x="493" y="259" font-weight="700">96.1%</text>
+          <line x1="140" y1="28" x2="140" y2="120" stroke="#16282E"/><line x1="140" y1="178" x2="140" y2="270" stroke="#16282E"/>
+          <text x="140" y="290" font-family="DM Mono" font-size="10" fill="#8A847E">0%</text><text x="498" y="290" font-family="DM Mono" font-size="10" fill="#8A847E" text-anchor="end">100%</text>
+        </g>
+      </svg>
+      <div class="small">F1: rules 0.876 · AI 0.967 · <b>combined 0.977</b>. Combined misses 36 topics (rules alone: 1,320). ¹ Synthetic vocabulary matches the rules by construction; expect lower on real data.</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card bl"><div class="k">AI catches the paraphrase</div>
+        <p style="font-size:15px;color:var(--ink);font-style:italic;margin-bottom:8px">"I plug it in at the house and wake up to the same battery as when I went to bed."</p>
+        <p><b>→ Charging · Home Charging Issue</b> &nbsp;<span class="mono" style="font-size:12px">confidence 0.78</span></p>
+        <p class="small" style="margin-top:6px">Reason: "Customer says they plug the vehicle in at home and wake up with the same battery level, indicating a problem with home charging." No keyword matched.</p></div>
+      <div class="card a"><div class="k">Rules explain the tag</div>
+        <p style="font-size:15px;color:var(--ink);font-style:italic;margin-bottom:8px">"I had phantom braking twice this week on the same road."</p>
+        <p><b>→ Safety · Unexpected Braking</b> &nbsp;<span class="mono" style="font-size:12px">matched "phantom braking"</span></p>
+        <p class="small" style="margin-top:6px">Quality and Legal can see the exact words behind every count.</p></div>
+      <div class="card g" style="padding:12px 18px"><p><b>One taxonomy file</b> (<span class="mono" style="font-size:12px">category_model.json</span>) drives both. The business edits topic definitions; no code change.</p></div>
+    </div>
+  </div>
+  <div class="ftr"><span>VOC Intelligence · 03 · How it works</span><span>Valtera Motors is fictional · all data synthetic</span><span class="brand"><i>[</i>databricks<i>]</i></span></div>
+</section>
+
+<!-- ============ 08 ESCALATION ============ -->
+<section class="slide">
+  <div class="hdr"><span>Valtera Motors · VOC Intelligence</span><span>Escalation queue<b>08</b></span></div>
+  <div class="eyebrow">// 03 · From signal to owner</div>
+  <h1>Every P1 safety case now has an owner and an audit trail<span class="dot">.</span></h1>
+  <div style="display:grid;grid-template-columns:560px 1fr;gap:28px;margin-top:16px">
+    <div style="background:#fff;border:1px solid var(--line);border-radius:6px;box-shadow:0 8px 24px rgba(22,40,46,.08);overflow:hidden">
+      <div style="background:var(--navy);color:#fff;padding:10px 16px;display:flex;justify-content:space-between;font:500 11px/1 'DM Mono';letter-spacing:.1em"><span>ESCALATION QUEUE · LAKEBASE</span><span style="color:#FF8A75">266 P1 · 52 P2</span></div>
+      <div style="padding:16px 18px">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><span class="tag b">P1</span><span class="mono" style="font-size:12px;color:var(--mono)">I2026111900007</span><span style="font-size:13px;color:var(--muted);margin-left:auto">2026 Aurora EV · Riverbend Valtera</span></div>
+        <div class="mono" style="font-size:10.5px;letter-spacing:.12em;color:var(--mono)">AI CASE SUMMARY · VERIFY</div>
+        <p style="font-size:16px;line-height:1.4;margin:4px 0 12px;font-weight:500">Car malfunctioned, slamming brakes on highway, no loaner provided, owner paying for rental car.</p>
+        <div class="mono" style="font-size:10.5px;letter-spacing:.12em;color:var(--mono)">RECOMMENDED ACTION</div>
+        <p style="font-size:14px;margin:4px 0 14px;color:var(--body)">Open safety investigation; call customer within 24h; check for related recall/OTA.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px">
+          <div style="border:1px solid var(--line);border-radius:4px;padding:8px 10px"><span class="small">Status</span><br><b>Acknowledged</b></div>
+          <div style="border:1px solid var(--line);border-radius:4px;padding:8px 10px"><span class="small">Assignee</span><br><b>Safety investigation team</b></div>
+        </div>
+        <div style="margin-top:10px;background:var(--oat);border-radius:4px;padding:8px 10px;font-size:12.5px;color:var(--body)"><span class="mono" style="font-size:10.5px;color:var(--mono)">AUDIT · </span>status Open → Acknowledged · note added · saved to Lakebase</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card l"><div class="k">Why it matters</div><p style="font-size:14.5px">An agent reads a one-line summary instead of a transcript, and the right team owns the case the same day. Nothing waits for a month-end export.</p></div>
+      <div class="card bl"><div class="k">How it works</div>
+        <p style="font-size:13.5px"><b>Delta</b> <span class="mono" style="font-size:12px">gold_escalation_queue</span> → <b>Lakebase</b> synced table (ms reads) → <b>Databricks App</b> write-back with audit log → <b>Lakehouse Sync</b> streams changes back to <span class="mono" style="font-size:12px">gold_case_status</span>.</p></div>
+      <div class="grid" style="grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div class="card n" style="padding:12px"><div class="big" style="font-size:32px">318</div><p class="small">cases in queue</p></div>
+        <div class="card n" style="padding:12px"><div class="big" style="font-size:32px">318=318</div><p class="small">Delta = Lakebase rows, checked every run</p></div>
+        <div class="card n" style="padding:12px"><div class="big" style="font-size:32px">0</div><p class="small">PII fields visible to the app</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="ftr"><span>VOC Intelligence · 03 · How it works</span><span>Valtera Motors is fictional · all data synthetic</span><span class="brand"><i>[</i>databricks<i>]</i></span></div>
+</section>
+
+<!-- ============ 09 GENIE ============ -->
+<section class="slide">
+  <div class="hdr"><span>Valtera Motors · VOC Intelligence</span><span>Ask Genie<b>09</b></span></div>
+  <div class="eyebrow">// 03 · Self-service answers</div>
+  <h1>Quality leads ask in plain English and see the SQL<span class="dot">.</span></h1>
+  <div style="display:grid;grid-template-columns:1fr 400px;gap:28px;margin-top:16px">
+    <div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><div style="background:var(--navy);color:#fff;border-radius:14px 14px 2px 14px;padding:12px 16px;font-size:15.5px;max-width:560px">When was the charge port door problem on the 2026 Aurora EV first detected?</div></div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:14px 14px 14px 2px;padding:14px 18px;max-width:640px">
+        <p style="font-size:15.5px;margin:0 0 10px">For the <b>2026 Aurora EV</b>, <b>Charging · Charge Port Door Stuck</b> was first detected on <b style="color:var(--lava)">2026-10-30</b>.</p>
+        <div class="code" style="font-size:11.5px"><span class="c">-- Generated SQL</span>
+<span class="kw">SELECT</span> MIN(first_alert_date) <span class="kw">AS</span> first_detected
+<span class="kw">FROM</span>   voc_valtera.gold_emerging_issues
+<span class="kw">WHERE</span>  topic_name = <span class="s">'Charging - Charge Port Door Stuck'</span>
+  <span class="kw">AND</span>  model = <span class="s">'Aurora EV'</span> <span class="kw">AND</span> model_year = 2026</div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:12px"><div style="background:var(--navy);color:#fff;border-radius:14px 14px 2px 14px;padding:10px 16px;font-size:14.5px">Which issues are spiking right now?</div></div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:14px 14px 14px 2px;padding:10px 18px;max-width:640px;margin-top:8px;font-size:14px;color:var(--body)"><b>4 alerts.</b> Strongest: Unexpected Braking, 2026 Aurora EV, <b>10.4×</b>. Aurora EV accounts for 3 of 4.</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card l"><div class="k">Trust, by design</div><p>Genie only sees governed gold tables with no PII, and every answer shows its SQL.</p></div>
+      <div class="card bl"><div class="k">Curated as code</div><p>The job rebuilds the Genie Agent on every run: column descriptions, joins, measures, example SQL.</p></div>
+      <div class="card g"><div class="k">Benchmarked</div><div class="big" style="font-size:40px">85% → 95%</div><p style="margin-top:6px">19 of 20 business questions answered correctly after curation. The job fails below 90%.</p></div>
+    </div>
+  </div>
+  <div class="ftr"><span>VOC Intelligence · 03 · How it works</span><span>Valtera Motors is fictional · all data synthetic</span><span class="brand"><i>[</i>databricks<i>]</i></span></div>
+</section>
+
+<!-- ============ 10 GOVERNANCE + COST ============ -->
+<section class="slide">
+  <div class="hdr"><span>Valtera Motors · VOC Intelligence</span><span>Governance &amp; cost<b>10</b></span></div>
+  <div class="eyebrow">// 03 · Trusted and efficient</div>
+  <h1>Governed by default, and two-thirds fewer AI calls<span class="dot">.</span></h1>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px">
+    <div class="card g" style="padding:18px 20px">
+      <div class="k">Unity Catalog governance · customers_secure, as a non-PII reader</div>
+      <table class="t" style="font-size:13px;margin:6px 0 12px">
+        <thead><tr><th>customer_id</th><th>first_name</th><th>last_name</th><th>email</th><th>phone</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">C00001</td><td class="mono"><b>K******</b></td><td class="mono"><b>H******</b></td><td class="mono"><b>k******</b></td><td class="mono"><b>+******</b></td></tr>
+          <tr><td class="mono">C00002</td><td class="mono"><b>M******</b></td><td class="mono"><b>L******</b></td><td class="mono"><b>m******</b></td><td class="mono">—</td></tr>
+</tbody>
+      </table>
+      <p style="margin-bottom:8px">• PII columns tagged <span class="mono" style="font-size:12px">pii</span> and masked unless the reader is in <span class="mono" style="font-size:12px">valtera_voc_pii_readers</span>.</p>
+      <p style="margin-bottom:8px">• Sentiment model tracked in MLflow, registered as <span class="mono" style="font-size:12px">voc_sentiment_model@champion</span>.</p>
+      <p>• Every run scores the classifiers against ground truth and writes the metrics to a table.</p>
+    </div>
+    <div class="card l" style="padding:18px 20px">
+      <div class="k">AI cost at contact-center scale</div>
+      <svg width="520" height="128" viewBox="0 0 520 128" role="img" aria-label="LLM calls: 11,953 one per sentence versus 4,018 with distinct-sentence cache">
+        <g font-family="DM Sans" font-size="13" fill="#16282E">
+          <text x="0" y="24">One call per sentence</text><rect x="170" y="10" width="290" height="22" rx="4" fill="#8A847E"/><text x="468" y="26" font-weight="700">11,953</text>
+          <text x="0" y="66" font-weight="700">Distinct-sentence cache</text><rect x="170" y="52" width="97" height="22" rx="4" fill="#FF3621"/><text x="275" y="68" font-weight="700">4,018 (−66%)</text>
+          <text x="0" y="108">A new day's file</text><rect x="170" y="94" width="4" height="22" rx="2" fill="#FF3621"/><text x="182" y="110" font-weight="700">43 calls</text>
+        </g>
+      </svg>
+      <p style="margin:8px 0">• Contact-center language repeats, so each <b>distinct</b> sentence is classified once and cached by text + definitions.</p>
+      <p style="margin-bottom:8px">• <b>Zero-token sentiment:</b> an LLM labels a sample once; a small trained model scores the rest (accuracy 0.987).</p>
+      <p>• <b>Serverless everywhere</b>; Lakebase scales to zero when the app is idle.</p>
+    </div>
+  </div>
+  <div class="ftr"><span>VOC Intelligence · 03 · How it works</span><span>Valtera Motors is fictional · all data synthetic</span><span class="brand"><i>[</i>databricks<i>]</i></span></div>
+</section>
+
+<!-- ============ 11 VALUE ============ -->
+<section class="slide">
+  <div class="hdr"><span>Valtera Motors · VOC Intelligence</span><span>Business value<b>11</b></span></div>
+  <div class="eyebrow">// 04 · The outcome in dollars</div>
+  <h1>~$4.0M of year-1 value on ~$75K of consumption<span class="dot">.</span></h1>
+  <p class="lede">Most of the value comes from acting earlier: fewer vehicles get a bad update, and fewer affected owners walk away.</p>
+  <div style="display:grid;grid-template-columns:1fr 300px;gap:24px">
+    <div class="card" style="padding:16px 20px">
+      <svg width="760" height="250" viewBox="0 0 760 250" role="img" aria-label="Year-1 value: revenue protected 2.3M, OTA exposure avoided 0.9M, license net savings 0.5M, analyst time 0.3M; total 4.0M">
+        <g font-family="DM Sans" fill="#16282E">
+          <!-- scale: $1M = 160px, origin x=310 -->
+          <text x="0" y="30" font-size="15" font-weight="700">Revenue protected</text><text x="0" y="48" font-size="11.5" fill="#5A5755">6,000 owners × 8% defection avoided × $4,800</text>
+          <rect x="310" y="14" width="368" height="30" rx="4" fill="#FF3621"/><text x="688" y="35" font-size="16" font-weight="700">$2.3M</text>
+          <text x="0" y="90" font-size="15" font-weight="700">OTA exposure avoided</text><text x="0" y="108" font-size="11.5" fill="#5A5755">~6,000 fewer vehicles × $150 service + goodwill</text>
+          <rect x="310" y="74" width="144" height="30" rx="4" fill="#1B3139"/><text x="464" y="95" font-size="16" font-weight="700">$0.9M</text>
+          <text x="0" y="150" font-size="15" font-weight="700">Vendor license retired</text><text x="0" y="168" font-size="11.5" fill="#5A5755">$600K license − ~$75K consumption</text>
+          <rect x="310" y="134" width="84" height="30" rx="4" fill="#1B3139"/><text x="404" y="155" font-size="16" font-weight="700">$0.5M</text>
+          <text x="0" y="210" font-size="15" font-weight="700">Analyst time returned</text><text x="0" y="228" font-size="11.5" fill="#5A5755">5 → 2.5 FTE on rule upkeep and tag review</text>
+          <rect x="310" y="194" width="48" height="30" rx="4" fill="#1B3139"/><text x="368" y="215" font-size="16" font-weight="700">$0.3M</text>
+          <line x1="310" y1="6" x2="310" y2="236" stroke="#16282E"/>
+        </g>
+      </svg>
+      <div style="display:flex;gap:16px;align-items:center;font-size:12px;color:var(--muted);margin-top:4px"><span><span style="display:inline-block;width:10px;height:10px;background:#FF3621;border-radius:2px"></span> revenue</span><span><span style="display:inline-block;width:10px;height:10px;background:#1B3139;border-radius:2px"></span> cost and risk avoided ($1.7M)</span><span class="tag e" style="margin-left:auto">estimate · validate in pilot</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card l" style="flex:1"><div class="k">Total year-1 value</div><div class="big" style="font-size:64px">$4.0M</div><p style="margin-top:8px">vs. ~$60–90K/yr of Databricks consumption: about <b>50× return</b>.</p></div>
+      <div class="card n"><div class="k">Not counted</div><p>Lower recall and brand risk, and faster dealer coaching from negative-sentiment hot spots.</p></div>
+    </div>
+  </div>
+  <div class="ftr"><span>VOC Intelligence · 04 · Value</span><span>Valtera Motors is fictional · all figures on this slide are estimates</span><span class="brand"><i>[</i>databricks<i>]</i></span></div>
+</section>
+
+<!-- ============ 12 SCORECARD ============ -->
+<section class="slide">
+  <div class="hdr"><span>Valtera Motors · VOC Intelligence</span><span>Before &amp; after<b>12</b></span></div>
+  <div class="eyebrow">// 04 · The buyer's KPIs</div>
+  <h1>Before and after, in the KPIs Quality is measured on<span class="dot">.</span></h1>
+  <table class="t" style="margin-top:14px;font-size:14px">
+    <thead><tr><th style="width:30%">KPI</th><th style="width:22%">Before · vendor tool</th><th style="width:30%">After · Databricks</th><th>Basis</th></tr></thead>
+    <tbody>
+      <tr><td><b>Time to detect an emerging safety issue</b></td><td>~30 days (month-end)</td><td><b style="color:var(--lava)">2–6 days</b> after OTA 4.2</td><td><span class="tag m">measured</span></td></tr>
+      <tr><td><b>Complaint topics found (recall)</b></td><td>77.9%</td><td><b style="color:var(--lava)">99.4%</b> at 96.1% precision</td><td><span class="tag m">measured</span></td></tr>
+      <tr><td><b>P1 safety cases with an owner</b></td><td>none</td><td><b style="color:var(--lava)">318</b> cases, AI summary + audit log</td><td><span class="tag m">built</span></td></tr>
+      <tr><td><b>Questions answered without a report request</b></td><td>analyst backlog</td><td><b style="color:var(--lava)">Genie</b>, 95% on 20 benchmarks</td><td><span class="tag m">measured</span></td></tr>
+      <tr><td><b>LLM calls for classification</b></td><td>1 per sentence</td><td><b style="color:var(--lava)">−66%</b>; 43 calls for a new day</td><td><span class="tag m">measured</span></td></tr>
+      <tr><td><b>Text-analytics run cost</b></td><td>~$600K/yr license</td><td><b style="color:var(--lava)">~$60–90K/yr</b> consumption</td><td><span class="tag e">estimate</span></td></tr>
+      <tr><td><b>Vehicles exposed to a bad OTA</b></td><td>full rollout</td><td><b style="color:var(--lava)">~6,000 fewer</b></td><td><span class="tag e">estimate</span></td></tr>
+      <tr><td><b>Revenue protected from avoided defection</b></td><td>—</td><td><b style="color:var(--lava)">~$2.3M/yr</b></td><td><span class="tag e">estimate</span></td></tr>
+    </tbody>
+  </table>
+  <div class="ftr"><span>VOC Intelligence · 04 · Value</span><span>Valtera Motors is fictional · all data synthetic</span><span class="brand"><i>[</i>databricks<i>]</i></span></div>
+</section>
+
+<!-- ============ 13 30/60/90 ============ -->
+<section class="slide">
+  <div class="hdr"><span>Valtera Motors · VOC Intelligence</span><span>Path to production<b>13</b></span></div>
+  <div class="eyebrow">// 05 · Next 90 days</div>
+  <h1>Pilot on real exports, then retire the vendor tool<span class="dot">.</span></h1>
+  <p class="lede">Same code, same job, deployed into a Valtera workspace. Each phase has a measurable exit test.</p>
+  <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:6px">
+    <div class="card bl"><div class="k">Day 30 · Prove it on real data</div><h3>3 months of real exports</h3><p>Land call and survey exports in a Valtera workspace. Migrate the vendor rule set into the taxonomy file as-is.</p><p style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line)"><b>Exit:</b> replay the last real OTA issue and compare detection dates.</p></div>
+    <div class="card a"><div class="k">Day 60 · Tune with analysts</div><h3>500 labelled sentences</h3><p>Two Valtera analysts build a gold set. Retrain sentiment, tune ai_classify confidence and alert thresholds on real volume.</p><p style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line)"><b>Exit:</b> recall ≥ 95% and precision ≥ 90% on the real gold set.</p></div>
+    <div class="card l"><div class="k">Day 90 · Switch over</div><h3>Run alongside, then retire</h3><p>Run in parallel with the vendor tool for one month. Connect the P1 queue to the case system, then retire the license.</p><p style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line)"><b>Exit:</b> Safety signs off on the P1 queue; license not renewed.</p></div>
+  </div>
+  <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+    <div style="background:var(--navy);color:#fff;border-radius:4px;padding:14px 18px"><div class="mono" style="font-size:10.5px;letter-spacing:.14em;color:#FF8A75">VALTERA BRINGS</div><p style="font-size:14px;margin:6px 0 0;color:#DCE3E5">A sample export, 2 analysts (~4 hrs/week), a Safety lead for sign-off, and the vendor rule set.</p></div>
+    <div style="background:var(--navy);color:#fff;border-radius:4px;padding:14px 18px"><div class="mono" style="font-size:10.5px;letter-spacing:.14em;color:#FF8A75">DATABRICKS BRINGS</div><p style="font-size:14px;margin:6px 0 0;color:#DCE3E5">The bundles, job and app as code, plus field engineering support to deploy and tune.</p></div>
+    <div style="background:var(--navy);color:#fff;border-radius:4px;padding:14px 18px"><div class="mono" style="font-size:10.5px;letter-spacing:.14em;color:#FF8A75">WE'LL MEASURE</div><p style="font-size:14px;margin:6px 0 0;color:#DCE3E5">Days to detect, recall and precision, P1 time to first action, and $ per 1K interactions.</p></div>
+  </div>
+  <div class="ftr"><span>VOC Intelligence · 05 · Next steps</span><span>Valtera Motors is fictional · all data synthetic</span><span class="brand"><i>[</i>databricks<i>]</i></span></div>
+</section>
+
+<!-- ============ 14 CLOSE ============ -->
+<section class="slide dark" style="background:var(--navy)">
+  <svg width="1280" height="720" style="position:absolute;inset:0" aria-hidden="true">
+    <text x="-20" y="790" font-family="DM Sans" font-weight="700" font-size="400" letter-spacing="-28" fill="#22404A">voc</text>
+    <polygon points="1280,0 1280,260 1020,0" fill="#FF3621"/>
+  </svg>
+  <div style="position:absolute;left:70px;top:44px;font:700 22px/1 'DM Sans';letter-spacing:-.02em;color:#fff">databricks</div>
+  <div style="position:absolute;left:70px;top:210px;width:900px">
+    <div class="mono" style="font-size:12.5px;letter-spacing:.16em;color:#FF8A75;text-transform:uppercase;margin-bottom:16px">// The ask</div>
+    <div style="font-weight:700;font-size:62px;line-height:1.02;letter-spacing:-.04em">Next step: a 30-day pilot on 3 months of your real exports<span class="dot">.</span></div>
+    <p style="font-size:19px;line-height:1.45;color:#C9D3D6;margin:22px 0 0;max-width:760px">We need a sample export, two analysts for labelling, and a Safety lead to sign off on the P1 queue. We'll show detection dates on your last real OTA issue.</p>
+  </div>
+  <div style="position:absolute;left:70px;bottom:44px;display:flex;gap:56px;font:400 10.5px/1.6 'DM Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#8FA3AA">
+    <div>Detect<br><span style="color:#fff">2 days, not 30</span></div>
+    <div>Coverage<br><span style="color:#fff">99.4% of complaints</span></div>
+    <div>Value<br><span style="color:#fff">~$4.0M year 1 (est.)</span></div>
+    <div>Platform<br><span style="color:#fff">Databricks Data Intelligence Platform</span></div>
+  </div>
+</section>
+
+</body>
+</html>
