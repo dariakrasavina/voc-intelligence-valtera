@@ -19,15 +19,6 @@ for t in sorted(r["tasks"], key=lambda t: t["start_time"]):
     secs = round((t.get("end_time", 0) - t.get("start_time", 0)) / 1000)
     print("  %-18s %-8s %5ss" % (t["task_key"], t["state"].get("result_state", ""), secs))' > evidence/job_run_summary.txt
 
-# 3. Lakeflow pipeline: latest update events (row counts, expectations)
-PID=$(databricks pipelines list-pipelines --filter "name LIKE 'valtera-voc-ingest'" --profile "$P" -o json | python3 -c 'import json,sys;print(json.load(sys.stdin)[0]["pipeline_id"])')
-databricks pipelines list-pipeline-events "$PID" --max-results 200 --profile "$P" -o json | python3 -c '
-import json,sys
-ev=json.load(sys.stdin)
-for e in ev:
-    d=e.get("details",{}); fp=d.get("flow_progress",{})
-    if fp.get("metrics") or fp.get("data_quality") or e["event_type"] in ("update_progress",):
-        print(e["timestamp"], e["event_type"], e.get("origin",{}).get("flow_name",""), json.dumps({k:fp[k] for k in ("status","metrics","data_quality") if k in fp}) or e.get("message",""))' > evidence/pipeline_events.txt
 
 # 4. key query results straight from Unity Catalog
 q() { databricks experimental aitools tools query "$2" --warehouse $W --profile "$P" > "evidence/query_results/$1.json"; }

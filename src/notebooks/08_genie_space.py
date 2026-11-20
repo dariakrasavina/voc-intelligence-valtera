@@ -37,6 +37,7 @@ w = WorkspaceClient()
 def _id(seed):
     """Stable 32-hex id, so re-running the notebook updates items instead of duplicating them."""
     return uuid.uuid5(uuid.NAMESPACE_URL, "valtera-voc-genie/" + seed).hex
+print(f"Genie Agent '{TITLE}' over {NS} on warehouse {wh}; benchmarks: {RUN_BENCH}, pass threshold {MIN_PASS:.0%}")
 
 # COMMAND ----------
 # MAGIC %md ## 1 · Tables and column configs
@@ -132,6 +133,7 @@ TABLES = {
     f"{NS}.dim_topics": [TOPIC, PARENT, col("escalation_weight", "Topic severity weight 0-5 (5 = safety critical).", ["severity weight"])],
     f"{NS}.mv_voc_metrics": [],
 }
+print("\n".join(f"{t.split('.')[-1]:<28} {len(c):>2} column configs" for t, c in TABLES.items()))
 
 # COMMAND ----------
 # MAGIC %md ## 2 · Joins, measures, filters, expressions
@@ -164,6 +166,7 @@ EXPRESSIONS = [  # (alias, display, sql, synonyms)
     ("interaction_month", "Month", "DATE_TRUNC('MONTH', gold_interaction_insights.interaction_date)", ["month", "monthly"]),
     ("vehicle", "Vehicle (model + year)", "CONCAT(gold_interaction_insights.model, ' ', CAST(gold_interaction_insights.model_year AS STRING))", ["vehicle", "model and year"]),
 ]
+print(f"{len(JOINS)} joins, {len(MEASURES)} measures, {len(FILTERS)} filters, {len(EXPRESSIONS)} expressions"); print("measures:", ", ".join(m[0] for m in MEASURES))
 
 # COMMAND ----------
 # MAGIC %md ## 3 · Example SQL (one per query shape) and text instructions
@@ -219,6 +222,7 @@ SAMPLE_QUESTIONS = ["Which issues are spiking right now?",
                     "When was the charge port door problem on the 2026 Aurora EV first detected?",
                     "Top complaint topics for EV owners in the last 30 days",
                     "Show what customers said about unexpected braking"]
+print(f"{len(EXAMPLES)} example SQL queries, {len(SAMPLE_QUESTIONS)} sample questions, instructions: {len(INSTRUCTIONS)} chars"); print("\n".join("- " + e[0] for e in EXAMPLES))
 
 # COMMAND ----------
 # MAGIC %md ## 4 · Benchmarks (ground truth checked below)
@@ -266,6 +270,7 @@ BENCHMARKS = [
     ("How many interactions were there for the Strata EV, all model years?",
      f"SELECT COUNT(*) AS interactions FROM {NS}.gold_interaction_insights WHERE model = 'Strata EV'"),
 ]
+print(f"{len(BENCHMARKS)} benchmark questions"); print("\n".join("- " + b[0] for b in BENCHMARKS))
 
 # COMMAND ----------
 # MAGIC %md ## 5 · Check every SQL statement on the warehouse before pushing

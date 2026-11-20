@@ -115,7 +115,8 @@ system. The job never writes to `landing`, so it can't trigger itself.
 | File-arrival trigger | [`evidence/triggered_run.md`](evidence/triggered_run.md) | a landed export started the job automatically, 8/8 tasks SUCCESS |
 | Incremental daily run | [`evidence/incremental_run.md`](evidence/incremental_run.md) | rebuild wrote **6,166** interactions; the next day's file added only **+70** interactions / +480 sentences; 43 new ai_classify calls |
 | Row counts per layer | [`evidence/query_results/table_row_counts.json`](evidence/query_results/table_row_counts.json) | 6,236 interactions → 39,934 sentences → 318 queue rows = 318 in Lakebase |
-| Pipeline events | [`evidence/pipeline_events.txt`](evidence/pipeline_events.txt) | flow progress, data-quality metrics |
+| Synthetic export landed in the volume | [`evidence/assets/landing_volume.txt`](evidence/assets/landing_volume.txt) | files and sizes per source, the generator's summary, raw transcript and CRM samples |
+| Lakeflow pipeline runs + data quality | [`evidence/assets/lakeflow_pipeline_event_log.json`](evidence/assets/lakeflow_pipeline_event_log.json), [`evidence/assets/lakeflow_pipeline.json`](evidence/assets/lakeflow_pipeline.json) | rows per table and expectation pass/fail per update; pipeline definition and latest updates |
 | Classifier quality | [`evidence/query_results/classifier_quality.json`](evidence/query_results/classifier_quality.json) | F1 0.876 rules / 0.967 AI / 0.977 combined |
 | AI-only catches with rationale | [`evidence/query_results/ai_only_catches.json`](evidence/query_results/ai_only_catches.json) | e.g. "It used to get me to my sister's place and back…" → Range Loss (0.78) |
 | Explainable rule tags | [`evidence/query_results/explainable_rule_tags.json`](evidence/query_results/explainable_rule_tags.json) | e.g. `"phantom braking"` → Unexpected Braking |

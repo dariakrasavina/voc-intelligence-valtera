@@ -21,6 +21,7 @@ def run(q, tolerate=False):
     except Exception as e:
         if not tolerate: raise
         log.append({"sql": q.strip()[:160], "ok": False, "error": str(e)[:200]})
+print(f"Governance for {ns}: PII tags, masking function, secure view")
 
 # COMMAND ----------
 for col in ["first_name", "last_name", "email", "phone"]:
@@ -40,6 +41,7 @@ AS SELECT customer_id, {ns}.mask_pii(first_name) AS first_name, {ns}.mask_pii(la
           {ns}.mask_pii(email) AS email, {ns}.mask_pii(phone) AS phone,
           state, region, loyalty_tier, updated_at
    FROM {ns}.silver_customers""")
+print("\n".join(("OK  " if l["ok"] else "SKIP") + "  " + l["sql"][:110] for l in log))
 
 # COMMAND ----------
 display(spark.sql(f"SELECT * FROM {ns}.customers_secure LIMIT 5"))

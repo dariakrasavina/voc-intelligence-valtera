@@ -10,7 +10,7 @@
 # MAGIC customer is to have analysts adjudicate a few hundred sentences and retrain.
 
 # COMMAND ----------
-# MAGIC %pip install -q scikit-learn==1.5.2
+# MAGIC %pip install scikit-learn==1.5.2
 # MAGIC %restart_python
 
 # COMMAND ----------
@@ -30,6 +30,7 @@ cat, sch, ev = (dbutils.widgets.get(k) for k in ["catalog", "schema", "evidence_
 n_label = int(dbutils.widgets.get("label_sample"))
 ns = f"{cat}.{sch}"
 MODEL_NAME = f"{ns}.voc_sentiment_model"
+print(f"Training {MODEL_NAME} on up to {n_label} weak-labelled customer sentences")
 
 # COMMAND ----------
 # 1. Weak labels (cached: only new sentences are sent to the LLM)

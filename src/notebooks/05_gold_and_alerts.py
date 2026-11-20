@@ -16,6 +16,7 @@ for k, v in {"catalog": "daria_krasavina", "schema": "voc_valtera",
 cat, sch, ev = (dbutils.widgets.get(k) for k in ["catalog", "schema", "evidence_path"])
 ns = f"{cat}.{sch}"
 def sql(q): return spark.sql(q.replace("{ns}", ns))
+print(f"Building gold tables, alerts, escalation queue and metric view in {ns}")
 
 # COMMAND ----------
 sql("""

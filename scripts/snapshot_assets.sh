@@ -23,4 +23,28 @@ databricks genie get-space "$SPACE" --include-serialized-space --profile "$P" -o
 
 databricks registered-models get daria_krasavina.voc_valtera.voc_sentiment_model --include-aliases --profile "$P" -o json | j '{"full_name": d["full_name"], "aliases": d.get("aliases"), "updated_at": d.get("updated_at")}' > $D/uc_model.json
 databricks apps get valtera-voc-app --profile "$P" -o json | j '{"name": d["name"], "url": d.get("url"), "app_status": d.get("app_status"), "compute_status": d.get("compute_status"), "resources": d.get("resources"), "user_api_scopes": d.get("user_api_scopes"), "active_deployment": {k: d.get("active_deployment",{}).get(k) for k in ("deployment_id","status","create_time")}}' > $D/databricks_app.json
+# Landing volume: what the synthetic export put there (files, sizes, raw samples) + the generator's own summary
+{
+  echo "# Landing volume /Volumes/daria_krasavina/voc_valtera/landing"
+  for f in interactions customers vehicles dealers _ground_truth; do
+    databricks fs ls "dbfs:/Volumes/daria_krasavina/voc_valtera/landing/$f" --long --profile "$P" -o json | python3 -c "
+import json,sys; fs=sorted(json.load(sys.stdin), key=lambda x: x['name'])
+print('%-14s %3d files %10d bytes   first: %s   last: %s' % ('$f', len(fs), sum(x.get('size',0) for x in fs), fs[0]['name'], fs[-1]['name']))"
+  done
+  echo; echo "# Generator summary (deterministic, seed 42: regenerating reproduces the landed files exactly)"
+  T=$(mktemp -d); python3 src/data_gen/generate_synthetic_voc.py --out "$T/b" --mode backfill; python3 src/data_gen/generate_synthetic_voc.py --out "$T/d" --mode daily --day 2026-11-20; rm -rf "$T"
+  echo; echo "# Raw sample: one call transcript as landed (interactions_20261105.json, first record)"
+  databricks fs cat dbfs:/Volumes/daria_krasavina/voc_valtera/landing/interactions/interactions_20261105.json --profile "$P" | head -1 | python3 -m json.tool
+  echo; echo "# Raw sample: first 5 CRM records as landed (messy on purpose; cleaned in silver_customers)"
+  databricks fs cat dbfs:/Volumes/daria_krasavina/voc_valtera/landing/customers/customers_0001_initial.json --profile "$P" | head -5
+} > $D/landing_volume.txt
+
+# Lakeflow pipeline event log: rows written and data-quality expectation results for the latest updates
+databricks experimental aitools tools query "
+SELECT origin.update_id, min(timestamp) AS at, origin.flow_name AS flow,
+       sum(details:flow_progress.metrics.num_output_rows::bigint) AS output_rows,
+       to_json(collect_list(details:flow_progress.data_quality.expectations)) AS expectations
+FROM event_log('$PID') WHERE event_type = 'flow_progress' AND details:flow_progress.status = 'COMPLETED'
+  AND timestamp > current_timestamp() - INTERVAL 1 DAY
+GROUP BY ALL ORDER BY at DESC LIMIT 40" --warehouse 148ccb90800933a1 --profile "$P" > $D/lakeflow_pipeline_event_log.json
 echo "asset snapshots written to $D"
