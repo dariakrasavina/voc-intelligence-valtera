@@ -32,15 +32,20 @@ a month. Today a **vendor text-analytics tool** tags them with keyword rules, an
 
 ## What it does (the demo)
 
-1. **Overview:** *"4 emerging issues"*. Three are the 2026 Aurora EV after OTA 4.2: charge-port door, unexpected
+1. **Overview:** what customers talk about most, how they feel week by week, survey promoters vs. detractors by
+   vehicle, and *"4 emerging issues"*. Three are the 2026 Aurora EV after OTA 4.2: charge-port door, unexpected
    braking and OTA failure, with peak lift of 24.8×, 17.6× and 7.6× over the 4-week baseline. The fourth is a smaller spike
    I did *not* plant (2024 Aurora EV infotainment, 11 vs. 2.5/week). That's why an alert opens an analyst review instead of
    escalating automatically.
-2. **Escalation queue:** 438 P1/P2 cases served from **Lakebase**. Each has an AI case summary and a recommended action.
-   An agent sets status, assignee and a note, which are saved to Lakebase with an audit log.
-3. **Ask Genie:** *"When was the charge port door problem on the 2026 Aurora EV first detected?"* → **2026-10-30**, with
+2. **Topics:** every topic the classifiers found, with volume, % negative and how it was detected; select a topic to read
+   what customers actually said (rule keywords or AI confidence and reason per quote).
+3. **Escalation queue:** about 440 P1/P2 cases served from **Lakebase**. Each has an AI case summary and a recommended action.
+   An agent sets status, assignee and a note, saved to Lakebase with an audit log, and streamed **back to the lakehouse**
+   with Lakebase Lakehouse Sync (`gold_case_status`), so Genie and reporting see how cases are handled. The loop is closed.
+4. **Monitoring:** data freshness, how emerging issues are detected (rule + alert history), how cases are handled
+   (status counts, time to first action) and how accurate the tagging is.
+5. **Ask Genie:** *"When was the charge port door problem on the 2026 Aurora EV first detected?"* → **2026-10-30**, with
    the generated SQL shown ([`evidence/genie/genie_conversations.md`](evidence/genie/genie_conversations.md)).
-4. **Model quality:** rules vs. `ai_classify` vs. combined, scored against ground truth.
 
 App: `https://valtera-voc-app-984752964297111.11.azure.databricksapps.com` (Databricks workspace sign-in required).
 
@@ -73,10 +78,12 @@ flowchart LR
   subgraph Serve["5 · Serve"]
     Q -->|synced table TRIGGERED| LB[("Lakebase Postgres<br/>lb_escalation_queue + case_mgmt")]
     GOLD --> GENIE["Genie Agent<br/>Valtera VOC Insights"]
-    LB --> APP["Databricks App (AppKit)<br/>Overview · Queue · Ask Genie · Quality"]
+    LB --> APP["Databricks App (AppKit)<br/>Overview · Topics · Queue · Monitoring · Ask Genie"]
     GOLD --> APP
     GENIE --> APP
     APP -->|case status / assignee / note| LB
+    LB -->|Lakehouse Sync CDC| CS["lb_case_*_history → gold_case_status"]
+    CS --> GENIE
   end
 ```
 
@@ -132,7 +139,7 @@ Every notebook writes its own JSON summary to the `evidence` volume; `scripts/co
 | **Classify distinct sentences once and cache them** | Contact-center language repeats heavily: 97.8% fewer calls, 0 on re-runs | The cache key includes a fingerprint of the definitions, instructions and version, so editing a topic definition re-classifies every sentence (tested in `tests/test_ai_common.py`). A per-label incremental re-score, as in that earlier project's incremental job, would make edits cheaper |
 | **Trained sentiment model instead of per-call LLM sentiment** | Zero token cost at volume, deterministic, owned and versioned in UC | Trained on LLM *weak* labels (352 distinct sentences in this synthetic set). Next: 500 analyst-labelled sentences |
 | **Daily alert rule: ≥10 in 7 days and ≥4× the prior 4-week weekly average** | Simple enough for Safety to trust; checked every day, so the first alert date is known | A 3× threshold produced 2 noise alerts. At 4× it also flags one unplanted low-volume spike, so alerts go to an analyst, and thresholds need tuning on real volume |
-| **Lakebase for the queue** | Millisecond reads, transactional write-back, audit log, while analytics stay on the SQL warehouse | Synced table is TRIGGERED (minutes after each job run), not continuous |
+| **Lakebase for the queue, Lakehouse Sync back** | Millisecond reads, transactional write-back and an audit log in Postgres; Lakehouse Sync streams case changes back to UC as SCD2 history, so reporting and Genie see case handling with no extra job | Synced table is TRIGGERED (minutes after each job run), not continuous |
 | **MERGE the queue, never replace it** | The synced table streams the queue's Change Data Feed. My first version rebuilt it with `CREATE OR REPLACE`, which broke the stream (`DIFFERENT_DELTA_TABLE_READ_BY_STREAMING_SOURCE`) | The sync task now checks Lakebase rows = gold rows and fails otherwise, recovering once with a full refresh |
 | **No PII beyond silver** | Gold, Genie and the app only use `customer_id`; names, emails and phones are masked | Agents who need contact details would get them through the PII-reader group |
 | **Genie Agent created by a notebook in the job** | Every run re-applies the curated definition (column configs, joins, snippets, examples, short instructions) and re-runs 20 benchmarks, so a data or schema change that breaks Genie fails the job | Benchmarks found real ambiguities (hybrid ≠ ICE, primary vs. any topic, spike = peak_lift), now encoded as column descriptions rather than long instructions |
@@ -191,6 +198,7 @@ command, a script, or by a job task the first time it runs. Nothing is created b
 | Tables, views, masking function, metric view | Job tasks (pipeline + notebooks) | `src/pipeline/`, `src/notebooks/` |
 | Sentiment model `voc_sentiment_model@champion` | Job task `sentiment_model` (MLflow → UC) | `src/notebooks/04_sentiment_model.py` |
 | Lakebase synced table `lb_escalation_queue` | Job task `lakebase_sync` (created on first run, recreated if broken) | `src/notebooks/06_lakebase_sync.py` |
+| Lakehouse Sync `case_mgmt` → UC (`lb_case_actions_history`, `lb_case_action_log_history`) | One-time CLI: `databricks postgres create-cdf-config projects/valtera-voc/branches/production/databases/databricks-postgres daria_krasavina voc_valtera case_mgmt --cdf-config-id case_mgmt_to_uc` | the app sets `REPLICA IDENTITY FULL` on its tables |
 | Genie Agent "Valtera VOC Insights" | Job task `genie_space` (creates or updates it, then runs the benchmarks) | `src/notebooks/08_genie_space.py` |
 | Grants for the app's service principal (UC + Lakebase) | Script, run once after the first app deploy; the sync task re-applies the Lakebase grant | `scripts/setup_app_access.sh` |
 

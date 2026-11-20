@@ -8,7 +8,7 @@ q() { databricks experimental aitools tools query "$1" --warehouse $W --profile 
 # Unity Catalog: only PII-free gold objects (never silver_customers / bronze)
 q "GRANT USE CATALOG ON CATALOG daria_krasavina TO \`$SP\`"
 q "GRANT USE SCHEMA ON SCHEMA $NS TO \`$SP\`"
-for t in gold_interaction_insights gold_topic_daily gold_emerging_issues gold_escalation_queue gold_sentence_topics eval_classification_metrics dim_topics mv_voc_metrics; do
+for t in gold_interaction_insights gold_topic_daily gold_emerging_issues gold_escalation_queue gold_sentence_topics gold_case_status eval_classification_metrics dim_topics mv_voc_metrics; do
   q "GRANT SELECT ON TABLE $NS.$t TO \`$SP\`"
 done
 # Lakebase: read the synced escalation queue (the app creates and owns its own case_mgmt schema)

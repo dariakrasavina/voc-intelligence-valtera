@@ -43,11 +43,13 @@ function KpiRow() {
   if (!k) return <EmptyBlock title="No interactions yet" description="Run the valtera-voc-end-to-end job to load data." />;
   const period = `Last 30 days to ${k.as_of_date}`;
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
       <Kpi label="Customer interactions" value={num(k.interactions).toLocaleString()} note={`${period} · calls + surveys`} />
-      <Kpi label="Negative sentiment" value={num(k.negative_pct).toFixed(1)} unit="%" note={`${period} · trained sentiment model`} />
-      <Kpi label="Safety-related interactions" value={num(k.safety_interactions).toLocaleString()} note={`${period} · Vehicle Safety topics`} />
-      <Kpi label="P1 cases" value={num(k.p1_cases).toLocaleString()} note={`${period} · avg survey NPS ${num(k.avg_nps).toFixed(1)}`} />
+      <Kpi label="Negative sentiment" value={num(k.negative_pct).toFixed(1)} unit="%" note="share of interactions · sentiment model" />
+      <Kpi label="Positive sentiment" value={num(k.positive_pct).toFixed(1)} unit="%" note="share of interactions · sentiment model" />
+      <Kpi label="Average survey NPS score" value={num(k.avg_nps).toFixed(1)} unit="/ 10" note="post-service surveys only" />
+      <Kpi label="Safety-related interactions" value={num(k.safety_interactions).toLocaleString()} note="Vehicle Safety topics" />
+      <Kpi label="P1 cases" value={num(k.p1_cases).toLocaleString()} note="safety or high escalation score" />
     </div>
   );
 }
@@ -141,38 +143,45 @@ export function OverviewPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="min-w-0">
           <CardHeader>
-            <CardTitle>2026 Aurora EV: charge-port and braking complaints jumped after OTA 4.2</CardTitle>
-            <CardDescription>Interactions per week by topic · OTA 4.2 shipped 2026-10-28 · source: gold_topic_daily</CardDescription>
+            <CardTitle>What customers talk about most</CardTitle>
+            <CardDescription>Top 10 complaint topics by interactions in the last 30 days, and how many of those were negative · praise excluded</CardDescription>
           </CardHeader>
           <CardContent>
-            <LineChart
-              queryKey="aurora_trend"
-              parameters={{}}
-              xKey="week"
-              yKey={['charge_port_door', 'unexpected_braking', 'ota_update_failure']}
-              colorPalette="categorical"
-              showSymbol
-              height={320}
-              ariaLabel="Weekly 2026 Aurora EV complaints by topic"
-            />
+            <BarChart queryKey="top_topics" parameters={{}} xKey="topic_name" yKey={['interactions', 'negative_interactions']}
+              orientation="horizontal" colorPalette="categorical" height={340} ariaLabel="Top complaint topics" />
           </CardContent>
         </Card>
         <Card className="min-w-0">
           <CardHeader>
-            <CardTitle>Repair delays and infotainment lead complaint volume</CardTitle>
-            <CardDescription>Top 10 complaint topics, interactions in the last 30 days · praise excluded</CardDescription>
+            <CardTitle>How customers feel, week by week</CardTitle>
+            <CardDescription>Interactions per week by sentiment (trained sentiment model) · all calls and surveys</CardDescription>
           </CardHeader>
           <CardContent>
-            <BarChart
-              queryKey="top_topics"
-              parameters={{}}
-              xKey="topic_name"
-              yKey={['interactions', 'negative_interactions']}
-              orientation="horizontal"
-              colorPalette="categorical"
-              height={320}
-              ariaLabel="Top complaint topics"
-            />
+            <BarChart queryKey="sentiment_weekly" parameters={{}} xKey="week" yKey={['negative', 'neutral', 'positive']}
+              stacked colorPalette="categorical" height={340} ariaLabel="Weekly interactions by sentiment" />
+          </CardContent>
+        </Card>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="min-w-0">
+          <CardHeader>
+            <CardTitle>2026 Aurora EV: charge-port and braking complaints jumped after OTA 4.2</CardTitle>
+            <CardDescription>Mentions per week by topic · OTA 4.2 shipped 2026-10-28 · source: gold_topic_daily</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <LineChart queryKey="aurora_trend" parameters={{}} xKey="week"
+              yKey={['charge_port_door', 'unexpected_braking', 'ota_update_failure']}
+              colorPalette="categorical" showSymbol height={320} ariaLabel="Weekly 2026 Aurora EV complaints by topic" />
+          </CardContent>
+        </Card>
+        <Card className="min-w-0">
+          <CardHeader>
+            <CardTitle>Survey feedback by vehicle: promoters vs. detractors</CardTitle>
+            <CardDescription>Post-service survey responses · promoters 9-10, passives 7-8, detractors 0-6</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <BarChart queryKey="nps_breakdown" parameters={{}} xKey="model" yKey={['promoters', 'passives', 'detractors']}
+              stacked colorPalette="categorical" height={320} ariaLabel="NPS breakdown by model" />
           </CardContent>
         </Card>
       </div>

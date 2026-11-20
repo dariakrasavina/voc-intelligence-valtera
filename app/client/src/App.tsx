@@ -4,7 +4,8 @@ import { Badge } from '@databricks/appkit-ui/react';
 import { OverviewPage } from './pages/OverviewPage';
 import { CasesPage } from './pages/CasesPage';
 import { AskPage } from './pages/AskPage';
-import { QualityPage } from './pages/QualityPage';
+import { TopicsPage } from './pages/TopicsPage';
+import { MonitoringPage } from './pages/MonitoringPage';
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   `px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
@@ -33,9 +34,10 @@ function Layout() {
         </div>
         <nav className="flex gap-1">
           <NavLink to="/" end className={navLinkClass}>Overview</NavLink>
+          <NavLink to="/topics" className={navLinkClass}>Topics</NavLink>
           <NavLink to="/cases" className={navLinkClass}>Escalation queue</NavLink>
+          <NavLink to="/monitoring" className={navLinkClass}>Monitoring</NavLink>
           <NavLink to="/ask" className={navLinkClass}>Ask Genie</NavLink>
-          <NavLink to="/quality" className={navLinkClass}>Model quality</NavLink>
         </nav>
         <div className="ml-auto flex items-center gap-2">
           <Badge variant="outline">Synthetic data</Badge>
@@ -55,8 +57,9 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <OverviewPage /> },
       { path: '/cases', element: <CasesPage /> },
+      { path: '/topics', element: <TopicsPage /> },
+      { path: '/monitoring', element: <MonitoringPage /> },
       { path: '/ask', element: <AskPage /> },
-      { path: '/quality', element: <QualityPage /> },
     ],
   },
 ]);

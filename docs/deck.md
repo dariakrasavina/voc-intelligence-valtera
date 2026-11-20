@@ -54,7 +54,8 @@ safety signals that surface 3–5 weeks after customers start calling.
    safety investigation team and add a note; it is saved to Lakebase with an audit log.
 3. **Ask Genie:** "When was the charge port door problem on the 2026 Aurora EV first detected?" and "Which dealers
    have the highest share of negative interactions?", with the generated SQL shown.
-4. **Model quality:** rules vs. AI vs. combined, scored against ground truth.
+4. **Topics:** what customers said about each topic, and how it was found (rules or AI).
+5. **Monitoring:** freshness, alert history, case handling (closed loop from the app via Lakehouse Sync), tagging accuracy.
 
 ---
 

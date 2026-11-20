@@ -5,6 +5,26 @@ import type { SQLTypeMarker, SQLStringMarker, SQLNumberMarker, SQLBooleanMarker,
 
 declare module "@databricks/appkit-ui/react" {
   interface QueryRegistry {
+    alert_history: {
+        name: "alert_history";
+        parameters: Record<string, never>;
+        result: Array<{
+          /** @sqlType STRING */
+          topic_name: string;
+          /** @sqlType STRING */
+          model: string;
+          /** @sqlType INT */
+          model_year: number;
+          /** @sqlType STRING */
+          first_alert_date: string;
+          /** @sqlType DECIMAL(29,2) */
+          peak_lift: number;
+          /** @sqlType INT */
+          last_7d: number;
+          /** @sqlType BOOLEAN */
+          is_alert: boolean;
+        }>;
+      };
     aurora_trend: {
         name: "aurora_trend";
         parameters: Record<string, never>;
@@ -17,6 +37,20 @@ declare module "@databricks/appkit-ui/react" {
           unexpected_braking: number;
           /** @sqlType INT */
           ota_update_failure: number;
+        }>;
+      };
+    case_handling: {
+        name: "case_handling";
+        parameters: Record<string, never>;
+        result: Array<{
+          /** @sqlType STRING */
+          priority: string;
+          /** @sqlType STRING */
+          status: string;
+          /** @sqlType INT */
+          cases: number;
+          /** @sqlType DECIMAL(23,1) */
+          avg_hours_to_first_action: number;
         }>;
       };
     classifier_quality: {
@@ -55,14 +89,18 @@ declare module "@databricks/appkit-ui/react" {
           poor_experience: number;
         }>;
       };
-    detection_source: {
-        name: "detection_source";
+    detection_by_group: {
+        name: "detection_by_group";
         parameters: Record<string, never>;
         result: Array<{
           /** @sqlType STRING */
-          detected_by: string;
+          parent_topic: string;
           /** @sqlType INT */
-          tagged_sentences: number;
+          both_methods: number;
+          /** @sqlType INT */
+          rules_only: number;
+          /** @sqlType INT */
+          ai_only: number;
         }>;
       };
     emerging_issues: {
@@ -87,6 +125,20 @@ declare module "@databricks/appkit-ui/react" {
           as_of_date: string;
         }>;
       };
+    freshness: {
+        name: "freshness";
+        parameters: Record<string, never>;
+        result: Array<{
+          /** @sqlType STRING */
+          latest_interaction_date: string;
+          /** @sqlType STRING */
+          gold_refreshed_at: string;
+          /** @sqlType INT */
+          total_interactions: number;
+          /** @sqlType INT */
+          days_of_data: number;
+        }>;
+      };
     kpis: {
         name: "kpis";
         parameters: Record<string, never>;
@@ -95,6 +147,8 @@ declare module "@databricks/appkit-ui/react" {
           interactions: number;
           /** @sqlType DOUBLE */
           negative_pct: number;
+          /** @sqlType DOUBLE */
+          positive_pct: number;
           /** @sqlType INT */
           safety_interactions: number;
           /** @sqlType INT */
@@ -103,6 +157,36 @@ declare module "@databricks/appkit-ui/react" {
           avg_nps: number;
           /** @sqlType STRING */
           as_of_date: string;
+        }>;
+      };
+    nps_breakdown: {
+        name: "nps_breakdown";
+        parameters: Record<string, never>;
+        result: Array<{
+          /** @sqlType STRING */
+          model: string;
+          /** @sqlType INT */
+          promoters: number;
+          /** @sqlType INT */
+          passives: number;
+          /** @sqlType INT */
+          detractors: number;
+          /** @sqlType INT */
+          nps: number;
+        }>;
+      };
+    sentiment_weekly: {
+        name: "sentiment_weekly";
+        parameters: Record<string, never>;
+        result: Array<{
+          /** @sqlType DATE */
+          week: string;
+          /** @sqlType INT */
+          negative: number;
+          /** @sqlType INT */
+          neutral: number;
+          /** @sqlType INT */
+          positive: number;
         }>;
       };
     top_topics: {
@@ -115,6 +199,53 @@ declare module "@databricks/appkit-ui/react" {
           interactions: number;
           /** @sqlType INT */
           negative_interactions: number;
+        }>;
+      };
+    topic_overview: {
+        name: "topic_overview";
+        parameters: Record<string, never>;
+        result: Array<{
+          /** @sqlType STRING */
+          topic_name: string;
+          /** @sqlType STRING */
+          parent_topic: string;
+          /** @sqlType INT */
+          interactions: number;
+          /** @sqlType DECIMAL(26,1) */
+          negative_pct: number;
+          /** @sqlType INT */
+          by_rules_only: number;
+          /** @sqlType INT */
+          by_ai_only: number;
+          /** @sqlType INT */
+          by_both: number;
+          /** @sqlType DECIMAL(26,1) */
+          ai_only_pct: number;
+          /** @sqlType STRING */
+          example_quote: string;
+        }>;
+      };
+    topic_quotes: {
+        name: "topic_quotes";
+        parameters: {
+          /** STRING - use sql.string() */
+          topic: SQLStringMarker;
+        };
+        result: Array<{
+          /** @sqlType STRING */
+          sentence_text: string;
+          /** @sqlType STRING */
+          detected_by: string;
+          /** @sqlType STRING */
+          matched_terms: string;
+          /** @sqlType DOUBLE */
+          ai_confidence: number;
+          /** @sqlType STRING */
+          ai_rationale: string;
+          /** @sqlType STRING */
+          channel: string;
+          /** @sqlType STRING */
+          created_at: string;
         }>;
       };
   }

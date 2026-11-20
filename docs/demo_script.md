@@ -33,8 +33,10 @@ Check in: *"Is time-to-detect the metric your team is measured on, or is it cost
   assignee "Safety investigation team", add a note → **Save to Lakebase** → the status count updates.
 - **TELL (business):** "Every P1 has an owner and an audit trail. Your agents read a one-line summary instead of the transcript."
 - **TELL (technical):** "The queue is a Delta table synced to Lakebase Postgres, so reads take milliseconds. Agent updates go
-  into a separate app-owned schema with an audit log. The app's service principal can only read the gold tables:
-  no names, emails, phones or VINs."
+  into a separate app-owned schema with an audit log, and Lakehouse Sync streams them straight back into the lakehouse, so
+  Monitoring and Genie can answer 'how many P1 safety cases are still open?' within seconds. The app's service principal
+  can only read the gold tables: no names, emails, phones or VINs."
+- **SHOW (optional):** Monitoring → "How escalation cases are handled" now shows the case you just saved.
 
 ## 3 · Ask Genie (4 min)
 - **SHOW:** "When was the charge port door problem on the 2026 Aurora EV first detected?" → **2026-10-30**.
@@ -43,7 +45,7 @@ Check in: *"Is time-to-detect the metric your team is measured on, or is it cost
   and Genie only sees governed tables without PII."
 
 ## 4 · Why trust the tagging (4 min)
-- **SHOW:** Model quality page.
+- **SHOW:** Topics page (pick "Charging - Charge Port Door Stuck" → quotes, rules vs. AI), then Monitoring → tagging accuracy.
 - **TELL:** "Keyword rules are perfectly explainable but miss every paraphrase: 79.8% recall. AI classification with
   the same plain-language topic definitions catches them. Together: **100% recall, 99.9% precision**. We measure this
   on every run against labelled data, so if quality drops we see it."
