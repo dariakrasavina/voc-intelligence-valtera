@@ -44,3 +44,5 @@ q transcript_sample "SELECT interaction_id, turn_idx, speaker, sentence_text FRO
 # 6. unit tests
 (uv run --no-project --with pytest python -m pytest tests -v 2>&1 || true) > evidence/unit_tests.txt
 echo "evidence collected in ./evidence"
+# Public repo: redact any personal email
+grep -rl '@databricks.com' evidence | while read f; do python3 -c "import re,sys; p=sys.argv[1]; s=open(p).read(); open(p,'w').write(re.sub(r'[A-Za-z0-9._%+-]+@databricks\\.com', '<redacted>', s))" "$f"; done  # redact any personal email

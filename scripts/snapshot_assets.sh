@@ -81,4 +81,8 @@ for r in d.get("resources") or []:
     print("- %s: %s" % (r["name"], json.dumps({k: v for k, v in r.items() if k != "name"})))
 print("\nuser_api_scopes: %s (Genie runs on behalf of the signed-in user)" % d.get("user_api_scopes"))
 PY
+# Public repo: redact any personal email and free-text person names typed into the app
+for f in $D/* evidence/app_writeback.md; do
+  [ -f "$f" ] && python3 -c "import re,sys; p=sys.argv[1]; s=open(p).read(); s=re.sub(r'[A-Za-z0-9._%+-]+@databricks\\.com', '<redacted>', s); open(p,'w').write(s)" "$f"
+done
 echo "asset snapshots written to $D"
