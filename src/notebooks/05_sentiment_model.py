@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # 30 · Trained sentiment model (MLflow + Unity Catalog)
+# MAGIC # 05 · Trained sentiment model (MLflow + Unity Catalog)
 # MAGIC Calling an LLM for sentiment on every sentence, every day, is a recurring token bill. Instead:
 # MAGIC 1. **Weak-label** a sample of distinct customer sentences once with `ai_analyze_sentiment`.
 # MAGIC 2. **Train** a small TF-IDF + logistic-regression model on those labels.
@@ -95,7 +95,7 @@ spark.sql(f"""CREATE OR REPLACE TABLE {ns}.sentence_sentiment
 dist = spark.sql(f"SELECT sentiment_label, count(*) n FROM {ns}.sentence_sentiment GROUP BY 1").toPandas()
 print(dist.to_string(index=False))
 os.makedirs(ev, exist_ok=True)
-with open(f"{ev}/30_sentiment_model.json", "w") as f:
+with open(f"{ev}/05_sentiment_model.json", "w") as f:
     json.dump({"model": MODEL_NAME, "version": int(version), "alias": "champion", "mlflow_run_id": run.info.run_id,
                "metrics_vs_weak_labels": metrics, "classification_report": report,
                "weak_label_distribution": lab.label.value_counts().to_dict(),

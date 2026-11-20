@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # 50 · Serve the escalation queue from Lakebase
+# MAGIC # 07 · Serve the escalation queue from Lakebase
 # MAGIC `gold_escalation_queue` (Delta, CDF on) is synced into **Lakebase Postgres** as
 # MAGIC `voc_valtera.lb_escalation_queue` (TRIGGERED synced table). The case-management app reads it with
 # MAGIC millisecond latency and writes case status / assignee / notes into its own Lakebase schema
@@ -115,7 +115,7 @@ for _ in range(12):  # the Postgres table is read through UC federation; allow a
     time.sleep(10)
 print(f"gold_escalation_queue rows: {src} | Lakebase lb_escalation_queue rows: {dst}")
 os.makedirs(ev, exist_ok=True)
-with open(f"{ev}/50_lakebase_sync.json", "w") as f:
+with open(f"{ev}/07_lakebase_sync.json", "w") as f:
     json.dump({"synced_table": SYNCED, "lakebase_project": proj, "postgres_table": f"{sch}.lb_escalation_queue",
                "scheduling_policy": "TRIGGERED", "sync_pipeline_id": pid, "sync_update_id": update_id,
                "sync_state": state, "recreated_synced_table": recreated, "app_access": app_grant,

@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # 60 · Evaluation: rules vs. ai_classify vs. consensus (against ground truth)
+# MAGIC # 08 · Evaluation: rules vs. ai_classify vs. consensus (against ground truth)
 # MAGIC The synthetic generator recorded the true topic of every complaint sentence (and whether it was
 # MAGIC phrased with the "expected" vocabulary or as a paraphrase). That lets us measure, not guess:
 # MAGIC precision / recall / F1 per method, per phrasing style and per topic.
@@ -8,10 +8,16 @@
 # COMMAND ----------
 import json, os
 for k, v in {"catalog": "daria_krasavina", "schema": "voc_valtera",
+             "landing_path": "/Volumes/daria_krasavina/voc_valtera/landing",
              "evidence_path": "/Volumes/daria_krasavina/voc_valtera/evidence"}.items():
     dbutils.widgets.text(k, v)
-cat, sch, ev = (dbutils.widgets.get(k) for k in ["catalog", "schema", "evidence_path"])
+cat, sch, landing, ev = (dbutils.widgets.get(k) for k in ["catalog", "schema", "landing_path", "evidence_path"])
 ns = f"{cat}.{sch}"
+
+# Ground truth (written by the export simulator, never read by any model) -> evaluation-only table
+(spark.read.json(f"{landing}/_ground_truth/")
+      .write.mode("overwrite").option("overwriteSchema", "true")
+      .saveAsTable(f"{ns}.eval_ground_truth_labels"))
 
 spark.sql(f"""CREATE OR REPLACE TEMP VIEW truth AS
   SELECT DISTINCT s.sentence_id, g.topic_id, g.variant
@@ -61,7 +67,7 @@ first_detect = spark.sql(f"""
   ORDER BY first_alert_date""").toPandas()
 print("\nSeeded OTA 4.2 issue (shipped 2026-10-28): first alert per topic for the 2026 Aurora EV:"); print(first_detect.to_string(index=False))
 os.makedirs(ev, exist_ok=True)
-with open(f"{ev}/60_evaluate.json", "w") as f:
+with open(f"{ev}/08_evaluate.json", "w") as f:
     json.dump({"overall": overall.to_dict("records"), "recall_by_phrasing": by_variant.to_dict("records"),
                "recall_by_topic": by_topic.to_dict("records"), "emerging_issue_alerts": alerts.to_dict("records"),
                "ota_42_first_detection": first_detect.to_dict("records")}, f, indent=2, default=str)

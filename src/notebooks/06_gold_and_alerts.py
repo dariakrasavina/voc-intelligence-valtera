@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # 40 · Gold layer, escalation queue and emerging-issue alerts
+# MAGIC # 06 · Gold layer, escalation queue and emerging-issue alerts
 # MAGIC * `gold_sentence_topics` – **consensus** of rule engine + ai_classify (rules for precision, AI for recall).
 # MAGIC * `gold_interaction_insights` – one row per call/survey: topics, sentiment, escalation score, priority.
 # MAGIC * `gold_topic_daily` – daily mentions by topic × model × model year × dealer (feeds Genie + app).
@@ -217,7 +217,7 @@ print("EMERGING ISSUES (alerts):"); print(alerts.to_string(index=False))
 print("\nESCALATION QUEUE:"); print(queue.to_string(index=False))
 print("\nTOPIC DETECTION SOURCE:"); print(detect.to_string(index=False))
 os.makedirs(ev, exist_ok=True)
-with open(f"{ev}/40_gold_and_alerts.json", "w") as f:
+with open(f"{ev}/06_gold_and_alerts.json", "w") as f:
     json.dump({"escalation_queue_write": {k: (dict(v) if isinstance(v, dict) else v) for k, v in merge_stats.items()},
                "emerging_issue_alerts": alerts.to_dict("records"), "escalation_queue_by_priority_topic": queue.to_dict("records"),
                "topic_detection_source": detect.to_dict("records"),

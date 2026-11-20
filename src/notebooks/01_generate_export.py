@@ -1,10 +1,12 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC # 00 · Land the contact-center + survey export
+# MAGIC # 01 · Generate and land the contact-center + survey export (simulator)
 # MAGIC Writes the **synthetic** Valtera Motors export (calls, surveys, CRM, vehicles, dealers) into the
 # MAGIC `landing` UC volume, the same shape a real vendor export would arrive in.
 # MAGIC `generate_mode=backfill` lands 90 days; `daily` lands one new day (incremental demo).
-# MAGIC Ground-truth labels are written to a separate table used **only** for evaluation.
+# MAGIC Runs in its own job (`valtera-voc-export-simulator`): it plays the vendor whose export lands in the volume.
+# MAGIC The landing triggers `valtera-voc-end-to-end` (file-arrival trigger). Ground-truth labels land in
+# MAGIC `_ground_truth/` and are read **only** by `08_evaluate`.
 
 # COMMAND ----------
 import json, os, sys
@@ -25,13 +27,8 @@ summary = gen.main(args)
 print(json.dumps(summary, indent=2))
 
 # COMMAND ----------
-# Ground truth -> evaluation-only table (never read by any model).
-ns = f'{P["catalog"]}.{P["schema"]}'
-(spark.read.json(f'{P["landing_path"]}/_ground_truth/')
-      .write.mode("overwrite").option("overwriteSchema", "true")
-      .saveAsTable(f"{ns}.eval_ground_truth_labels"))
 files = {d: len(os.listdir(os.path.join(P["landing_path"], d))) for d in ["interactions", "customers", "vehicles", "dealers"]}
 print("files in landing:", files)
 os.makedirs(P["evidence_path"], exist_ok=True)
-with open(f'{P["evidence_path"]}/00_land_export.json', "w") as f:
+with open(f'{P["evidence_path"]}/01_generate_export.json', "w") as f:
     json.dump({"generator_summary": summary, "landing_files": files}, f, indent=2)
