@@ -39,7 +39,7 @@ export function AskPage() {
         <h2 className="text-xl font-semibold">Ask Genie about customer feedback</h2>
         <p className="text-sm text-muted-foreground">
           Genie Agent &ldquo;Valtera VOC Insights&rdquo; over the gold tables and the mv_voc_metrics metric view (no PII columns).
-          Queries run as the app&apos;s service principal, not as you.
+          Queries run with your own Databricks permissions (on-behalf-of-user).
         </p>
       </div>
 

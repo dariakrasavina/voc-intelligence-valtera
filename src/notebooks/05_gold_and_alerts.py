@@ -70,7 +70,7 @@ FROM {ns}.silver_interactions i LEFT JOIN tp USING (interaction_id) LEFT JOIN se
 """)
 sql("""
 CREATE OR REPLACE TABLE {ns}.gold_interaction_insights AS
-SELECT *, CASE WHEN escalation_score >= 6 OR (is_safety AND max_negative_prob >= 0.5) THEN 'P1'
+SELECT *, current_timestamp() AS refreshed_at, CASE WHEN escalation_score >= 6 OR (is_safety AND max_negative_prob >= 0.5) THEN 'P1'
                WHEN escalation_score >= 3 THEN 'P2' ELSE 'P3' END AS priority
 FROM _interaction_base""")
 sql("""COMMENT ON TABLE {ns}.gold_interaction_insights IS 'One row per customer interaction (call or survey) with topics, model-scored sentiment, escalation score and priority (P1 = safety or score>=6, P2 = score>=3). No PII.'""")
@@ -164,6 +164,34 @@ merge_stats = (sql("DESCRIBE HISTORY {ns}.gold_escalation_queue")
                .where("operation IN ('MERGE', 'CREATE TABLE AS SELECT')")
                .select("version", "operation", "operationMetrics").first().asDict())
 print("escalation queue write:", merge_stats)
+
+# COMMAND ----------
+# Closed loop: case status / assignee / notes saved in the app (Lakebase case_mgmt schema) stream back to
+# Unity Catalog through Lakebase Lakehouse Sync as lb_case_actions_history / lb_case_action_log_history (SCD2 CDC).
+# gold_case_status is a VIEW, so it always shows the latest state without waiting for a job run.
+if spark.catalog.tableExists(f"{ns}.lb_case_actions_history"):
+    sql("""
+    CREATE OR REPLACE VIEW {ns}.gold_case_status
+    COMMENT 'Escalation queue + how each case is being handled (status, assignee, note, first action) from the app, via Lakebase Lakehouse Sync. Open = no action saved yet.'
+    AS
+    WITH latest AS (
+      SELECT * FROM (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY case_id ORDER BY _pg_lsn DESC) AS rn
+        FROM {ns}.lb_case_actions_history
+        WHERE _pg_change_type IN ('insert', 'update_postimage', 'delete'))
+      WHERE rn = 1 AND _pg_change_type <> 'delete'),
+    actions AS (
+      SELECT case_id, min(logged_at) AS first_action_at, count(*) AS updates
+      FROM {ns}.lb_case_action_log_history WHERE _pg_change_type = 'insert' GROUP BY case_id)
+    SELECT q.case_id, q.created_at, q.priority, q.primary_topic, q.primary_parent_topic, q.model, q.model_year,
+           q.dealer_name, q.dealer_region, q.channel,
+           coalesce(l.status, 'Open') AS status, l.assignee, l.note, l.updated_by,
+           CAST(l.updated_at AS TIMESTAMP) AS last_updated_at,
+           CAST(a.first_action_at AS TIMESTAMP) AS first_action_at, coalesce(a.updates, 0) AS updates
+    FROM {ns}.gold_escalation_queue q
+    LEFT JOIN latest l ON l.case_id = q.case_id
+    LEFT JOIN actions a ON a.case_id = q.case_id""")
+    print("gold_case_status:", sql("SELECT status, count(*) n FROM {ns}.gold_case_status GROUP BY 1").collect())
 
 # COMMAND ----------
 spark.sql("""

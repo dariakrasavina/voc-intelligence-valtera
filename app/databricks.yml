@@ -23,9 +23,9 @@ resources:
       # Start the app automatically on deploy.
       lifecycle:
         started: true
-      # Uncomment to enable on behalf of user API scopes. Available scopes: sql, genie, files, model-serving
-      # user_api_scopes:
-      #   - sql
+      # On-behalf-of-user scopes: Genie runs with the signed-in user's own permissions.
+      user_api_scopes:
+        - genie
 
       # The resources which this app has access to.
       resources:

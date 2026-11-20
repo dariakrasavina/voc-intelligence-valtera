@@ -34,6 +34,9 @@ const SETUP_SQL = [
      updated_by TEXT,
      logged_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
    )`,
+  // Lakehouse Sync (Lakebase -> Unity Catalog CDC) needs full row images; only the owner (this app) can set it.
+  `ALTER TABLE case_mgmt.case_actions REPLICA IDENTITY FULL`,
+  `ALTER TABLE case_mgmt.case_action_log REPLICA IDENTITY FULL`,
 ];
 
 const LIST_SQL = `
