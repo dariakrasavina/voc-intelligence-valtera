@@ -13,7 +13,7 @@ resources:
         enabled: true
       # Event-driven: a new contact-center / survey export file in the landing volume starts a run.
       trigger:
-        pause_status: UNPAUSED
+        pause_status: PAUSED
         file_arrival:
           url: ${var.landing_path}/
           min_time_between_triggers_seconds: 300   # at most one triggered run every 5 minutes

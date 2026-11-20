@@ -201,6 +201,50 @@ declare module "@databricks/appkit-ui/react" {
           negative_interactions: number;
         }>;
       };
+    topic_group_sentiment: {
+        name: "topic_group_sentiment";
+        parameters: Record<string, never>;
+        result: Array<{
+          /** @sqlType STRING */
+          parent_topic: string;
+          /** @sqlType INT */
+          negative: number;
+          /** @sqlType INT */
+          neutral_or_positive: number;
+        }>;
+      };
+    topic_group_share: {
+        name: "topic_group_share";
+        parameters: Record<string, never>;
+        result: Array<{
+          /** @sqlType STRING */
+          parent_topic: string;
+          /** @sqlType INT */
+          mentions: number;
+        }>;
+      };
+    topic_group_weekly: {
+        name: "topic_group_weekly";
+        parameters: Record<string, never>;
+        result: Array<{
+          /** @sqlType DATE */
+          week: string;
+          /** @sqlType INT */
+          vehicle_safety: number;
+          /** @sqlType INT */
+          battery_charging: number;
+          /** @sqlType INT */
+          software: number;
+          /** @sqlType INT */
+          service_warranty: number;
+          /** @sqlType INT */
+          dealer: number;
+          /** @sqlType INT */
+          billing: number;
+          /** @sqlType INT */
+          praise: number;
+        }>;
+      };
     topic_overview: {
         name: "topic_overview";
         parameters: Record<string, never>;

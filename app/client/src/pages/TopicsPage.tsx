@@ -2,6 +2,8 @@ import { useState } from 'react';
 import {
   useAnalyticsQuery,
   BarChart,
+  DonutChart,
+  LineChart,
   Badge,
   Card,
   CardContent,
@@ -57,6 +59,39 @@ export function TopicsPage() {
           topic to read what customers actually said.
         </p>
       </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <Card className="min-w-0">
+          <CardHeader>
+            <CardTitle>Share of mentions by topic group</CardTitle>
+            <CardDescription>All topic mentions in calls and surveys</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <DonutChart queryKey="topic_group_share" parameters={{}} xKey="parent_topic" yKey="mentions"
+              colorPalette="categorical" height={300} ariaLabel="Share of mentions by topic group" />
+          </CardContent>
+        </Card>
+        <Card className="min-w-0 lg:col-span-2">
+          <CardHeader>
+            <CardTitle>Weekly mentions by topic group</CardTitle>
+            <CardDescription>Vehicle Safety and Battery &amp; Charging rise after OTA 4.2 (2026-10-28)</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <LineChart queryKey="topic_group_weekly" parameters={{}} xKey="week"
+              yKey={['vehicle_safety', 'battery_charging', 'software', 'service_warranty', 'dealer', 'billing', 'praise']}
+              colorPalette="categorical" height={300} ariaLabel="Weekly mentions by topic group" />
+          </CardContent>
+        </Card>
+      </div>
+      <Card className="min-w-0">
+        <CardHeader>
+          <CardTitle>How negative is each topic group?</CardTitle>
+          <CardDescription>Topic mentions split into negative vs. neutral or positive interactions (trained sentiment model)</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <BarChart queryKey="topic_group_sentiment" parameters={{}} xKey="parent_topic" yKey={['negative', 'neutral_or_positive']}
+            stacked orientation="horizontal" colorPalette="categorical" height={280} ariaLabel="Negative vs other mentions by topic group" />
+        </CardContent>
+      </Card>
       <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
         <Card className="xl:col-span-3 min-w-0">
           <CardHeader>
