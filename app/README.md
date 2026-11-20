@@ -9,3 +9,7 @@ Case-management and insight app for the Valtera Motors VOC Intelligence build. S
 * **Model quality**: rules vs. ai_classify vs. combined, scored against ground truth.
 
 Deploy: `databricks bundle deploy && databricks bundle run app` from this folder (profile with access to the workspace).
+
+**Local build note:** the bundler (tsdown/rolldown) rejects project paths that contain a comma (for example a folder
+named `FE-Bar, FY2027`). Deploying is unaffected because Databricks builds the app remotely; for a local
+`npm run build` / `databricks apps validate`, use a checkout path without a comma.

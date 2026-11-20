@@ -1,0 +1,12 @@
+# databricks apps validate (run on an identical copy at a path without a comma; the local bundler rejects 'FE-Bar, FY2027')
+Validating project using npm...
+⏭️  Skipped Installing dependencies
+✅ Generating types (1.1s)
+✅ Running AST-grep lint (0.4s)
+✅ Type checking (2.2s)
+✅ Building (6.0s)
+✅ Running tests (0.8s)
+✅ All validation checks passed (10.4s)
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
