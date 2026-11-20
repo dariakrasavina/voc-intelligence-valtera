@@ -50,7 +50,7 @@ Check in: *"Is time-to-detect the metric your team is measured on, or is it cost
 - **Technical detail:** each rule tag stores the words that triggered it; ai_classify returns a confidence and a rationale.
 
 ## 5 · Cost, operations, next steps (3 min) — TELL
-- "One serverless job, daily and incremental. Yesterday's re-run processed 0 old files, and today's run processed only today's 70 interactions."
+- "One serverless job. It starts by itself when your export lands, plus an 8 a.m. catch-up run every day, and it's incremental. Yesterday's re-run processed 0 old files, and today's run processed only today's 70 interactions."
 - "We classify each *distinct* sentence once: 350 AI calls instead of 15,821, and zero on re-runs. Sentiment
   uses a small trained model, so there's no per-call cost."
 - "30/60/90: run on 3 months of your real exports and migrate your vendor rule set → analysts label 500 sentences and we

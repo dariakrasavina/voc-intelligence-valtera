@@ -71,7 +71,7 @@ Contact-center + survey export ──► UC Volume (landing)
                   └─► Genie Agent "Valtera VOC Insights" ──────────────────► Ask Genie tab in the same app
 ```
 
-One Lakeflow Job runs it end to end, daily and incrementally. Pipeline, job and app are Databricks Asset Bundles;
+One Lakeflow Job runs it end to end and incrementally: it starts when a new export lands (file-arrival trigger) and every day at 8 a.m. as a catch-up. Pipeline, job and app are Databricks Asset Bundles;
 the Genie Agent, grants and Lakebase setup are scripted. All of it is in Git.
 
 ---
