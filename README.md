@@ -36,7 +36,7 @@ assumptions to validate first (8% defection, $4,800 per owner) and partly overla
 conservative figure is the **$1.7M**. Not counted: lower recall and brand risk.
 
 - **Presentation deck:** [`docs/Valtera_VOC_Intelligence_deck_v2.pdf`](docs/Valtera_VOC_Intelligence_deck_v2.pdf) (source: [`docs/deck_v2/deck_v2.html`](docs/deck_v2/deck_v2.html))
-- **Demo script for the roleplay:** [`docs/demo_script.md`](docs/demo_script.md)
+- **Demo script for the roleplay:** [`docs/demo_script_v2.md`](docs/demo_script_v2.md) (run of show, prepared answers, demo route, close; earlier version: [`docs/demo_script.md`](docs/demo_script.md))
 
 ## What it does (the demo)
 
@@ -192,7 +192,7 @@ resources/, databricks.yml   bundle: pipeline + job
 app/                   Databricks App (AppKit): UI, SQL queries, Lakebase case routes, tests (separate bundle)
 tests/                 rule-engine unit tests
 evidence/              text evidence of execution
-docs/                  presentation deck (Valtera_VOC_Intelligence_deck_v2.pdf + deck_v2/ source), demo script, AI tools used
+docs/                  presentation deck (Valtera_VOC_Intelligence_deck_v2.pdf + deck_v2/ source), demo script (v2), AI tools used
 scripts/               evidence collection, Genie evidence, app access setup
 ```
 
